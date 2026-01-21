@@ -1,0 +1,85 @@
+{
+  "board": "CBSE",
+  "studentsName": "NIKHIL MOHANAN",
+  "rollNo": 4229599,
+  "mothersName": "SHEELA MOHANAN",
+  "fatherName": "MOHANAN C M",
+  "school": "CHINMAYA VIDYALAYA CANNANORE KERALA",
+  "subjects": [
+    {
+      "subCode": "301",
+      "subject": "ENGLISH CORE",
+      "theory": 87,
+      "practical": null,
+      "total": 87,
+      "totalInWords": "Eighty Seven",
+      "positionalGrade": "A1"
+    },
+    {
+      "subCode": "041",
+      "subject": "MATHEMATICS",
+      "theory": 68,
+      "practical": null,
+      "total": 68,
+      "totalInWords": "Sixty Eight",
+      "positionalGrade": "B2"
+    },
+    {
+      "subCode": "042",
+      "subject": "PHYSICS",
+      "theory": 86,
+      "practical": 0,
+      "total": 86,
+      "totalInWords": "Eighty Six",
+      "positionalGrade": "A1"
+    },
+    {
+      "subCode": "043",
+      "subject": "CHEMISTRY",
+      "theory": 0,
+      "practical": 0,
+      "total": 87,
+      "totalInWords": "Eighty Seven",
+      "positionalGrade": "Al"
+    },
+    {
+      "subCode": "044",
+      "subject": "BIOLOGY",
+      "theory": 88,
+      "practical": 0,
+      "total": 88,
+      "totalInWords": "Eighty Eight",
+      "positionalGrade": "A1"
+    },
+    {
+      "subCode": "S00",
+      "subject": "WORK EXPERIENCE",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": "",
+      "positionalGrade": "A1"
+    },
+    {
+      "subCode": "S02",
+      "subject": "PHY & HEALTH EDUCA",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": "",
+      "positionalGrade": "B2"
+    },
+    {
+      "subCode": "503",
+      "subject": "GENERAL STUDIES",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": "",
+      "positionalGrade": "A1"
+    }
+  ],
+  "result": "Pass",
+  "date": "21/05/2008",
+  "corrected": "Corrected spelling mistakes, removed leading zeros from numbers, corrected date format, and set 'theory' as 'total - practical' for subjects where it was not equal."
+}

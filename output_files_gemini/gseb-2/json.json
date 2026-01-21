@@ -1,0 +1,81 @@
+{
+  "board": "GSEB",
+  "monthAndYearOfExam": "FEB-MAR-25",
+  "seatNo": "B 223846",
+  "centreNo": "",
+  "schoolIndexNo": "09.0293",
+  "group": "A",
+  "studentsName": "PRAJAPATI ARYA VINODBHAI",
+  "subjects": [
+    {
+      "subCode": "013",
+      "subject": "ENGLISH S.L.",
+      "total": 100,
+      "obtained": 76,
+      "obtainedInWords": "Seventy Six",
+      "grade": "B1"
+    },
+    {
+      "subCode": "050",
+      "subject": "MATHEMATICS",
+      "total": 100,
+      "obtained": 98,
+      "obtainedInWords": "Ninety Eight",
+      "grade": "A1"
+    },
+    {
+      "subCode": "052",
+      "subject": "CHEMISTRY",
+      "total": 100,
+      "obtained": 86,
+      "obtainedInWords": "Eighty Six",
+      "grade": "A2"
+    },
+    {
+      "subCode": "053",
+      "subject": "CHEMISTRY PRACT.",
+      "total": 50,
+      "obtained": 46,
+      "obtainedInWords": "Forty Six",
+      "grade": "A1"
+    },
+    {
+      "subCode": "054",
+      "subject": "PHYSICS",
+      "total": 100,
+      "obtained": 88,
+      "obtainedInWords": "Eighty Eight",
+      "grade": "A2"
+    },
+    {
+      "subCode": "055",
+      "subject": "PHYSICS PRACT.",
+      "total": 50,
+      "obtained": 42,
+      "obtainedInWords": "Forty Two",
+      "grade": "A2"
+    },
+    {
+      "subCode": "331",
+      "subject": "COMPUTER",
+      "total": 100,
+      "obtained": 49,
+      "obtainedInWords": "Forty Nine",
+      "grade": "C2"
+    },
+    {
+      "subCode": "332",
+      "subject": "COMPUTER PRACT.",
+      "total": 50,
+      "obtained": 50,
+      "obtainedInWords": "Fifty",
+      "grade": "A1"
+    }
+  ],
+  "total": 650,
+  "obtained": 535,
+  "obtainedInWords": "Five Hundred Thirty Five",
+  "date": "",
+  "result": "Pass",
+  "corrected": "centreNo was not found in OCR, set to \"\"; studentsName corrected from \"LEA PRAJAPATI ARYA VINODBHAI N\" to \"PRAJAPATI ARYA VINODBHAI\"; Subject \"ENGLISH 5.L.\" corrected to \"ENGLISH S.L.\"; Subject `PHYSICS` had `obtainedInWords` \"2ERO EIGHT EIGHT\" corrected to \"Eighty Eight\"; Subject `COMPUTER` grade `c2` corrected to `C2`; `obtainedInWords` for all subjects were reformatted (e.g., \"ZERO SEVEN SIX\" to \"Seventy Six\") and `obtained` values were derived from them; Grand `total` (650) and `obtained` (535) were calculated from individual subject data; Grand `obtainedInWords` corrected from \"FIVE HUNDRED THIRTY FIVE ONLY\" to \"Five Hundred Thirty Five\"; `date` was not found in OCR, set to \"\"; `result` inferred as \"Pass\"."
+}

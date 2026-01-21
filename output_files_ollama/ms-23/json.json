@@ -1,0 +1,85 @@
+{
+  "board": "CBSE",
+  "studentsName": "Manju Devi",
+  "rollNo": 602164,
+  "mothersName": "M: w/ Father’ SGU Name VINAY KUMAR ",
+  "fatherName": "VINAY KUMAR",
+  "school": "MODEL SCHOOL DALMIA NAGAR ROI TAS B 1 MAR “",
+  "subjects": [
+    {
+      "subCode": "301",
+      "subject": "ENGLISH CORE",
+      "theory": 64,
+      "practical": null,
+      "total": 64,
+      "totalInWords": "Sixty Four",
+      "positionalGrade": "C2"
+    },
+    {
+      "subCode": "322",
+      "subject": "SANSKRIT CORE",
+      "theory": 50,
+      "practical": null,
+      "total": 50,
+      "totalInWords": "Fifty",
+      "positionalGrade": "C1"
+    },
+    {
+      "subCode": "D41",
+      "subject": "MATHEMATICS",
+      "theory": 35,
+      "practical": null,
+      "total": 35,
+      "totalInWords": "Thirty Five",
+      "positionalGrade": "D2"
+    },
+    {
+      "subCode": "042",
+      "subject": "PHYSICS",
+      "theory": 62,
+      "practical": 29,
+      "total": 91,
+      "totalInWords": "Ninety One",
+      "positionalGrade": "C2"
+    },
+    {
+      "subCode": "048",
+      "subject": "PHYSICAL EDUCATION",
+      "theory": 53,
+      "practical": null,
+      "total": 53,
+      "totalInWords": "Fifty Three",
+      "positionalGrade": "D2"
+    },
+    {
+      "subCode": "043",
+      "subject": "CHEMISTRY",
+      "theory": 63,
+      "practical": null,
+      "total": 63,
+      "totalInWords": "Sixty Three",
+      "positionalGrade": "C2"
+    },
+    {
+      "subCode": "500",
+      "subject": "WORK EXPERIENCE",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": "",
+      "positionalGrade": "A2"
+    },
+    {
+      "subCode": "Q3",
+      "subject": "GENERAL STUDIES",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": "",
+      "positionalGrade": "AZ"
+    }
+  ],
+  "result": "Pass",
+  "date": "02-03-2015",
+  "corrected": "Removed leading zeros from numbers, corrected spelling mistakes, removed abbreviations / B T, corrected 'FIFTY TREES' to 'FIFTY THREE', corrected 'AZ' to 'A2'"
+}

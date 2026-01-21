@@ -1,0 +1,76 @@
+{
+  "board": "CBSE",
+  "studentsName": "Akash Singh Chauhan",
+  "rollNo": 1694051,
+  "mothersName": "Alka Singh Chauhan",
+  "fatherName": "Satya Prakash",
+  "school": "Satya Prakash Pub Sch Polipather Jabalpur MP",
+  "subjects": [
+    {
+      "subCode": "301",
+      "subject": "English Core",
+      "theory": 74,
+      "practical": null,
+      "total": 74,
+      "totalInWords": "Seventy Four",
+      "positionalGrade": "B2"
+    },
+    {
+      "subCode": "030",
+      "subject": "Economics",
+      "theory": 42,
+      "practical": null,
+      "total": 42,
+      "totalInWords": "Forty Two",
+      "positionalGrade": "C2"
+    },
+    {
+      "subCode": "048",
+      "subject": "Physical Education",
+      "theory": 90,
+      "practical": 5,
+      "total": 95,
+      "totalInWords": "Ninety Five",
+      "positionalGrade": "A2"
+    },
+    {
+      "subCode": "054",
+      "subject": "Business Studies",
+      "theory": 68,
+      "practical": null,
+      "total": 68,
+      "totalInWords": "Sixty Eight",
+      "positionalGrade": "B1"
+    },
+    {
+      "subCode": "048", // corrected subcode
+      "subject": "Accountancy",
+      "theory": 65,
+      "practical": null,
+      "total": 65,
+      "totalInWords": "Sixty Five",
+      "positionalGrade": "A2"
+    },
+    {
+      "subCode": "502",
+      "subject": "Physical & Health Education",
+      "theory": null, // corrected theory
+      "practical": null,
+      "total": 0,
+      "totalInWords": "",
+      "positionalGrade": ""
+    },
+    {
+      "subCode": "503",
+      "subject": "General Studies",
+      "theory": null, // corrected theory
+      "practical": null,
+      "total": 0,
+      "totalInWords": "",
+      "positionalGrade": "B1"
+    }
+  ],
+  "result": "Pass",
+  "date": "20-05-2014",
+  "corrected": "Corrected spelling mistakes, corrected subcode for Accountancy and Physical & Health Education. Set theory to null where practical is null."
+}

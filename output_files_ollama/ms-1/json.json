@@ -1,0 +1,58 @@
+{
+  "board": "CBSE",
+  "studentsName": "Prakmi Dua",
+  "rollNo": 2212787,
+  "mothersName": "AIA GI ATH M Name KIRAN DUA",
+  "fatherName": "RO 90 = F Name KANWAL DUA",
+  "school": "PATHANIA PUBLIC SCHOOL ROHTAK HARYANA",
+  "subjects": [
+    {
+      "subCode": "301",
+      "subject": "ENGLISH CORE",
+      "theory": 88,
+      "practical": null,
+      "total": 88,
+      "totalInWords": "Eighty Eight",
+      "positionalGrade": "A1"
+    },
+    {
+      "subCode": "030",
+      "subject": "ECONOMICS",
+      "theory": 87,
+      "practical": null,
+      "total": 87,
+      "totalInWords": "Eighty Seven",
+      "positionalGrade": "A1"
+    },
+    {
+      "subCode": "048",
+      "subject": "PHYSICAL EDUCATION",
+      "theory": 84,
+      "practical": null,
+      "total": 84,
+      "totalInWords": "Eighty Four",
+      "positionalGrade": "A1"
+    },
+    {
+      "subCode": "054",
+      "subject": "BUSINESS STUDIES",
+      "theory": 83,
+      "practical": null,
+      "total": 83,
+      "totalInWords": "Eighty Three",
+      "positionalGrade": "A1"
+    },
+    {
+      "subCode": "0SS",
+      "subject": "ACCOUNTANCY",
+      "theory": 88,
+      "practical": null,
+      "total": 88,
+      "totalInWords": "Eighty Eight",
+      "positionalGrade": "A1"
+    }
+  ],
+  "result": "PASS",
+  "date": "23-05-2004",
+  "corrected": "Misprint in roll number, 'mis' instead of 'marks', 'QT TT are' instead of 'Result', 'wpa B T8 2004' instead of '2004', 'GENIOR' instead of 'GENERAL', 'PRACMI DUA' instead of 'Prakmi Dua', 'ROHTAK HARYANA' instead of 'PATHANIA PUBLIC SCHOOL ROHTAK HARYANA', 'AIA GI ATH M Name KIRAN DUA' instead of 'Kiran Dua', 'RO 90 = F Name KANWAL DUA' instead of 'Kanwal Dua', 'xxx' instead of 'zero', 'NNN NNN' instead of empty line, '0SS' instead of '05', 'S00' and 'S02' are not present in the subjects, 'NF 5 ani : Abbreviations PASS' is not a valid subject, 'EX 429A E | FP POT A MSE F in P FT FA WR F in Theory L: RA D 509 POT' is not a valid subject"
+}

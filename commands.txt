@@ -1,0 +1,25 @@
+Mac
+
+brew install ollama
+ollama --version
+ollama serve
+cp -R -i traineddata/. /opt/homebrew/share/tessdata/
+sudo cp -R -i traineddata/. /opt/homebrew/share/tessdata/
+python3 -m venv venv
+source venv/bin/activate
+pip install pytesseract pdf2image Pillow opencv-python PyYAML numpy python-dotenv
+GEMINI_API_KEY=your_gemini_api_key_here
+python -W ignore ext.py
+deactivate
+
+Windows
+
+ollama --version
+ollama serve
+xcopy /Y /I traineddata\* "C:\Program Files\Tesseract-OCR\tessdat\"
+python -m venv venv
+venv\Scripts\activate
+pip install pytesseract pdf2image Pillow opencv-python PyYAML numpy python-dotenv
+GEMINI_API_KEY=your_gemini_api_key_here
+python -W ignore ext.py
+deactivate

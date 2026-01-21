@@ -1,0 +1,81 @@
+{
+  "board": "GSEB",
+  "monthAndYearOfExam": "FEB-MAR-25",
+  "seatNo": "B 216772",
+  "centreNo": "0503",
+  "schoolIndexNo": "05.0146",
+  "group": "A",
+  "studentsName": "PRAJAPATI VED PANKAJBHAI",
+  "subjects": [
+    {
+      "subCode": "013",
+      "subject": "ENGLISH (S.L.)",
+      "total": 100,
+      "obtained": 81,
+      "obtainedInWords": "ZERO EIGHT ONE",
+      "grade": "A2"
+    },
+    {
+      "subCode": "050",
+      "subject": "MATHEMATICS",
+      "total": 100,
+      "obtained": 79,
+      "obtainedInWords": "ZERO SEVEN NINE",
+      "grade": "B1"
+    },
+    {
+      "subCode": "052",
+      "subject": "CHEMISTRY",
+      "total": 100,
+      "obtained": 78,
+      "obtainedInWords": "ZERO SEVEN EIGHT",
+      "grade": "B1"
+    },
+    {
+      "subCode": "053",
+      "subject": "CHEMISTRY PRACT.",
+      "total": 50,
+      "obtained": 43,
+      "obtainedInWords": "ZERO FOUR THREE",
+      "grade": "A2"
+    },
+    {
+      "subCode": "054",
+      "subject": "PHYSICS",
+      "total": 100,
+      "obtained": 73,
+      "obtainedInWords": "ZERO SEVEN THREE",
+      "grade": "B1"
+    },
+    {
+      "subCode": "055",
+      "subject": "PHYSICS PRACT.",
+      "total": 50,
+      "obtained": 38,
+      "obtainedInWords": "ZERO THREE EIGHT",
+      "grade": "B1"
+    },
+    {
+      "subCode": "331",
+      "subject": "COMPUTER",
+      "total": 100,
+      "obtained": 84,
+      "obtainedInWords": "ZERO EIGHT FOUR",
+      "grade": "A2"
+    },
+    {
+      "subCode": "332",
+      "subject": "COMPUTER PRACT.",
+      "total": 50,
+      "obtained": 50,
+      "obtainedInWords": "ZERO FIVE ZERO",
+      "grade": "A1"
+    }
+  ],
+  "total": 650,
+  "obtained": 526,
+  "obtainedInWords": "FIVE HUNDRED TWENTY SIX ONLY",
+  "date": "05-05-2025",
+  "result": "PASS",
+  "corrected": "Removed leading zeros from obtained marks and total fields; corrected Grade for subject 332 from '1' to 'A1'; calculated grand total of 650; formatted date from 05/05/2025 to 05-05-2025; set result to PASS based on subject grades."
+}

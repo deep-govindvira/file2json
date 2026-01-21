@@ -1,0 +1,94 @@
+{
+  "board": "CBSE",
+  "studentsName": "Parveen Kumar",
+  "rollNo": 23203090,
+  "mothersName": "M R",
+  "fatherName": "SRO BALA ",
+  "school": "GOVT SARVODAYA BAL VIDYALAYA WEST PATEL NGR N D",
+  "subjects": [
+    {
+      "subCode": "301",
+      "subject": "ENGLISH CORE",
+      "theory": 65,
+      "practical": null,
+      "total": 65,
+      "totalInWords": "Sixty Five",
+      "positionalGrade": "A2"
+    },
+    {
+      "subCode": "002",
+      "subject": "HINDI ELECTIVE",
+      "theory": 76,
+      "practical": null,
+      "total": 76,
+      "totalInWords": "Seventy Six",
+      "positionalGrade": "A2"
+    },
+    {
+      "subCode": "030",
+      "subject": "ECONOMICS",
+      "theory": 44,
+      "practical": null,
+      "total": 44,
+      "totalInWords": "Forty Four",
+      "positionalGrade": "D1"
+    },
+    {
+      "subCode": "054",
+      "subject": "BUSINESS STUDIES",
+      "theory": 44,
+      "practical": 15,
+      "total": 59,
+      "totalInWords": "Fifty Nine",
+      "positionalGrade": "D1"
+    },
+    {
+      "subCode": "055",
+      "subject": "ACCOUNTANCY",
+      "theory": 40,
+      "practical": 16,
+      "total": 56,
+      "totalInWords": "Fifty Six",
+      "positionalGrade": "C2"
+    },
+    {
+      "subCode": "048",
+      "subject": "PHYSICAL EDUCATION",
+      "theory": 32,
+      "practical": 27,
+      "total": 59,
+      "totalInWords": "Fifty Nine",
+      "positionalGrade": "D1"
+    },
+    {
+      "subCode": "S00",
+      "subject": "WORK EXPERIENCE",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": "A2",
+      "positionalGrade": "A2"
+    },
+    {
+      "subCode": "502",
+      "subject": "PHY & HEALTH EDUCA",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": "",
+      "positionalGrade": ""
+    },
+    {
+      "subCode": "S03",
+      "subject": "GENERAL STUDIES",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": "A2",
+      "positionalGrade": "A2"
+    }
+  ],
+  "result": "Pass",
+  "date": "25-05-2018",
+  "corrected": "Removed leading zeros from numbers, corrected spelling mistakes, removed abbreviations and symbols, corrected subject codes to 3 digits."
+}
