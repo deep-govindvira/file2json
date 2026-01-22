@@ -1,0 +1,40 @@
+{
+  "board": "CBSE",
+  "studentsName": "ARPT KUMAR",
+  "rollNo": 7605424,
+  "mothersName": null,
+  "fatherName": null,
+  "school": "NAVYUG VIDYALAYA R R SINHA ROAD BHAGALPUR BIHAR",
+  "subjects": [
+    {
+      "subCode": "041",
+      "subject": "MATHEMATICS",
+      "theory": 61,
+      "practical": null,
+      "total": 61,
+      "totalInWords": "SIXTY ONE",
+      "positionalGrade": "B"
+    },
+    {
+      "subCode": "068",
+      "subject": null,
+      "theory": 88,
+      "practical": null,
+      "total": 88,
+      "totalInWords": "EIGHTY EIGHT",
+      "positionalGrade": null
+    },
+    {
+      "subCode": "030",
+      "subject": "PHYSICAL EDUCATION",
+      "theory": 41,
+      "practical": 30,
+      "total": 71,
+      "totalInWords": "SEVENTY ONE",
+      "positionalGrade": null
+    }
+  ],
+  "result": "PASS",
+  "date": "02-05-2019",
+  "corrected": "Corrected student name, roll no, school name, subject names, subject codes, and grades. Removed extra characters and noise. Set total based on totalInWords."
+}

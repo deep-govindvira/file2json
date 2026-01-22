@@ -45,7 +45,7 @@ def process_pdf_file(input_file_path):
         new_width = int(width * SCALE)
         new_height = int(height * SCALE)
         image = image.resize((new_width, new_height), PIL.Image.Resampling.LANCZOS)
-        image = image.filter(PIL.ImageFilter.MedianFilter(size=3))
+        # image = image.filter(PIL.ImageFilter.MedianFilter(size=3))
         processed_images.append(image)
 
     text = ""
@@ -56,8 +56,15 @@ def process_pdf_file(input_file_path):
             text += page_text + "\n" # slower but readable
     return text
 
+
+def generate_with_gemma(prompt):
+    client = genai.Client()
+    return client.models.generate_content(
+        model=MODEL,   # e.g., "gemma-3-27b"
+        contents=prompt
+    ).text
+
 def generate_with_gemini(prompt):
-    dotenv.load_dotenv()
     client = genai.Client()
     return client.models.generate_content(
         model=MODEL,
@@ -76,17 +83,20 @@ def generate_with_ollama(prompt):
 
 def generate_json(prompt, max_retries=50, retry_delay=2):
     global MODEL
-    if MODEL.startswith("gemini-"):
+    if MODEL.startswith("gemma-") or MODEL.startswith("gemini-"):
         attempt = 0
         while True:
             try:
-                return generate_with_gemini(prompt)
+                if MODEL.startswith("gemma-"):
+                    return generate_with_gemma(prompt)
+                else:
+                    return generate_with_gemini(prompt)
             except Exception as e:
                 attempt += 1
-                print(f"⚠️ Gemini failed (attempt {attempt}): {e}")
+                print(f"⚠️ {MODEL} failed (attempt {attempt}): {e}")
 
                 if attempt >= max_retries:
-                    print("❌ Max retries reached for Gemini.")
+                    print(f"❌ Max retries reached for {MODEL}.")
                     return {}
 
                 retry_delay *= 2
@@ -114,12 +124,22 @@ def process_image_file(input_file_path, output_dir):
     if GRAYSCALE:
         image = image.convert("L")  # grayscale (ignore color)
     image = PIL.ImageOps.autocontrast(image)
+
+    data = pytesseract.image_to_data(image, output_type=pytesseract.Output.DICT)
+    
+    heights = [data['height'][i] for i in range(len(data['text'])) if data['text'][i].strip()]
+    
+    if heights:
+        avg_font_height = sum(heights) / len(heights)
+        SCALE = 120 / avg_font_height  # dynamic scale factor (taget_font_size = 20)
+        print(f"⬆️ SCALE = {SCALE}")
+
     width, height = image.size
     new_width = int(width * SCALE)   # double the size
     new_height = int(height * SCALE)
     image = image.resize((new_width, new_height), PIL.Image.Resampling.LANCZOS)
-    image = image.filter(PIL.ImageFilter.MedianFilter()) # image becomes smother (remove noise)
-    image.save(os.path.join(output_dir, "image.png"))
+    # image = image.filter(PIL.ImageFilter.MedianFilter()) # image becomes smother (remove noise)
+    image.save(os.path.join(output_dir, "preprocessed.png"))
     return extract_text_from_image(image)
 
 def process_file(input_file_path):
@@ -164,6 +184,13 @@ def process_file(input_file_path):
     print(f"🤖 Sending data to {MODEL} for structured JSON extraction...")
     json_output = generate_json(prompt)
 
+    if json_output.startswith("```json"):
+        json_output = json_output[len("```json"):].strip()
+
+    if json_output.endswith("```"):
+        json_output = json_output[:-3].strip()
+
+
     output_file_path_for_json = os.path.join(output_dir, "json.json")
     with open(output_file_path_for_json, "w", encoding="utf-8") as f:
         f.write(json_output)
@@ -176,6 +203,8 @@ def process_file(input_file_path):
     print(f"⏰ Total Time: {total_time:.3f} seconds")
 
 def process():
+    dotenv.load_dotenv()
+
     if os.path.isfile(INPUT_PATH):
         process_file(INPUT_PATH)
 

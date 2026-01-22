@@ -1,20 +1,22 @@
 input_path: "input_files" # file or folder path
-output_path: "output_files_gemini"
+output_path: "output_files_gemma"
 allowed_input_image_extensions: [".png", ".jpg", ".jpeg", ".tiff", ".bmp"]
 dpi: 300
 grayscale: true
-scale: 4
+scale: 2
 languages_for_ocr: "eng+dotOCRDData1+DotMatrix_FT_500+5x5_Dots_FT_500+DisplayDots_FT_500+Dotrice_FT_500+LCDDot_FT_500+dotslayer" 
 config_for_ocr: "--oem 3 --psm 6 -c =|~`^}{[]/\\\\\\<>-#.:«»_;,+=@*$%&()! -c classify_bln_numeric_mode=1 -c tessedit_char_whitelist= ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-stop_llm: true
+stop_llm: false
 # model: "gemini-2.5-flash"
-model: "gemini-3-flash-preview"
+# model: "gemini-3-flash-preview"
+model: "gemma-3-27b-it"
 # model: "llama3.1"
 # model: "phi3" # fast but less accurate
 documents:
   CBSE_MARKSHEET:
     keywords:
       - "TOTAL IN WORDS"
+      - "TOTALINWORDS"
       - "CENTRAL"
       - "POSITIONAL"
       - "SENIOR"

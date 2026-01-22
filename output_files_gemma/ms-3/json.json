@@ -1,0 +1,66 @@
+{"board": "CBSE",
+  "studentsName": "Divanghu",
+  "rollNo": 9698157,
+  "mothersName": "Saroj Bala",
+  "fatherName": "Parveen Kumar",
+  "school": "Govt Sarvodaya Bal Vidyalaya West Patel Nagar N D",
+  "subjects": [
+    {
+      "subCode": "301",
+      "subject": "English Core",
+      "theory": 65,
+      "practical": null,
+      "total": 65,
+      "totalInWords": "Sixty Five",
+      "positionalGrade": "C2"
+    },
+    {
+      "subCode": "002",
+      "subject": "Hindi Elective",
+      "theory": 76,
+      "practical": null,
+      "total": 76,
+      "totalInWords": "Seventy Six",
+      "positionalGrade": "A2"
+    },
+    {
+      "subCode": "030",
+      "subject": "Economics",
+      "theory": 44,
+      "practical": null,
+      "total": 44,
+      "totalInWords": "Forty Four",
+      "positionalGrade": "D1"
+    },
+    {
+      "subCode": "054",
+      "subject": "Business Studies",
+      "theory": 44,
+      "practical": 15,
+      "total": 59,
+      "totalInWords": "Fifty Nine",
+      "positionalGrade": "D1"
+    },
+    {
+      "subCode": "055",
+      "subject": "Accountancy",
+      "theory": 40,
+      "practical": 16,
+      "total": 56,
+      "totalInWords": "Fifty Six",
+      "positionalGrade": "C2"
+    },
+    {
+      "subCode": "048",
+      "subject": "Physical Education",
+      "theory": 32,
+      "practical": 27,
+      "total": 59,
+      "totalInWords": "Fifty Nine",
+      "positionalGrade": "D1"
+    }
+  ],
+  "result": "Pass",
+  "date": "25-05-2018",
+  "corrected": "Corrected date format to DD-MM-YYYY, removed leading zeros from numbers, corrected subject names, corrected positional grades."
+}
