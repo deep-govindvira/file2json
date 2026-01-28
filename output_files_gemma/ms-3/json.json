@@ -1,6 +1,6 @@
 {"board": "CBSE",
-  "studentsName": "Divanghu",
-  "rollNo": 9698157,
+  "studentsName": "Divanshu",
+  "rollNo": 9696157,
   "mothersName": "Saroj Bala",
   "fatherName": "Parveen Kumar",
   "school": "Govt Sarvodaya Bal Vidyalaya West Patel Nagar N D",
@@ -11,8 +11,8 @@
       "theory": 65,
       "practical": null,
       "total": 65,
-      "totalInWords": "Sixty Five",
-      "positionalGrade": "C2"
+      "totalInWords": "sixty five",
+      "positionalGrade": "J"
     },
     {
       "subCode": "002",
@@ -20,7 +20,7 @@
       "theory": 76,
       "practical": null,
       "total": 76,
-      "totalInWords": "Seventy Six",
+      "totalInWords": "seventy six",
       "positionalGrade": "A2"
     },
     {
@@ -29,7 +29,7 @@
       "theory": 44,
       "practical": null,
       "total": 44,
-      "totalInWords": "Forty Four",
+      "totalInWords": "forty four",
       "positionalGrade": "D1"
     },
     {
@@ -38,7 +38,7 @@
       "theory": 44,
       "practical": 15,
       "total": 59,
-      "totalInWords": "Fifty Nine",
+      "totalInWords": "fifty nine",
       "positionalGrade": "D1"
     },
     {
@@ -47,7 +47,7 @@
       "theory": 40,
       "practical": 16,
       "total": 56,
-      "totalInWords": "Fifty Six",
+      "totalInWords": "fifty six",
       "positionalGrade": "C2"
     },
     {
@@ -56,11 +56,11 @@
       "theory": 32,
       "practical": 27,
       "total": 59,
-      "totalInWords": "Fifty Nine",
+      "totalInWords": "fifty nine",
       "positionalGrade": "D1"
     }
   ],
   "result": "Pass",
   "date": "25-05-2018",
-  "corrected": "Corrected date format to DD-MM-YYYY, removed leading zeros from numbers, corrected subject names, corrected positional grades."
+  "corrected": "Corrected spelling mistakes, removed leading zeros from numbers, set correct date format."
 }

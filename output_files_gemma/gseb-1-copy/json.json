@@ -1,18 +1,17 @@
-{
-  "board": "GSEB",
+{"board": "GSEB",
   "monthAndYearOfExam": "FEB-MAR-25",
   "seatNo": "B 216772",
   "centreNo": "0503",
   "schoolIndexNo": "05.0146",
   "group": "A",
-  "studentsName": "Ved Pankajbhai Prajapati",
+  "studentsName": "Prajapati Ved Pankajbhai",
   "subjects": [
     {
       "subCode": "101",
       "subject": "ENGLISH (S.L.)",
       "total": 100,
       "obtained": 81,
-      "obtainedInWords": "Zero Eight One",
+      "obtainedInWords": "Eighty One",
       "grade": "A2"
     },
     {
@@ -20,7 +19,7 @@
       "subject": "MATHEMATICS",
       "total": 100,
       "obtained": 79,
-      "obtainedInWords": "Zero Seven Nine",
+      "obtainedInWords": "Seventy Nine",
       "grade": "B1"
     },
     {
@@ -28,15 +27,15 @@
       "subject": "CHEMISTRY",
       "total": 100,
       "obtained": 78,
-      "obtainedInWords": "Zero Seven Eight",
+      "obtainedInWords": "Seventy Eight",
       "grade": "B1"
     },
     {
       "subCode": "053",
-      "subject": "CHEMISTRY PRACT.)",
+      "subject": "CHEMISTRY PRACT.",
       "total": 50,
       "obtained": 43,
-      "obtainedInWords": "Zero Four Three",
+      "obtainedInWords": "Forty Three",
       "grade": "A2"
     },
     {
@@ -44,7 +43,7 @@
       "subject": "PHYSICS",
       "total": 100,
       "obtained": 73,
-      "obtainedInWords": "Zero Seven Three",
+      "obtainedInWords": "Seventy Three",
       "grade": "B1"
     },
     {
@@ -52,7 +51,7 @@
       "subject": "PHYSICS PRACT.",
       "total": 50,
       "obtained": 38,
-      "obtainedInWords": "Zero Three Eight",
+      "obtainedInWords": "Thirty Eight",
       "grade": "B1"
     },
     {
@@ -60,7 +59,7 @@
       "subject": "COMPUTER",
       "total": 100,
       "obtained": 84,
-      "obtainedInWords": "Zero Eight Four",
+      "obtainedInWords": "Eighty Four",
       "grade": "A2"
     },
     {
@@ -68,14 +67,14 @@
       "subject": "COMPUTER PRACT.",
       "total": 50,
       "obtained": 50,
-      "obtainedInWords": "Zero Five Zero",
+      "obtainedInWords": "Fifty Zero",
       "grade": "A1"
     }
   ],
   "total": 500,
   "obtained": 426,
-  "obtainedInWords": "Five Hundred Twenty Six Only",
-  "date": "23-05-2004",
+  "obtainedInWords": "Five Hundred Twenty Six",
+  "date": "28-05-2004",
   "result": "Pass",
-  "corrected": "Corrected spelling mistakes in student's name and subject names. Corrected subject codes to be 3 digits. Removed leading zeros from numbers. Corrected total marks to 500. Added missing subject codes."
+  "corrected": "Corrected student's name, subject codes, total marks, and removed leading zeros from numbers."
 }

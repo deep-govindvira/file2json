@@ -1,0 +1,40 @@
+{
+  "board": "CBSE",
+  "studentsName": "Anshika Anandkumar Patel",
+  "rollNo": 11631467,
+  "mothersName": "Kinnari Patel",
+  "fatherName": "Anandkumar Patel",
+  "school": "Saraswati International School",
+  "subjects": [
+    {
+      "subCode": "101",
+      "subject": "English Core",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": null,
+      "positionalGrade": "A2"
+    },
+    {
+      "subCode": "102",
+      "subject": "Computer Science",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": null,
+      "positionalGrade": null
+    },
+    {
+      "subCode": "103",
+      "subject": "Health & Physical",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": null,
+      "positionalGrade": null
+    }
+  ],
+  "result": null,
+  "date": null,
+  "corrected": "No corrections made"
+}

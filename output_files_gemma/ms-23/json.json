@@ -1,1 +1,93 @@
-{"board": "CBSE", "studentsName": "TANMAY RAJ", "rollNo": 7637490, "mothersName": "MANJU DEVI", "fatherName": "VINAY KUMAR", "school": "MODEL SCHOOL DALMIA NAGAR ROHTAS BIHAR", "subjects": [{"subCode": "301", "subject": "ENGLISH CORE", "theory": 64, "practical": null, "total": 64, "totalInWords": "SIXTY FOUR", "positionalGrade": "C2"}, {"subCode": "322", "subject": "SANSKRIT CORE", "theory": 50, "practical": null, "total": 50, "totalInWords": "FIFTY", "positionalGrade": "C1"}, {"subCode": "041", "subject": "MATHEMATICS", "theory": 35, "practical": null, "total": 35, "totalInWords": "THIRTY FIVE", "positionalGrade": "D2"}, {"subCode": "042", "subject": "Physics", "theory": 33, "practical": 29, "total": 62, "totalInWords": "SIXTY TWO", "positionalGrade": "C2"}, {"subCode": "048", "subject": "PHYSICAL EDUCATION", "theory": 24, "practical": 29, "total": 53, "totalInWords": "FIFTY THREE", "positionalGrade": "D2"}, {"subCode": "043", "subject": "CHEMISTRY", "theory": 33, "practical": 30, "total": 63, "totalInWords": "SIXTY THREE", "positionalGrade": "C2"}], "result": "PASS", "date": "2015-00-00", "corrected": "Corrected spelling mistakes, standardized date format, corrected subject codes, and ensured correct data types."}
+{"board": "CBSE",
+  "studentsName": "Tanmay Raj",
+  "rollNo": 7637490,
+  "mothersName": "Manju Devi",
+  "fatherName": "Vinay Kumar",
+  "school": "Model School Dalmia Nagar Rohtas Bihar",
+  "subjects": [
+    {
+      "subCode": "301",
+      "subject": "English Core",
+      "theory": 64,
+      "practical": null,
+      "total": 64,
+      "totalInWords": "Sixty Four",
+      "positionalGrade": "C2"
+    },
+    {
+      "subCode": "322",
+      "subject": "Sanskrit Core",
+      "theory": 50,
+      "practical": null,
+      "total": 50,
+      "totalInWords": "Fifty",
+      "positionalGrade": "C1"
+    },
+    {
+      "subCode": "041",
+      "subject": "Mathematics",
+      "theory": 35,
+      "practical": null,
+      "total": 35,
+      "totalInWords": "Thirty Five",
+      "positionalGrade": "D2"
+    },
+    {
+      "subCode": "042",
+      "subject": "Physics",
+      "theory": 33,
+      "practical": 20,
+      "total": 62,
+      "totalInWords": "Sixty Two",
+      "positionalGrade": "C2"
+    },
+    {
+      "subCode": "048",
+      "subject": "Physical Education",
+      "theory": 24,
+      "practical": 29,
+      "total": 53,
+      "totalInWords": "Fifty Three",
+      "positionalGrade": "D2"
+    },
+    {
+      "subCode": "043",
+      "subject": "Chemistry",
+      "theory": 33,
+      "practical": 30,
+      "total": 63,
+      "totalInWords": "Sixty Three",
+      "positionalGrade": "C2"
+    },
+    {
+      "subCode": "500",
+      "subject": "Work Experience",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": null,
+      "positionalGrade": "A2"
+    },
+    {
+      "subCode": "502",
+      "subject": "Health Education",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": null,
+      "positionalGrade": "A1"
+    },
+    {
+      "subCode": "503",
+      "subject": "General Studies",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": null,
+      "positionalGrade": "A2"
+    }
+  ],
+  "result": "Pass",
+  "date": "25-05-2015",
+  "corrected": "Corrected spelling mistakes, standardized subject codes to 3 digits, corrected date format, and handled missing practical marks."
+}

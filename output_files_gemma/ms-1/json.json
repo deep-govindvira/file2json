@@ -1,5 +1,5 @@
 {"board": "CBSE",
-  "studentsName": "Man Prachi Dua",
+  "studentsName": "Prachi Dua",
   "rollNo": 2212787,
   "mothersName": "Kiran Dua",
   "fatherName": "Kanwal Dua",
@@ -52,6 +52,6 @@
     }
   ],
   "result": "Pass",
-  "date": "23-03-2004",
-  "corrected": "Corrected student name, mother's name, father's name, school name, subject names, subject codes, total marks based on total in words, and date format."
+  "date": "23-05-2004",
+  "corrected": "Corrected spelling mistakes, removed leading zeros from numbers, set total based on totalInWords, added missing subject codes."
 }

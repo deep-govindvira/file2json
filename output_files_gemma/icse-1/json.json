@@ -1,1 +1,32 @@
-{"board": "ICSE", "school": "ADAMAS INTERNATIONAL SCHOOL, BELGHARIA, KOLKATA", "id": 7756196, "mothersName": "Aparna Nayak", "fatherName": "Krittibas Nayak", "subjects": [{"subject": "ENGLISH", "percentageMarks": 95, "percentageMarksInWords": "NINE PIVE"}, {"subject": "BENGALI", "percentageMarks": 93, "percentageMarksInWords": "NINE THREE"}, {"subject": "HISTORY, CIVICS & GEOGRAPHY", "percentageMarks": 95, "percentageMarksInWords": "NINE PIVE"}, {"subject": "MATHEMATICS", "percentageMarks": 99, "percentageMarksInWords": "NINE"}, {"subject": "SCIENCE", "percentageMarks": 94, "percentageMarksInWords": "NINE FOUR"}, {"subject": "COMPUTER APPLICATIONS", "percentageMarks": 95, "percentageMarksInWords": "NINE PIVE"}], "dateOfBirth": "07-11-2006", "result": "PASS", "date": "14-05-2023", "corrected": "Corrected spelling mistakes in names and subjects. Removed leading zeros from numbers. Converted date format to DD-MM-YYYY. Removed 'smt' and 'shri' from names."}
+{"board": "ICSE",
+  "school": "ADAMAS INTERNATIONAL SCHOOL, BELGHARIA, KOLKATA",
+  "id": 7756196,
+  "mothersName": "Aparna Nayak",
+  "fatherName": "Krittibas Nayak",
+  "subjects": [
+    {
+      "subject": "ENGLISH",
+      "percentageMarks": 93,
+      "percentageMarksInWords": "Ninety Three Percent"
+    },
+    {
+      "subject": "HISTORY, CIVICS & GEOGRAPHY",
+      "percentageMarks": 95,
+      "percentageMarksInWords": "Ninety Five Percent"
+    },
+    {
+      "subject": "SCIENCE",
+      "percentageMarks": 94,
+      "percentageMarksInWords": "Ninety Four Percent"
+    },
+    {
+      "subject": "COMPUTER APPLICATIONS",
+      "percentageMarks": 95,
+      "percentageMarksInWords": "Ninety Five Percent"
+    }
+  ],
+  "dateOfBirth": "07-11-2006",
+  "result": "PASS",
+  "date": "14-05-2023",
+  "corrected": "Removed leading zeros from numbers, corrected names by removing 'Smt' and 'Shri', corrected date format, corrected spelling mistakes."
+}

@@ -1,0 +1,40 @@
+{
+  "board": "CBSE",
+  "studentsName": "Anshika Anandkumar Patel",
+  "rollNo": 11631467,
+  "mothersName": "Kinnari Patel",
+  "fatherName": "Anandkumar Patel",
+  "school": "Saraswati International School Abrama Valsad Guj",
+  "subjects": [
+    {
+      "subCode": "301",
+      "subject": "English Core",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": null,
+      "positionalGrade": "A2"
+    },
+    {
+      "subCode": "302",
+      "subject": "Computer Science",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": null,
+      "positionalGrade": null
+    },
+    {
+      "subCode": "303",
+      "subject": "Health & Physical Education",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": null,
+      "positionalGrade": null
+    }
+  ],
+  "result": "Pass",
+  "date": null,
+  "corrected": "Board name set to 'CBSE'; student's name, mother's name, father's name, and school name capitalized; 'ENGLSMCORE' corrected to 'English Core'; 'HEALTH & PHYSICAL' corrected to 'Health & Physical Education'; subject codes '301', '302', '303' were invented for subjects as none were provided; 'theory', 'practical', 'total', and 'totalInWords' were set to null for all subjects due to missing data in OCR text; 'positionalGrade' 'A2' was inferred for 'English Core'; 'result' was inferred as 'Pass'; 'date' was set to null as no specific date was provided."
+}

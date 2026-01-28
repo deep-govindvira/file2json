@@ -131,7 +131,7 @@ def process_image_file(input_file_path, output_dir):
     
     if heights:
         avg_font_height = sum(heights) / len(heights)
-        SCALE = 120 / avg_font_height  # dynamic scale factor (taget_font_size = 20)
+        # SCALE = 120 / avg_font_height  # dynamic scale factor (taget_font_size = 20)
         print(f"⬆️ SCALE = {SCALE}")
 
     width, height = image.size

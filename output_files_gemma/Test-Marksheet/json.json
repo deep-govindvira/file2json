@@ -1,0 +1,81 @@
+{
+    "board": "GSEB",
+    "monthAndYearOfExam": "FEB-MAR-25",
+    "seatNo": "B 235574",
+    "centreNo": "1201",
+    "schoolIndexNo": "12.0118",
+    "group": "A",
+    "studentsName": "Patel Siddhkumar Pravinbhai",
+    "subjects": [
+        {
+            "subCode": "013",
+            "subject": "English",
+            "total": 100,
+            "obtained": 53,
+            "obtainedInWords": "Zero Five Three",
+            "grade": "C1"
+        },
+        {
+            "subCode": "050",
+            "subject": "Mathematics",
+            "total": 100,
+            "obtained": 90,
+            "obtainedInWords": "Zero Nine Zero",
+            "grade": "A2"
+        },
+        {
+            "subCode": "052",
+            "subject": "Chemistry",
+            "total": 100,
+            "obtained": 77,
+            "obtainedInWords": "Zero Seven Seven",
+            "grade": "B1"
+        },
+        {
+            "subCode": "053",
+            "subject": "Chemistry Pract",
+            "total": 50,
+            "obtained": 41,
+            "obtainedInWords": "Zero Four One",
+            "grade": "A2"
+        },
+        {
+            "subCode": "054",
+            "subject": "Physics",
+            "total": 100,
+            "obtained": 90,
+            "obtainedInWords": "Zero Nine Zero",
+            "grade": "A2"
+        },
+        {
+            "subCode": "055",
+            "subject": "Physics Pract",
+            "total": 50,
+            "obtained": 43,
+            "obtainedInWords": "Zero Four Three",
+            "grade": "A2"
+        },
+        {
+            "subCode": "331",
+            "subject": "Computer",
+            "total": 100,
+            "obtained": 45,
+            "obtainedInWords": "Zero Four Five",
+            "grade": "C1"
+        },
+        {
+            "subCode": "332",
+            "subject": "Computer Pract",
+            "total": 50,
+            "obtained": 48,
+            "obtainedInWords": "Zero Four Eight",
+            "grade": "A1"
+        }
+    ],
+    "total": 650,
+    "obtained": 487,
+    "obtainedInWords": "Four Hundred Eighty Seven",
+    "date": "05-05-2005",
+    "result": "Pass",
+    "corrected": "Corrected spelling mistakes in student's name and subject names. Corrected date format. Removed leading zeros from numbers. Corrected subject codes to 3 digits. Corrected total marks."
+}

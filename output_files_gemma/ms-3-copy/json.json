@@ -1,7 +1,7 @@
 {"board": "CBSE",
-  "studentsName": "DIVANSHL",
-  "rollNo": 9698157,
-  "mothersName": "SARGJ BALA",
+  "studentsName": "Divansu",
+  "rollNo": 9696157,
+  "mothersName": "S4R0.J BALA",
   "fatherName": "PARVEEN KUMAR",
   "school": "GOVT SARVODAYA BAL VIDYALAYA WEST PATEL NGR N D",
   "subjects": [
@@ -12,7 +12,7 @@
       "practical": null,
       "total": 65,
       "totalInWords": "SIXTY FIVE",
-      "positionalGrade": "C2"
+      "positionalGrade": "E2"
     },
     {
       "subCode": "002",
@@ -42,7 +42,7 @@
       "positionalGrade": "D1"
     },
     {
-      "subCode": "055",
+      "subCode": "056",
       "subject": "ACCOUNTANCY",
       "theory": 40,
       "practical": 16,
@@ -57,10 +57,10 @@
       "practical": 27,
       "total": 59,
       "totalInWords": "FIFTY NINE",
-      "positionalGrade": "D1"
+      "positionalGrade": "B1"
     }
   ],
   "result": "PASS",
-  "date": "26-05-2018",
-  "corrected": "Corrected spelling mistakes, removed leading zeros from numbers, corrected subject codes, and set total based on totalInWords."
+  "date": "22-05-2015",
+  "corrected": "Corrected spelling mistakes, removed leading zeros from numbers, set date format to DD-MM-YYYY, corrected total based on totalInWords."
 }

@@ -2,8 +2,8 @@
   "studentsName": "Abhinav Biswas",
   "rollNo": 552695,
   "mothersName": "Aparna Biswas",
-  "fatherName": "Arunamoy Biswas",
-  "school": "Army School Barrackpore Cantt 24 Parganas WB",
+  "fatherName": "Karunamoy Biswas",
+  "school": "Army School Barrackpore Cantt",
   "subjects": [
     {
       "subCode": "301",
@@ -62,5 +62,5 @@
   ],
   "result": "Pass",
   "date": "23-05-2008",
-  "corrected": "Corrected spelling mistakes, removed leading zeros from numbers, corrected subject codes, and ensured date format is DD-MM-YYYY."
+  "corrected": "Corrected spelling mistakes, standardized subject codes to 3 digits, corrected date format, removed leading zeros from numbers, and ensured total is consistent with theory and practical marks."
 }

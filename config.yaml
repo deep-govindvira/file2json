@@ -1,4 +1,4 @@
-input_path: "input_files" # file or folder path
+input_path: "input_files/class12.pdf" # file or folder path
 output_path: "output_files_gemma"
 allowed_input_image_extensions: [".png", ".jpg", ".jpeg", ".tiff", ".bmp"]
 dpi: 300
@@ -10,6 +10,7 @@ stop_llm: false
 # model: "gemini-2.5-flash"
 # model: "gemini-3-flash-preview"
 model: "gemma-3-27b-it"
+# model: "gemma3:27b"
 # model: "llama3.1"
 # model: "phi3" # fast but less accurate
 documents:

@@ -9,10 +9,10 @@
   "subjects": [
     {
       "subCode": "013",
-      "subject": "English (S. Ll.)",
+      "subject": "English (S.L.)",
       "total": 100,
       "obtained": 85,
-      "obtainedInWords": "Zero Eighty Five",
+      "obtainedInWords": "Zero Eight Five",
       "grade": "A2"
     },
     {
@@ -29,7 +29,7 @@
       "total": 100,
       "obtained": 68,
       "obtainedInWords": "Zero Six Eight",
-      "grade": "9"
+      "grade": "C1"
     },
     {
       "subCode": "053",
@@ -37,7 +37,7 @@
       "total": 50,
       "obtained": 46,
       "obtainedInWords": "Zero Four Six",
-      "grade": "1"
+      "grade": "D"
     },
     {
       "subCode": "054",
@@ -61,7 +61,7 @@
       "total": 100,
       "obtained": 54,
       "obtainedInWords": "Zero Five Four",
-      "grade": "41"
+      "grade": "C1"
     },
     {
       "subCode": "332",
@@ -69,13 +69,13 @@
       "total": 50,
       "obtained": 46,
       "obtainedInWords": "Zero Four Six",
-      "grade": "6"
+      "grade": "D"
     }
   ],
-  "total": 352,
+  "total": 350,
   "obtained": 464,
   "obtainedInWords": "Four Hundred Sixty Four Only",
-  "date": "05-05-2025",
-  "result": "E. Q. C.",
-  "corrected": "Corrected seatNo, schoolIndexNo, studentsName, subject names, subject codes, grades, total and obtained marks. Corrected date format."
+  "date": "23-05-2004",
+  "result": "Pass",
+  "corrected": "Corrected seatNo, schoolIndexNo, subjects codes, subject names, obtained values based on obtainedInWords, grades, total and obtained values."
 }

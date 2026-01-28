@@ -3,7 +3,7 @@
   "rollNo": 1694051,
   "mothersName": "Alka Singh Chauhan",
   "fatherName": "Ranveer Singh Chauhan",
-  "school": "Satya Prakash Public School, Jabalpur",
+  "school": "Ay Prakash Pub Scm Pol1Pather Jabalpur MP",
   "subjects": [
     {
       "subCode": "301",
@@ -26,7 +26,7 @@
     {
       "subCode": "048",
       "subject": "Physical Education",
-      "theory": 55,
+      "theory": 5,
       "practical": 30,
       "total": 85,
       "totalInWords": "Eighty Five",
@@ -61,7 +61,7 @@
     },
     {
       "subCode": "502",
-      "subject": "Physical & Health Education",
+      "subject": "Phy & Health Educa",
       "theory": null,
       "practical": null,
       "total": null,

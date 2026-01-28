@@ -1,9 +1,9 @@
 {"board": "CBSE",
-  "studentsName": "Anit Singh",
-  "rollNo": 2962392,
+  "studentsName": "Amit Singh",
+  "rollNo": 2062392,
   "mothersName": "Maya Devi",
   "fatherName": "Chain Singh",
-  "school": "4851 Moti R Arya Model School Sector 27A Chandigarh",
+  "school": "Moti Ram Arya S S Model School Sector 27A Chandigarh",
   "subjects": [
     {
       "subCode": "301",
@@ -61,7 +61,7 @@
     },
     {
       "subCode": "502",
-      "subject": "Phy & Health Educa",
+      "subject": "Physical & Health Education",
       "theory": null,
       "practical": null,
       "total": null,
@@ -80,5 +80,5 @@
   ],
   "result": "Pass",
   "date": "23-05-2006",
-  "corrected": "Corrected student name to Anit Singh, school name, subject names, and added missing practical marks where possible. Corrected date format."
+  "corrected": "Corrected spelling mistakes in student's name, mother's name, father's name, school name and subject names. Corrected subject codes to be 3 digits. Added missing subjects. Corrected date format."
 }
