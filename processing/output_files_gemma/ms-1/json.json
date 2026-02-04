@@ -1,0 +1,57 @@
+{"board": "CBSE",
+  "studentsName": "Man Prachi Dua",
+  "rollNo": 2212787,
+  "mothersName": "Kiran Dua",
+  "fatherName": "Kanwal Dua",
+  "school": "Pathania Public School Rohtak Haryana",
+  "subjects": [
+    {
+      "subCode": "301",
+      "subject": "English Core",
+      "theory": 88,
+      "practical": null,
+      "total": 88,
+      "totalInWords": "Eighty Eight",
+      "positionalGrade": null
+    },
+    {
+      "subCode": "030",
+      "subject": "Economics",
+      "theory": 87,
+      "practical": null,
+      "total": 87,
+      "totalInWords": "Eighty Seven",
+      "positionalGrade": null
+    },
+    {
+      "subCode": "048",
+      "subject": "Physical Education",
+      "theory": 26,
+      "practical": 58,
+      "total": 84,
+      "totalInWords": "Eighty Four",
+      "positionalGrade": null
+    },
+    {
+      "subCode": "054",
+      "subject": "Business Studies",
+      "theory": 83,
+      "practical": null,
+      "total": 83,
+      "totalInWords": "Eighty Three",
+      "positionalGrade": null
+    },
+    {
+      "subCode": "055",
+      "subject": "Accountancy",
+      "theory": 68,
+      "practical": 20,
+      "total": 88,
+      "totalInWords": "Eighty Eight",
+      "positionalGrade": null
+    }
+  ],
+  "result": "Pass",
+  "date": "23-03-2004",
+  "corrected": "Corrected student name, mother's name, father's name, school name, subject names, subject codes, totals based on totalInWords, and date format."
+}

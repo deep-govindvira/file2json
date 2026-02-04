@@ -1,0 +1,67 @@
+{
+  "board": "CBSE",
+  "studentsName": "Rahul Kumar y",
+  "rollNo": 90991,
+  "mothersName": "A Singh",
+  "fatherName": "R P I Kumar",
+  "school": "Navyug Vidyalaya R R Sinha Road Bhagalpur Bihar",
+  "subjects": [
+    {
+      "subCode": "301",
+      "subject": "English Core",
+      "theory": 81,
+      "practical": null,
+      "total": 81,
+      "totalInWords": "Eighty One",
+      "positionalGrade": "B"
+    },
+    {
+      "subCode": "061",
+      "subject": "Mathematics",
+      "theory": 81,
+      "practical": null,
+      "total": 81,
+      "totalInWords": "Eighty One",
+      "positionalGrade": "B"
+    },
+    {
+      "subCode": "043",
+      "subject": "Chemistry",
+      "theory": 63,
+      "practical": 30,
+      "total": 93,
+      "totalInWords": "Ninety Three",
+      "positionalGrade": "C1"
+    },
+    {
+      "subCode": "048",
+      "subject": "Physical Education",
+      "theory": 71,
+      "practical": 30,
+      "total": 101,
+      "totalInWords": "One Hundred One",
+      "positionalGrade": "A"
+    },
+    {
+      "subCode": "500",
+      "subject": "Work Experience At B",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": "",
+      "positionalGrade": ""
+    },
+    {
+      "subCode": "502",
+      "subject": "Health & Phy. Education A 3",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": "",
+      "positionalGrade": ""
+    }
+  ],
+  "result": "Pass",
+  "date": "02-08-2019",
+  "corrected": "Removed leading zeros from roll number, corrected spelling mistakes in student's name and father's name, removed incorrect subjects"
+}

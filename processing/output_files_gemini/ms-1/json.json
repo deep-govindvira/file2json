@@ -1,0 +1,85 @@
+{
+  "board": "CBSE",
+  "studentsName": "Prachi Dua",
+  "rollNo": 2212787,
+  "mothersName": "KIRAN DUA",
+  "fatherName": "KANWAL DUA",
+  "school": "PATHANIA PUBLIC SCHOOL ROHTAK HARYANA",
+  "subjects": [
+    {
+      "subCode": "301",
+      "subject": "ENGLISH CORE",
+      "theory": 88,
+      "practical": null,
+      "total": 88,
+      "totalInWords": "EIGHTY EIGHT",
+      "positionalGrade": null
+    },
+    {
+      "subCode": "030",
+      "subject": "ECONOMICS",
+      "theory": 87,
+      "practical": null,
+      "total": 87,
+      "totalInWords": "EIGHTY SEVEN",
+      "positionalGrade": null
+    },
+    {
+      "subCode": "048",
+      "subject": "PHYSICAL EDUCATION",
+      "theory": 26,
+      "practical": 58,
+      "total": 84,
+      "totalInWords": "EIGHTY FOUR",
+      "positionalGrade": null
+    },
+    {
+      "subCode": "054",
+      "subject": "BUSINESS STUDIES",
+      "theory": 83,
+      "practical": null,
+      "total": 83,
+      "totalInWords": "EIGHTY THREE",
+      "positionalGrade": null
+    },
+    {
+      "subCode": "055",
+      "subject": "ACCOUNTANCY",
+      "theory": 68,
+      "practical": 20,
+      "total": 88,
+      "totalInWords": "EIGHTY EIGHT",
+      "positionalGrade": null
+    },
+    {
+      "subCode": "500",
+      "subject": "WORK EXPERIENCE",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": null,
+      "positionalGrade": null
+    },
+    {
+      "subCode": "502",
+      "subject": "PHYSICAL & HEALTH EDUCATION",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": null,
+      "positionalGrade": null
+    },
+    {
+      "subCode": "503",
+      "subject": "GENERAL STUDIES",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": null,
+      "positionalGrade": null
+    }
+  ],
+  "result": "Pass",
+  "date": "23-03-2004",
+  "corrected": "Student's name 'PRACMI DUA' corrected to 'Prachi Dua'. Subject code '0SS' for ACCOUNTANCY corrected to '055'. Subject code 'S00' for WORK EXPERIENCE corrected to '500'. Subject code 'S02' for 'PHY % HEALTH EDUCA' corrected to '502'. Subject name 'PHY % HEALTH EDUCA' corrected to 'PHYSICAL & HEALTH EDUCATION'. Board name 'CENTRAL BOARD OF SECONDARY EDUCATION' standardized to 'CBSE'. Result 'PASS' standardized to 'Pass'. Date '23032004' formatted to '23-03-2004'. Positional grades were set to null for all subjects as they were not present in the OCR text. Marks (theory, practical, total, totalInWords) were set to null for 'WORK EXPERIENCE', 'PHYSICAL & HEALTH EDUCATION', and 'GENERAL STUDIES' as they were not present in the OCR text."
+}

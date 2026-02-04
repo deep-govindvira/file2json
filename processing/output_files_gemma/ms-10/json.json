@@ -1,0 +1,84 @@
+{"board": "CBSE",
+  "studentsName": "Nikhil Mohanan",
+  "rollNo": 4229599,
+  "mothersName": "Sheela Mohanan",
+  "fatherName": "Mohanan C M",
+  "school": "Chinmaya Vidyalaya Cannanore Kerala",
+  "subjects": [
+    {
+      "subCode": "301",
+      "subject": "English Core",
+      "theory": 87,
+      "practical": null,
+      "total": 87,
+      "totalInWords": "Eighty Seven",
+      "positionalGrade": "A1"
+    },
+    {
+      "subCode": "041",
+      "subject": "Mathematics",
+      "theory": 68,
+      "practical": null,
+      "total": 68,
+      "totalInWords": "Sixty Eight",
+      "positionalGrade": "B2"
+    },
+    {
+      "subCode": "042",
+      "subject": "Physics",
+      "theory": 56,
+      "practical": 0,
+      "total": 86,
+      "totalInWords": "Eighty Six",
+      "positionalGrade": "A1"
+    },
+    {
+      "subCode": "043",
+      "subject": "Chemistry",
+      "theory": 87,
+      "practical": null,
+      "total": 87,
+      "totalInWords": "Eighty Seven",
+      "positionalGrade": "A1"
+    },
+    {
+      "subCode": "044",
+      "subject": "Biology",
+      "theory": 56,
+      "practical": 0,
+      "total": 88,
+      "totalInWords": "Eighty Eight",
+      "positionalGrade": "A1"
+    },
+    {
+      "subCode": "500",
+      "subject": "Work Experience",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": null,
+      "positionalGrade": "A1"
+    },
+    {
+      "subCode": "502",
+      "subject": "Phy & Health Educa",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": null,
+      "positionalGrade": "B2"
+    },
+    {
+      "subCode": "503",
+      "subject": "General Studies",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": null,
+      "positionalGrade": "A1"
+    }
+  ],
+  "result": "Pass",
+  "date": "21-05-2008",
+  "corrected": "Corrected spelling mistakes, formatted date, corrected subject codes, and added missing null values."
+}

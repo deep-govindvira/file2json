@@ -1,0 +1,94 @@
+{
+  "board": "CBSE",
+  "studentsName": "ABHINAV BISWAS",
+  "rollNo": 565495,
+  "mothersName": null,
+  "fatherName": "KARUNAMOY BISWAS",
+  "school": "ARMY SCHOOL BARRACKPORE CANTT, 24 PARGANAS, WB",
+  "subjects": [
+    {
+      "subCode": "301",
+      "subject": "ENGLISH CORE",
+      "theory": 87,
+      "practical": null,
+      "total": 87,
+      "totalInWords": "EIGHTY SEVEN",
+      "positionalGrade": "A1"
+    },
+    {
+      "subCode": "041",
+      "subject": "MATHEMATICS",
+      "theory": 93,
+      "practical": null,
+      "total": 95,
+      "totalInWords": "NINETY FIVE",
+      "positionalGrade": "A1"
+    },
+    {
+      "subCode": "042",
+      "subject": "PHYSICS",
+      "theory": 58,
+      "practical": 30,
+      "total": 88,
+      "totalInWords": "EIGHTY EIGHT",
+      "positionalGrade": "A1"
+    },
+    {
+      "subCode": "043",
+      "subject": "CHEMISTRY",
+      "theory": 66,
+      "practical": 29,
+      "total": 95,
+      "totalInWords": "NINETY FIVE",
+      "positionalGrade": "A1"
+    },
+    {
+      "subCode": "083",
+      "subject": "COMPUTER SCIENCE",
+      "theory": 62,
+      "practical": 30,
+      "total": 92,
+      "totalInWords": "NINETY TWO",
+      "positionalGrade": "A1"
+    },
+    {
+      "subCode": "048",
+      "subject": "PHYSICAL EDUCATION",
+      "theory": 65,
+      "practical": 23,
+      "total": 88,
+      "totalInWords": "EIGHTY EIGHT",
+      "positionalGrade": "A1"
+    },
+    {
+      "subCode": "500",
+      "subject": "WORK EXPERIENCE",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": null,
+      "positionalGrade": "B1"
+    },
+    {
+      "subCode": "502",
+      "subject": "PHYSICAL & HEALTH EDUCATION",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": null,
+      "positionalGrade": "A1"
+    },
+    {
+      "subCode": "503",
+      "subject": "GENERAL STUDIES",
+      "theory": null,
+      "practical": null,
+      "total": null,
+      "totalInWords": null,
+      "positionalGrade": "A2"
+    }
+  ],
+  "result": "PASS",
+  "date": "23-05-2008",
+  "corrected": "Board name mapped to 'CBSE'. Student's Name corrected from 'ABMINAV BISWAS' to 'ABHINAV BISWAS'. Roll No '5.65495' converted to 565495. Mother's Name identified as missing and set to null. School Name cleaned from '468 ARMY SCHOOL BARRACKPORE CANTT 24 PARGANAS WB' to 'ARMY SCHOOL BARRACKPORE CANTT, 24 PARGANAS, WB'. For ENGLISH CORE, 'ENGL ISH CORE' corrected to 'ENGLISH CORE'. For MATHEMATICS, total '0985' corrected to 95 based on 'NINETY FIVE'. For CHEMISTRY, total '9095' corrected to 95 based on 'NINETY FIVE'. For COMPUTER SCIENCE, total 'O92' corrected to 92. For PHYSICAL EDUCATION, total '19088' corrected to 88. For WORK EXPERIENCE, PHY & HEALTH EDUCA, GENERAL STUDIES, theory, practical, total, and totalInWords were set to null as they were not provided. For PHY & HEALTH EDUCA, subject name corrected to 'PHYSICAL & HEALTH EDUCATION'. For GENERAL STUDIES, subCode 'S03' corrected to '503'. All numbers had leading zeros removed. Result extracted as 'PASS'."
+}
