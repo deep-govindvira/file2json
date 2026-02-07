@@ -53,5 +53,5 @@
   ],
   "result": "Pass",
   "date": "23-03-2004",
-  "corrected": "Corrected student name, mother's name, father's name, school name, subject names, subject codes, totals based on totalInWords, and date format."
+  "corrected": "Corrected student name, mother's name, father's name, school name, subject names, subject codes, totals based on total in words, and date format."
 }

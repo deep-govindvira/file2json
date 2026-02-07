@@ -8,6 +8,8 @@ import yaml, pdf2image, pytesseract, os, ollama, PIL, PIL.ImageFilter, time, dot
 from google import genai
 from pathlib import Path
 
+from fastapi.concurrency import run_in_threadpool
+
 with open("config.yaml", "r") as file:
     cfg = yaml.safe_load(file) or {}
 
@@ -275,5 +277,6 @@ async def process_path(data: PathRequest):
     if not os.path.exists(file_path):
         return {"error": "File not found"}
 
-    json_output = process_file(file_path)
+    # json_output = process_file(file_path)
+    json_output = await run_in_threadpool(process_file, file_path)
     return json.loads(json_output)
