@@ -19,12 +19,13 @@ public class JobServiceImpl implements JobService {
     private final AppProps props;
 
     @Override
-    public CreateJobResponse addJobToUser(String userId) {
+    public CreateJobResponse addJobToUser(String userId, CreateJobRequest request) {
         User user = userService.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        Job job = Job.builder().user(user).build();
+        Job job = JobConverter.toJob(request);
+        job.setUser(user);
         Job savedJob = repository.save(job);
-        createFolderForJob(job);
+        createFolderForJob(savedJob);
         return JobConverter.toCreateJobResponse(savedJob);
     }
 
@@ -36,8 +37,8 @@ public class JobServiceImpl implements JobService {
     private void createFolderForJob(Job job) {
         Path folderPath = Paths.get(
                 props.getUploadPath(),
-                job.getUser().getFolderPath(),
-                job.getFolderPath()
+                job.getUser().getId(),
+                job.getId()
         );
 
         try {

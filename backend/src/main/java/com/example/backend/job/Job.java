@@ -4,10 +4,7 @@ import com.example.backend.Status;
 import com.example.backend.marksheet.Marksheet;
 import com.example.backend.user.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +20,7 @@ public class Job {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(nullable = false, unique = true)
-    private String folderPath;
+    private String name;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
@@ -32,16 +28,11 @@ public class Job {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @ToString.Exclude
     private User user;
 
     @OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
+    @ToString.Exclude
     private List<Marksheet> marksheets = new ArrayList<>();
-
-    @PrePersist
-    public void prePersist() {
-        if (folderPath == null) {
-            folderPath = java.util.UUID.randomUUID().toString();
-        }
-    }
 }

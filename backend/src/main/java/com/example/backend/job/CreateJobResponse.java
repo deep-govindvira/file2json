@@ -8,5 +8,6 @@ import lombok.Data;
 @Builder
 public class CreateJobResponse {
     private String id;
+    private String name;
     private Status status;
 }

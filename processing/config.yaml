@@ -102,7 +102,7 @@ documents:
       
       Input formate will be similar to:
       Board Name,
-      Month and Year of Exam, Seat No, Centre No, School Index No, Group,
+      Month and Year of Exam, Seat No, Centre No, School Index No, GroupName,
       Student's Name,
       Subject Code, Subject, Total, Obtained, Obtained in words, Grade
       Total, Obtained, Date
@@ -116,9 +116,9 @@ documents:
         "seatNo": "B 216772",
         "centreNo": "0503",
         "schoolIndexNo": "05.0146",
-        "group": "A",
-        "studentsName": "Rahul Sharma",
-        "subjects": [
+        "groupName": "A",
+        "studentName": "Rahul Sharma",
+        "gsebSubjects": [
           {
             "subCode": "101",
             "subject": "Mathematics",

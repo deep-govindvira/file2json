@@ -5,7 +5,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 @Slf4j
@@ -23,17 +25,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public CreateUserResponse createUser(CreateUserRequest request) {
         User user = UserConverter.toUser(request);
-        repository.save(user);
-        createFolderForUser(user);
-        return UserConverter.toCreateUserResponse(user);
+        User savedUser = repository.save(user);
+        createFolderForUser(savedUser);
+        return UserConverter.toCreateUserResponse(savedUser);
     }
 
     private void createFolderForUser(User user) {
-        File newFolder = new File(props.getUploadPath(), user.getFolderPath());
-        if (!newFolder.exists()) {
-            if (!newFolder.mkdirs()) {
-                throw new RuntimeException("Failed to create folder for user: " + newFolder.getAbsolutePath());
-            }
-        } else throw new RuntimeException("Failed to create folder for user: " + newFolder.getAbsolutePath());
+        Path newFolder = Paths.get(
+                props.getUploadPath(),
+                user.getId()
+        );
+
+        try {
+            Files.createDirectories(newFolder);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to create folder for job: " + newFolder);
+        }
     }
 }

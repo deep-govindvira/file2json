@@ -8,7 +8,6 @@ import lombok.Data;
 public class CreateUserResponse {
     private String id;
     private String name;
-    private String folderPath;
     private String email;
 }
 

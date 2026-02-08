@@ -21,7 +21,15 @@ public class MarksheetController {
     public ResponseEntity<List<SaveMarksheetResponse>> saveMarksheets(
             @PathVariable String userId, @PathVariable String jobId,
             @RequestParam("files") @NotEmpty(message = "Files must not be empty") List<MultipartFile> files) {
+        log.info("files: ", files);
         List<SaveMarksheetResponse> responses = marksheetService.saveMarksheets(userId, jobId, files);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responses);
+    }
+
+    @PostMapping("/process")
+    public ResponseEntity<List<ProcessMarksheetResponse>> processMarksheets(
+            @PathVariable String userId, @PathVariable String jobId) {
+        List<ProcessMarksheetResponse> responses = marksheetService.processMarksheets(userId, jobId);
         return ResponseEntity.status(HttpStatus.CREATED).body(responses);
     }
 }

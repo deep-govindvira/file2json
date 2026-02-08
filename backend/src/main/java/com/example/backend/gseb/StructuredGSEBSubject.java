@@ -1,13 +1,13 @@
-package com.example.backend.gseb.subject;
+package com.example.backend.gseb;
 
 import lombok.Data;
 
 @Data
-public class GsebSubjectResponse {
+public class StructuredGSEBSubject {
     private String subCode;
     private String subject;
-    private Integer total;
-    private Integer obtained;
+    private int total;
+    private int obtained;
     private String obtainedInWords;
     private String grade;
 }

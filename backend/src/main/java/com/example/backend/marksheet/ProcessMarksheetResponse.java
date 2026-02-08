@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class SaveMarksheetResponse {
+public class ProcessMarksheetResponse {
     private String id;
     private String name;
     private Status status;

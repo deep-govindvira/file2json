@@ -34,3 +34,4 @@ server:
   port: ${SERVER_PORT}
 
 upload-path: ${UPLOAD_PATH}
+process-api-url: ${PROCESS_API_URL}

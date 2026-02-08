@@ -11,6 +11,7 @@ public class AppProps {
     private Spring spring;
     private Server server;
     private String uploadPath;
+    private String processApiUrl;
 
     @Data
     public static class Spring {

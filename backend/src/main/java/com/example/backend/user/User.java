@@ -2,10 +2,7 @@ package com.example.backend.user;
 
 import com.example.backend.job.Job;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +18,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(nullable = false, unique = true)
-    private String folderPath;
-
     @Column(nullable = false)
     private String name;
 
@@ -34,13 +28,7 @@ public class User {
     private String email;
 
     @Builder.Default
+    @ToString.Exclude
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Job> jobs = new ArrayList<>();
-
-    @PrePersist
-    public void prePersist() {
-        if (folderPath == null) {
-            folderPath = java.util.UUID.randomUUID().toString();
-        }
-    }
 }

@@ -3,10 +3,7 @@ package com.example.backend.marksheet;
 import com.example.backend.Status;
 import com.example.backend.job.Job;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "marksheets")
@@ -19,11 +16,11 @@ public class Marksheet {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    private String filePath;
+    private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Builder.Default
-    private Board board = Board.UNKNOWN;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "board_id", referencedColumnName = "id", unique = true)
+    private Board board;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
@@ -31,10 +28,13 @@ public class Marksheet {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_id", nullable = false)
+    @ToString.Exclude
     private Job job;
 
-//    @OneToOne(mappedBy = "marksheet", cascade = CascadeType.ALL)
-//    private GsebMarksheet gseb;
+//    @OneToOne(mappedBy = "gseb", cascade = CascadeType.ALL)
+//    @ToString.Exclude
+//    private GSEB gseb;
+
 //
 //    @OneToOne(mappedBy = "marksheet", cascade = CascadeType.ALL)
 //    private CbseMarksheet cbse;

@@ -4,7 +4,15 @@ public class MarksheetConverter {
     public static SaveMarksheetResponse toCreateMarksheetResponse(Marksheet marksheet) {
         return SaveMarksheetResponse.builder()
                 .id(marksheet.getId())
-                .filePath(marksheet.getFilePath())
+                .name(marksheet.getName())
+                .status(marksheet.getStatus())
+                .build();
+    }
+
+    public static ProcessMarksheetResponse toProcessMarksheetResponse(Marksheet marksheet) {
+        return ProcessMarksheetResponse.builder()
+                .id(marksheet.getId())
+                .name(marksheet.getName())
                 .status(marksheet.getStatus())
                 .build();
     }

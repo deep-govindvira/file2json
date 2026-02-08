@@ -99,7 +99,8 @@ def generate_with_ollama(prompt):
             {"role": "system", "content": "You extract structured data and output only valid JSON."},
             {"role": "user", "content": prompt},
         ],
-        options={"temperature": 0.2},
+        # options={"temperature": 0.2},
+        options={"temperature": 2.0},
     )["message"]["content"]
 
 def generate_json(prompt, max_retries=50, retry_delay=2):
