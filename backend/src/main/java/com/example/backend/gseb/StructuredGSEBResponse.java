@@ -14,7 +14,7 @@ public class StructuredGSEBResponse {
     private String groupName;
     private String studentName;
 
-    private List<StructuredGSEBSubject> gsebSubjects;
+    private List<StructuredGSEBSubjectResponse> gsebSubjects;
 
     private int total;
     private int obtained;

@@ -6,7 +6,6 @@ import java.time.format.DateTimeFormatter;
 public class GSEBConverter {
     public static GSEB toGSEB(StructuredGSEBResponse r) {
         GSEB gseb = GSEB.builder()
-                .board(r.getBoard())
                 .monthAndYearOfExam(r.getMonthAndYearOfExam())
                 .seatNo(r.getSeatNo())
                 .centreNo(r.getCentreNo())
@@ -23,9 +22,9 @@ public class GSEBConverter {
                 .build();
 
         if (r.getGsebSubjects() != null) {
-            for (StructuredGSEBSubject s : r.getGsebSubjects()) {
+            for (StructuredGSEBSubjectResponse s : r.getGsebSubjects()) {
 
-                GSEBSubject subject = GSEBSubject.builder()
+                GSEBMark subject = GSEBMark.builder()
                         .subCode(s.getSubCode())
                         .subject(s.getSubject())
                         .total(s.getTotal())
@@ -35,7 +34,7 @@ public class GSEBConverter {
                         .gseb(gseb) // IMPORTANT (owning side)
                         .build();
 
-                gseb.getGsebSubjects().add(subject);
+                gseb.getGsebMarks().add(subject);
             }
         }
 

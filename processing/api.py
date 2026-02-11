@@ -243,7 +243,7 @@ def process():
 # MAIN PROCESSING LOGIC
 # =========================
 
-# process()
+process()
 
 app = FastAPI()
 
@@ -279,5 +279,5 @@ async def process_path(data: PathRequest):
         return {"error": "File not found"}
 
     # json_output = process_file(file_path)
-    json_output = await run_in_threadpool(process_file, file_path)
+    json_output = await run_in_threadpool(process_file, file_path) # multithreading
     return json.loads(json_output)

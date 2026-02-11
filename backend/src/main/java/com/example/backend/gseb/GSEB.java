@@ -1,9 +1,11 @@
 package com.example.backend.gseb;
 
-import com.example.backend.marksheet.Board;
-import com.example.backend.marksheet.Marksheet;
+import com.example.backend.marksheet.MarksheetInfo;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -11,15 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "gseb")
+@Table(name = "gseb_marksheets")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@DiscriminatorValue("GSEB")
-public class GSEB extends Board {
-    private String board;
+//@DiscriminatorValue("GSEB")
+public class GSEB extends MarksheetInfo {
+    //    private String board;
     private String monthAndYearOfExam;
     private String seatNo;
     private String centreNo;
@@ -35,13 +37,8 @@ public class GSEB extends Board {
     private String result;
     private String corrected;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "marksheet_id", unique = true)
-    @ToString.Exclude
-    private Marksheet marksheet;
-
     @OneToMany(mappedBy = "gseb", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     @ToString.Exclude
-    private List<GSEBSubject> gsebSubjects = new ArrayList<>();
+    private List<GSEBMark> gsebMarks = new ArrayList<>();
 }

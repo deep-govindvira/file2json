@@ -1,7 +1,6 @@
 package com.example.backend.job;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +12,6 @@ public class JobController {
 
     @PostMapping
     public ResponseEntity<CreateJobResponse> addJobToUser(@PathVariable String userId, @RequestBody CreateJobRequest request) {
-        CreateJobResponse response = service.addJobToUser(userId, request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return service.addJobToUser(userId, request);
     }
 }

@@ -12,6 +12,7 @@ public class AppProps {
     private Server server;
     private String uploadPath;
     private String processApiUrl;
+    private String noOfThreads;
 
     @Data
     public static class Spring {

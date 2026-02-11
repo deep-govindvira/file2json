@@ -1,6 +1,6 @@
 package com.example.backend.marksheet;
 
-import com.example.backend.Status;
+import com.example.backend.enums.Status;
 import lombok.Builder;
 import lombok.Data;
 

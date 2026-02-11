@@ -1,6 +1,6 @@
 package com.example.backend.job;
 
-import com.example.backend.Status;
+import com.example.backend.enums.Status;
 import com.example.backend.marksheet.Marksheet;
 import com.example.backend.user.User;
 import jakarta.persistence.*;
@@ -18,12 +18,15 @@ import java.util.List;
 public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "job_id")
     private String id;
 
+    @Column(name = "job_name")
     private String name;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
+    @Column(name = "job_status")
     private Status status = Status.UNPROCESSED;
 
     @ManyToOne(fetch = FetchType.LAZY)

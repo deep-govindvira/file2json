@@ -16,9 +16,10 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "user_id")
     private String id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "user_name")
     private String name;
 
     @Column(nullable = false)

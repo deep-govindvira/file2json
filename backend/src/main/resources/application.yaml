@@ -35,3 +35,4 @@ server:
 
 upload-path: ${UPLOAD_PATH}
 process-api-url: ${PROCESS_API_URL}
+no_of_threads: ${NO_OF_THREADS}

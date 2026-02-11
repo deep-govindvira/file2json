@@ -1,4 +1,4 @@
-input_path: "input_files" # file or folder path
+input_path: "input_files/icse-1.png" # file or folder path
 output_path: "output_files_gemma"
 allowed_input_image_extensions: [".png", ".jpg", ".jpeg", ".tiff", ".bmp"]
 dpi: 300
@@ -40,12 +40,12 @@ documents:
       JSON SCHEMA (DO NOT CHANGE KEYS):
       {
         "board": "CBSE",
-        "studentsName": "Rahul Sharma",
+        "studentName": "Rahul Sharma",
         "rollNo": 2212787,
-        "mothersName": "Sunita Sharma",
+        "motherName": "Sunita Sharma",
         "fatherName": "Anil Sharma",
         "school": "Greenwood High School",
-        "subjects": [
+        "cbseSubjects": [
           {
             "subCode": "101",
             "subject": "Mathematics",
@@ -178,8 +178,9 @@ documents:
       
       Input formate will be similar to:
       Board Name,
+      Name,
       School Name,
-      Id,
+      Unique Id,
       Mother's Name, 
       Father's Name,
       Subject, Percentage Marks, Percentage Marks in words,
@@ -193,8 +194,9 @@ documents:
       {
         "board": "ICSE",
         "school": "St. Mary's High School",
-        "id": 7756196,
-        "mothersName": "Sunita Sharma",
+        "studentName": "Rahul Sharma",
+        "uniqueId": 7756196,
+        "motherName": "Sunita Sharma",
         "fatherName": "Anil Sharma",
         "subjects": [
           {

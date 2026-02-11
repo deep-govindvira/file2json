@@ -3,6 +3,8 @@ package com.example.backend.user;
 import com.example.backend.config.AppProps;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.Files;
@@ -23,11 +25,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public CreateUserResponse createUser(CreateUserRequest request) {
+    public ResponseEntity<CreateUserResponse> createUser(CreateUserRequest request) {
         User user = UserConverter.toUser(request);
         User savedUser = repository.save(user);
         createFolderForUser(savedUser);
-        return UserConverter.toCreateUserResponse(savedUser);
+        CreateUserResponse response = UserConverter.toCreateUserResponse(savedUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     private void createFolderForUser(User user) {

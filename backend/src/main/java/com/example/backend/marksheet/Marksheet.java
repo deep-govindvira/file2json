@@ -1,6 +1,6 @@
 package com.example.backend.marksheet;
 
-import com.example.backend.Status;
+import com.example.backend.enums.Status;
 import com.example.backend.job.Job;
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,13 +14,13 @@ import lombok.*;
 public class Marksheet {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private String marksheet_id;
 
     private String name;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "board_id", referencedColumnName = "id", unique = true)
-    private Board board;
+    @JoinColumn(name = "marksheet_info_id", referencedColumnName = "marksheet_info_id", unique = true)
+    private MarksheetInfo marksheetInfo;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default

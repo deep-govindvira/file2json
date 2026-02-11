@@ -1,10 +1,10 @@
 {"board": "CBSE",
-  "studentsName": "Man Prachi Dua",
+  "studentName": "Man Prachi Dua",
   "rollNo": 2212787,
-  "mothersName": "Kiran Dua",
+  "motherName": "Kiran Dua",
   "fatherName": "Kanwal Dua",
   "school": "Pathania Public School Rohtak Haryana",
-  "subjects": [
+  "cbseSubjects": [
     {
       "subCode": "301",
       "subject": "English Core",
@@ -53,5 +53,5 @@
   ],
   "result": "Pass",
   "date": "23-03-2004",
-  "corrected": "Corrected student name, mother's name, father's name, school name, subject names, subject codes, totals based on total in words, and date format."
+  "corrected": "Corrected student name, mother name, father name, school name, subject names, subject codes, and date format. Removed unnecessary characters and corrected total values based on 'totalInWords'. Removed subjects with missing data."
 }
