@@ -243,7 +243,7 @@ def process():
 # MAIN PROCESSING LOGIC
 # =========================
 
-process()
+# process()
 
 app = FastAPI()
 

@@ -1,45 +1,86 @@
 package com.example.backend.marksheet;
 
-import com.example.backend.enums.Status;
-import com.example.backend.job.Job;
+import com.example.backend.Audit;
+import com.example.backend.board.Board;
+import com.example.backend.marksheet_summary.MarksheetSummary;
+import com.example.backend.project.Project;
+import com.example.backend.user.User;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "marksheets")
+@Table(name = "student_marksheets")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Marksheet {
+public class Marksheet extends Audit {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String marksheet_id;
+    @Column(name = "id")
+    private String id;
 
-    private String name;
+    @Column(name = "student_name")
+    private String studentName;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "marksheet_info_id", referencedColumnName = "marksheet_info_id", unique = true)
-    private MarksheetInfo marksheetInfo;
+    @Column(name = "father_name")
+    private String fatherName;
 
-    @Enumerated(EnumType.STRING)
+    @Column(name = "mother_name")
+    private String motherName;
+
+    @Column(name = "url")
+    private String url;
+
     @Builder.Default
-    private Status status = Status.UNPROCESSED;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "processing_status")
+    private ProcessingStatus processingStatus = ProcessingStatus.UNPROCESSED;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "job_id", nullable = false)
-    @ToString.Exclude
-    private Job job;
+    @Column(name = "processing_started_at")
+    private LocalDateTime processingStartedAt;
 
-//    @OneToOne(mappedBy = "gseb", cascade = CascadeType.ALL)
-//    @ToString.Exclude
-//    private GSEB gseb;
+    @Column(name = "processing_duration")
+    private Long processingDuration;
 
-//
-//    @OneToOne(mappedBy = "marksheet", cascade = CascadeType.ALL)
-//    private CbseMarksheet cbse;
-//
-//    @OneToOne(mappedBy = "marksheet", cascade = CascadeType.ALL)
-//    private IcseMarksheet icse;
+    @Column(name = "seat_no")
+    private String seatNo;
+
+    @Column(name = "school_centre_no")
+    private String schoolCentreNo;
+
+    @Column(name = "school_index_no")
+    private String schoolIndexNo;
+
+    @Column(name = "group_name")
+    private String group;
+
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    @Column(name = "verification_status")
+    private VerificationStatus verificationStatus = VerificationStatus.UNVERIFIED;
+
+    @Column(name = "year")
+    private Long year;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "exam_boards_id")
+    private Board board;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "marksheet_summary_id", referencedColumnName = "id")
+    private MarksheetSummary marksheetSummary;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "verified_by_users_id", referencedColumnName = "id")
+    private User verifiedByUser;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "marksheet_processing_projects_id")
+    private Project project;
 }
-

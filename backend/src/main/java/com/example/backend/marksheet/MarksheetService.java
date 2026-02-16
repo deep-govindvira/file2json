@@ -1,13 +1,13 @@
 package com.example.backend.marksheet;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface MarksheetService {
+    List<ProcessMarksheetResponse> processMarksheets(String userId, String projectId);
 
-    ResponseEntity<List<SaveMarksheetResponse>> saveMarksheets(String userId, String jobId, List<MultipartFile> files);
+    ProcessMarksheetResponse processMarksheet(String userId, String projectId, String marksheetId);
 
-    ResponseEntity<List<ProcessMarksheetResponse>> processMarksheets(String userId, String jobId);
+    List<UploadMarksheetResponse> storeMarksheets(String userId, String projectId, List<MultipartFile> files);
 }

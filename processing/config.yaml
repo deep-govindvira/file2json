@@ -1,5 +1,5 @@
 input_path: "input_files/icse-1.png" # file or folder path
-output_path: "output_files_gemma"
+output_path: "output_files"
 allowed_input_image_extensions: [".png", ".jpg", ".jpeg", ".tiff", ".bmp"]
 dpi: 300
 grayscale: true
@@ -45,7 +45,7 @@ documents:
         "motherName": "Sunita Sharma",
         "fatherName": "Anil Sharma",
         "school": "Greenwood High School",
-        "cbseSubjects": [
+        "marks": [
           {
             "subCode": "101",
             "subject": "Mathematics",
@@ -105,9 +105,9 @@ documents:
       Month and Year of Exam, Seat No, Centre No, School Index No, GroupName,
       Student's Name,
       Subject Code, Subject, Total, Obtained, Obtained in words, Grade
-      Total, Obtained, Date
-      Obtained in words
-      Result
+      Total, Obtained, overAllGrade, Date
+      Obtained in words,
+      sciencePercentileRank, Result
 
       JSON SCHEMA (DO NOT CHANGE KEYS):
       {
@@ -118,7 +118,7 @@ documents:
         "schoolIndexNo": "05.0146",
         "groupName": "A",
         "studentName": "Rahul Sharma",
-        "gsebSubjects": [
+        "marks": [
           {
             "subCode": "101",
             "subject": "Mathematics",
@@ -139,7 +139,9 @@ documents:
         "total": 200,
         "obtained": 175,
         "obtainedInWords": "One Hundred Seventy Five",
+        "overAllGrade": "A1",
         "date": "23-05-2004",
+        "sciencePercentileRank": 95.49,
         "result": "Pass",
         "corrected": ""
       }
@@ -178,7 +180,7 @@ documents:
       
       Input formate will be similar to:
       Board Name,
-      Name,
+      Student Name,
       School Name,
       Unique Id,
       Mother's Name, 
@@ -193,12 +195,12 @@ documents:
       JSON SCHEMA (DO NOT CHANGE KEYS):
       {
         "board": "ICSE",
-        "school": "St. Mary's High School",
         "studentName": "Rahul Sharma",
+        "school": "St. Mary's High School",
         "uniqueId": 7756196,
         "motherName": "Sunita Sharma",
         "fatherName": "Anil Sharma",
-        "subjects": [
+        "marks": [
           {
             "subject": "Mathematics",
             "percentageMarks": 80,

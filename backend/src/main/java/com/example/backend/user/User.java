@@ -1,35 +1,36 @@
 package com.example.backend.user;
 
-import com.example.backend.job.Job;
+import com.example.backend.Audit;
 import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "users")
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class User {
+@AllArgsConstructor
+@Builder
+public class User extends Audit {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "user_id")
     private String id;
 
-    @Column(nullable = false, name = "user_name")
+    @Column(name = "user_name")
     private String name;
 
-    @Column(nullable = false)
-    private String password; // hashed password
-
-    @Column(unique = true, nullable = false)
+    @Column(name = "email", unique = true)
     private String email;
 
-    @Builder.Default
-    @ToString.Exclude
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Job> jobs = new ArrayList<>();
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "department")
+    private String department;
+
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<UserProject> projects = new ArrayList<>();
 }

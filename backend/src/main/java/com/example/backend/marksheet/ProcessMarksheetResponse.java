@@ -1,13 +1,17 @@
 package com.example.backend.marksheet;
 
-import com.example.backend.enums.Status;
 import lombok.Builder;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Data
 @Builder
 public class ProcessMarksheetResponse {
-    private String id;
-    private String name;
-    private Status status;
+    private String marksheetId;
+    private String marksheetUrl;
+    private ProcessingStatus processingStatus;
+    private LocalDateTime processingStartedAt;
+    private VerificationStatus verificationStatus;
+    private Long year;
 }

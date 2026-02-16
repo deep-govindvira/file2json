@@ -1,48 +1,42 @@
 package com.example.backend.user;
 
-import com.example.backend.config.AppProps;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+
     private final UserRepository repository;
-    private final AppProps props;
+    private final UserConverter converter;
 
     @Override
-    public Optional<User> findById(String id) {
-        return repository.findById(id);
+    public List<User> saveAll(List<User> userList) {
+        return repository.saveAll(userList);
     }
 
     @Override
-    public ResponseEntity<CreateUserResponse> createUser(CreateUserRequest request) {
-        User user = UserConverter.toUser(request);
-        User savedUser = repository.save(user);
-        createFolderForUser(savedUser);
-        CreateUserResponse response = UserConverter.toCreateUserResponse(savedUser);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    public Optional<User> findById(String userId) {
+        return repository.findById(userId);
     }
 
-    private void createFolderForUser(User user) {
-        Path newFolder = Paths.get(
-                props.getUploadPath(),
-                user.getId()
-        );
+    @Override
+    public RegisterUserResponse registerUser(RegisterUserRequest request) {
+        User user = converter.user(request);
+        User saved = repository.save(user);
+        return converter.registerUserResponse(saved);
+    }
 
-        try {
-            Files.createDirectories(newFolder);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to create folder for job: " + newFolder);
+    @Override
+    public LoginUserResponse loginUser(LoginUserRequest request) {
+        User user = converter.user(request);
+        User existingUser = repository.findByEmail(user.getEmail()).orElseThrow();
+        if (!existingUser.getPassword().equals(user.getPassword())) {
+            throw new RuntimeException("User not found");
         }
+        return converter.loginUserResponse(existingUser);
     }
 }

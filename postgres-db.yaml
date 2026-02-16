@@ -19,9 +19,30 @@ services:
     container_name: adminer
     ports:
       - "8081:8080"
+    depends_on:
+      - postgres
     restart: unless-stopped
+
+  # ER diagram generator (CLI only)
+  schemaspy:
+    image: schemaspy/schemaspy:latest
+    container_name: schemaspy
+    command: >
+      -t pgsql
+      -host postgres
+      -port 5432
+      -db postgres
+      -u postgres
+      -p postgres
+    volumes:
+      - ./er-output:/output
+    depends_on:
+      - postgres
+    profiles:
+      - er
 
 volumes:
   postgres_data:
 
 # docker-compose -f postgres-db.yaml -p postgres-db up -d
+# docker compose -f postgres-db.yaml -p postgres-db --profile er run --rm schemaspy

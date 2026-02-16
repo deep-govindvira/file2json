@@ -10,7 +10,9 @@ spring:
       enabled: ${SPRING_THREADS_VIRTUAL_ENABLED}
 
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
+    host: ${SPRING_DATASOURCE_HOST}
+    port: ${SPRING_DATASOURCE_PORT}
+    name: ${SPRING_DATASOURCE_NAME}
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
@@ -36,3 +38,4 @@ server:
 upload-path: ${UPLOAD_PATH}
 process-api-url: ${PROCESS_API_URL}
 no_of_threads: ${NO_OF_THREADS}
+
