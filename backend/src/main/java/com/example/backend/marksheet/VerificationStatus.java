@@ -4,6 +4,5 @@ public enum VerificationStatus {
     UNVERIFIED,
     IN_PROGRESS,
     VERIFIED,
-    CANCELLED,
-    ON_HOLD
+    CANCELLED
 }

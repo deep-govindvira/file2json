@@ -1,5 +1,6 @@
 package com.example.backend.icse;
 
+import com.example.backend.Correction;
 import lombok.Data;
 
 import java.util.List;
@@ -16,5 +17,6 @@ public class IcseResponse {
     private String dateOfBirth;
     private String result;
     private String date;
-    private String corrected;
+    private List<Correction> corrected;
+
 }

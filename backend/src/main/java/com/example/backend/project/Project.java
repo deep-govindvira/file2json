@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Table(name = "marksheet_processing_projects")
 @Data
@@ -25,11 +23,12 @@ public class Project extends Audit {
     @Column(name = "project_description")
     private String description = "";
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "project_status")
-    private ProjectStatus status = ProjectStatus.NOT_STARTED;
+    private ProjectStatus status = ProjectStatus.UNPROCESSED;
 
-    @Column(name = "project_status_updated_at")
-    private LocalDateTime statusUpdatedAt = LocalDateTime.now();
+//    @Column(name = "project_status_updated_at")
+//    private LocalDateTime statusUpdatedAt = LocalDateTime.now();
 
     @Column(name = "project_processing_duration")
     private Long processingDuration;
@@ -39,6 +38,9 @@ public class Project extends Audit {
 
     @Column(name = "processed_marksheets")
     private Integer processedMarksheets = 0;
+
+    @Column(name = "processing_failed_marksheets")
+    private Integer processingFailedMarksheets = 0;
 
     @Column(name = "total_marksheets")
     private Integer totalMarksheets = 0;

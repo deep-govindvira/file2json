@@ -1,6 +1,7 @@
 package com.example.backend.user;
 
 import com.example.backend.Audit;
+import com.example.backend.auth.entity.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,6 +31,9 @@ public class User extends Audit {
 
     @Column(name = "department")
     private String department;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<UserProject> projects = new ArrayList<>();

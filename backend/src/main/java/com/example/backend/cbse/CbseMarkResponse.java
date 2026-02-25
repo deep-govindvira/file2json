@@ -1,6 +1,9 @@
 package com.example.backend.cbse;
 
+import com.example.backend.Correction;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class CbseMarkResponse {
@@ -11,4 +14,5 @@ public class CbseMarkResponse {
     private Integer total;
     private String totalInWords;
     private String positionalGrade;
+    private List<Correction> corrected;
 }

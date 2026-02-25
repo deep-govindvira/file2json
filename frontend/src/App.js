@@ -1,62 +1,62 @@
-import './App.css';
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { setupInterceptors } from "./api/authInterceptors";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-
-import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import PublicRoute from "./routes/PublicRoute";
 import Dashboard from "./pages/Dashboard";
-import RegisterForm from './pages/RegisterForm';
-import PublicRoute from './routes/PublicRoute';
-import ProtectedRoute from './routes/ProtectedRoute';
-import LoginForm from './pages/LoginForm';
-import { useSelector } from 'react-redux';
-import CreateProjectForm from './pages/CreateProjectForm';
+import { useEffect } from "react";
+import CreateProject from "./pages/CreateProject";
+import ProtectedLayout from "./components/ProtectedLayout";
+import ViewProject from "./components/ViewProject";
+import ViewMarksheet from "./pages/ViewMarksheet";
+import EditProject from "./pages/EditProject";
 
 function App() {
-    const userId = useSelector((state) => state.userId.value);
-      const isAuthenticated = !!userId;
+
+  useEffect(() => {
+    setupInterceptors();
+  });
 
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
 
+        {/* Public Routes */}
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
         <Route
           path="/register"
           element={
-            <PublicRoute isAuthenticated={isAuthenticated}>
-              <RegisterForm />
+            <PublicRoute>
+              <Register />
             </PublicRoute>
           }
         />
 
-         <Route
-          path="/login"
-          element={
-            <PublicRoute isAuthenticated={isAuthenticated}>
-              <LoginForm />
-            </PublicRoute>
-          }
-        />
+        {/* Protected Layout Wrapper */}
+        <Route element={<ProtectedLayout />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/create-project" element={<CreateProject />} />
+          <Route path="/project/:id/view" element={<ViewProject />} />
+          <Route path="/project/:id/edit" element={<EditProject />} />
+          <Route
+            path="/project/:projectId/marksheet/:marksheetId/view"
+            element={<ViewMarksheet />}
+          />
+        </Route>
 
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
+        {/* Default Redirect */}
+        <Route path="*" element={<Navigate to="/dashboard" />} />
 
-        <Route
-          path="/create-project"
-          element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <CreateProjectForm />
-            </ProtectedRoute>
-          }
-        />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 

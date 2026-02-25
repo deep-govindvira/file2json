@@ -1,5 +1,6 @@
 package com.example.backend.gseb;
 
+import com.example.backend.Correction;
 import lombok.Data;
 
 import java.util.List;
@@ -23,5 +24,5 @@ public class GsebResponse {
     private String date;
     private Double sciencePercentileRank;
     private String result;
-    private String corrected;
+    private List<Correction> corrected;
 }

@@ -1,5 +1,6 @@
 package com.example.backend.cbse;
 
+import com.example.backend.Correction;
 import lombok.Data;
 
 import java.util.List;
@@ -15,5 +16,5 @@ public class CbseResponse {
     private List<CbseMarkResponse> marks;
     private String result;
     private String date;
-    private String corrected;
+    private List<Correction> corrected;
 }

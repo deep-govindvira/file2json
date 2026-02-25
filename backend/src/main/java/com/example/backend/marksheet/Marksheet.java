@@ -83,4 +83,7 @@ public class Marksheet extends Audit {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "marksheet_processing_projects_id")
     private Project project;
+
+    @Column(name = "corrected", columnDefinition = "TEXT")
+    private String corrected;
 }

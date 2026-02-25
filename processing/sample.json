@@ -1,0 +1,22 @@
+[
+    {
+        "fieldName": "percentageMarks",
+        "originalValue": "095",
+        "updatedValue": 95
+    },
+    {
+        "fieldName": "percentageMarksInWords",
+        "originalValue": "NINE PIVE",
+        "updatedValue": "Nine Five Percent"
+    },
+    {
+        "fieldName": "subject",
+        "originalValue": "MATERMATICS",
+        "updatedValue": "Mathematics"
+    },
+    {
+        "fieldName": "percentageMarksInWords",
+        "originalValue": "N NINE",
+        "updatedValue": "Nine Nine Percent"
+    }
+]

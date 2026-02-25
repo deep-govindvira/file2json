@@ -1,5 +1,6 @@
 package com.example.backend;
 
+import com.example.backend.auth.entity.Role;
 import com.example.backend.board.Board;
 import com.example.backend.board.BoardService;
 import com.example.backend.config.AppProps;
@@ -10,6 +11,7 @@ import com.example.backend.user_project.UserProjectService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ public class Initializer implements CommandLineRunner {
     private final UserService userService;
     private final UserProjectService userProjectService;
     private final UserProjectRepository userProjectRepository;
+    private final PasswordEncoder encoder;
 
     @Override
     public void run(String... args) {
@@ -83,7 +86,8 @@ public class Initializer implements CommandLineRunner {
         User user = User.builder()
                 .name("Deep Govindvira")
                 .email("deepgovindvira@gmail.com")
-                .password("password")
+                .password(encoder.encode("deep"))
+                .role(Role.ADMIN)
                 .department("IT")
                 .build();
 
@@ -94,7 +98,8 @@ public class Initializer implements CommandLineRunner {
         User user = User.builder()
                 .name("Yash Gokulgandhi")
                 .email("yashgokulgandhi6@gmail.com")
-                .password("password")
+                .password(encoder.encode("yash"))
+                .role(Role.ADMIN)
                 .department("IT")
                 .build();
 

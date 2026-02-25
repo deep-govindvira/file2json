@@ -35,4 +35,13 @@ public class UserConverter {
                 .userId(user.getId())
                 .build();
     }
+
+    public GetUserResponse getUserResponse(User user) {
+        return GetUserResponse.builder()
+                .department(user.getDepartment())
+                .email(user.getEmail())
+                .name(user.getName())
+                .userId(user.getId())
+                .build();
+    }
 }

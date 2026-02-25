@@ -8,7 +8,6 @@ spring:
   threads:
     virtual:
       enabled: ${SPRING_THREADS_VIRTUAL_ENABLED}
-
   datasource:
     host: ${SPRING_DATASOURCE_HOST}
     port: ${SPRING_DATASOURCE_PORT}
@@ -16,6 +15,9 @@ spring:
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
+  jackson:
+    deserialization:
+      fail-on-null-for-primitives: false
 
   jpa:
     hibernate:
@@ -32,6 +34,11 @@ spring:
     clean-disabled: ${SPRING_FLYWAY_CLEAN_DISABLED}
     out-of-order: ${SPRING_FLYWAY_OUT_OF_ORDER}
 
+jwt:
+  secret: ${SPRING_JWT_SECRET}
+  access-expiration: ${SPRING_JWT_ACCESS_EXPIRATION}
+  refresh-expiration: ${SPRING_JWT_REFRESH_EXPIRATION}
+
 server:
   port: ${SERVER_PORT}
 
@@ -39,3 +46,4 @@ upload-path: ${UPLOAD_PATH}
 process-api-url: ${PROCESS_API_URL}
 no_of_threads: ${NO_OF_THREADS}
 
+allowed-origin: "http://localhost:3000"

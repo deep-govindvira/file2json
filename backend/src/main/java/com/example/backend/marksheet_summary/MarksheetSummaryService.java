@@ -1,5 +1,7 @@
 package com.example.backend.marksheet_summary;
 
-public interface MarksheetSummaryService {
+import org.springframework.stereotype.Service;
 
+@Service
+public class MarksheetSummaryService {
 }

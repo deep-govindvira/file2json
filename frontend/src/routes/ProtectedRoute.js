@@ -1,13 +1,14 @@
-// src/components/PublicRoute.jsx
 import { Navigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
-const ProtectedRoute = ({ isAuthenticated, children }) => {
-  if (!isAuthenticated) {
-    // If user is not authenticated, redirect to login page
-    return <Navigate to="/login" replace />;
-  }
+const ProtectedRoute = ({ children }) => {
+    const isAuthenticated = !!Cookies.get("accessToken");
 
-  return children;
+    if (!isAuthenticated) {
+        return <Navigate to="/login" replace />;
+    }
+
+    return children;
 };
 
 export default ProtectedRoute;

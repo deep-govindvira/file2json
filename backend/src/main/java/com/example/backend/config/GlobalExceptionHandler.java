@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,11 +45,21 @@ public class GlobalExceptionHandler {
     }
 
 
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<String> handleGenericException(Exception ex) {
+//        ex.printStackTrace();
+//        return ResponseEntity
+//                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                .body("Something went wrong while processing the request.");
+//    }
+
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleGenericException(Exception ex) {
-        ex.printStackTrace();
+    public ResponseEntity<?> handleException(Exception ex) {
         return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Something went wrong while processing the request.");
+                .status(HttpStatus.BAD_REQUEST)
+                .body(Map.of(
+                        "error", ex.getMessage(),
+                        "timestamp", Instant.now()
+                ));
     }
 }

@@ -1,4 +1,4 @@
-input_path: "input_files/icse-1.png" # file or folder path
+input_path: "debug_files" # file or folder path
 output_path: "output_files"
 allowed_input_image_extensions: [".png", ".jpg", ".jpeg", ".tiff", ".bmp"]
 dpi: 300
@@ -53,7 +53,8 @@ documents:
             "practical": null,
             "total": 80,
             "totalInWords": "Eighty",
-            "positionalGrade": "A1"
+            "positionalGrade": "A1",
+            "corrected": []
           },
           {
             "subCode": "102",
@@ -62,19 +63,37 @@ documents:
             "practical": 20,
             "total": 95,
             "totalInWords": "Ninety Five",
-            "positionalGrade": "A1"
+            "positionalGrade": "A1",
+            "corrected": [
+              {
+                "fieldName": "total",
+                "ocrValue": 90,
+                "correctedValue": 95
+              },
+              {
+                "fieldName": "totalInWords",
+                "ocrValue": "Ninty Five",
+                "correctedValue": "Ninety Five"
+              }
+            ]
           }
         ],
         "result": "Pass",
         "date": "23-05-2004",
-        "corrected": ""
+        "corrected": [
+          {
+            "fieldName": "studentName",
+            "ocrValue": "Rahut Sharma",
+            "correctedValue": "Rahul Sharma"
+          }
+        ]
       }
 
 
       Strict rules (must follow all):
           Set "board" to "CBSE".
-          in "corrected" field, write things you have corrected in the JSON output compared to the OCR text.
-          If no corrections were made, write "No corrections made".
+          Correct spelling, formatting, capitalization, and numeric errors to make the data meaningful.
+          Log every correction in corrected as { fieldName, ocrValue, correctedValue }.
           Subject Code is always 3 digits and dont contain alphabet.
           Grade can be A1, A2, B1, B2, C1, C2, D1, D2, E.
           date is always in DD-MM-YYYY format.
@@ -82,7 +101,6 @@ documents:
           "totalInWords" is always correct. Use it to set "total".
           If "theory" + "practical" does not equal "total", the take "theory" as "total" - "practical".
           Include all subjects from the OCR text in the JSON output. 
-          Correct spelling mistakes.
           Output ONLY valid JSON.
           No explanations, no markdown, no comments.
           No trailing commas.
@@ -125,7 +143,14 @@ documents:
             "total": 100,
             "obtained": 80,
             "obtainedInWords": "Eighty",
-            "grade": "A1"
+            "grade": "A1",
+            "corrected": [
+              {
+                "fieldName": "obtainedInWords",
+                "ocrValue": "Eigthy",
+                "correctedValue": "Eighty"
+              }
+            ]
           },
           {
             "subCode": "102",
@@ -133,7 +158,19 @@ documents:
             "total": 100,
             "obtained": 95,
             "obtainedInWords": "Ninety Five",
-            "grade": "A1"
+            "grade": "A1",
+            "corrected": [
+              {
+                "fieldName": "obtained",
+                "ocrValue": 90,
+                "correctedValue": 95
+              },
+              {
+                "fieldName": "obtainedInWords",
+                "ocrValue": "Ninty Five",
+                "correctedValue": "Ninety Five"
+              }
+            ]
           }
         ],
         "total": 200,
@@ -143,13 +180,18 @@ documents:
         "date": "23-05-2004",
         "sciencePercentileRank": 95.49,
         "result": "Pass",
-        "corrected": ""
+        "corrected": [
+          {
+            "fieldName": "studentName",
+            "ocrValue": "Rahut Sharma",
+            "correctedValue": "Rahul Sharma"
+          }
+        ]
       }
-
       Strict rules (must follow all):
           Set "board" to "GSEB".
-          in "corrected" field, write things you have corrected in the JSON output compared to the OCR text.
-          If no corrections were made, write "No corrections made".
+          Correct spelling, formatting, capitalization, and numeric errors to make the data meaningful.
+          Log every correction in corrected as { fieldName, ocrValue, correctedValue }.
           "obtainedInWords" is always correct. Use it to set the "obtained" marks field.
           The "total" in the root of the JSON should be the sum of all "total" marks from each subject in the "subjects" array.
           The "obtained" in the root of the JSON should be the sum of all "obtained" marks from each subject in the "subjects" array.
@@ -159,7 +201,6 @@ documents:
           date is always in DD-MM-YYYY format.
           Remove leading zeros from numbers.
           Include all subjects from the OCR text in the JSON output. 
-          Correct spelling mistakes.
           Output ONLY valid JSON.
           No explanations, no markdown, no comments.
           No trailing commas.
@@ -204,33 +245,52 @@ documents:
           {
             "subject": "Mathematics",
             "percentageMarks": 80,
-            "percentageMarksInWords": "Eighty Percent"
+            "percentageMarksInWords": "Eighty Percent",
+            "corrected": [
+              {
+                "fieldName": "percentageMarksInWords",
+                "ocrValue": "Eigthy Percent",
+                "correctedValue": "Eighty Percent"
+              }
+            ]
           },
           {
             "subject": "Physics",
             "percentageMarks": 95,
-            "percentageMarksInWords": "Ninety Five Percent"
+            "percentageMarksInWords": "Ninety Five Percent",
+            "corrected": [
+              {
+                "fieldName": "percentageMarksInWords",
+                "ocrValue": "Ninty Five Percent",
+                "correctedValue": "Ninety Five Percent"
+              }
+            ]
           }
         ],
         "dateOfBirth": "15-08-2006",
         "result": "Pass",
         "date": "23-05-2004",
-        "corrected": ""
+        "corrected": [
+          {
+            "fieldName": "studentName",
+            "ocrValue": "Rahut Sharma",
+            "correctedValue": "Rahul Sharma"
+          }
+        ]
       }
-
       Strict rules (must follow all):
           Set "board" to "ICSE".
           ignore sub subject names and marks.
           for example English is subject. "English Literature", "Literature in English" is sub subject.
           "History, CIVICS & Geography" is subject. "History & Civics", "Geography" are sub subjects.
-          "Science" is subject. "Physics", "Chemistry", "Biology" are sub subjects.          in "corrected" field, write things you have corrected in the JSON output compared to the OCR text.
-          If no corrections were made, write "No corrections made".
+          "Science" is subject. "Physics", "Chemistry", "Biology" are sub subjects.
+          Correct spelling, formatting, capitalization, and numeric errors to make the data meaningful.
+          Log every correction in corrected as { fieldName, ocrValue, correctedValue }.
           date is always in DD-MM-YYYY format.
           Remove leading zeros from numbers.
           Don't include "smt" and "shri" in names.
           "percentageMarksInWords" is always correct. Use it to set "percentageMarks".
           Include all subjects from the OCR text in the JSON output. 
-          Correct spelling mistakes.
           Output ONLY valid JSON.
           No explanations, no markdown, no comments.
           No trailing commas.

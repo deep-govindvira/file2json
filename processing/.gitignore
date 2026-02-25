@@ -2,6 +2,7 @@
 venv
 input_files
 debug_files
+output_files
 output_files_gemma
 output_files_gemini
 output_files_ollama

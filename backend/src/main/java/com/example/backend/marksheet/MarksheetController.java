@@ -12,32 +12,42 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/users/{userId}/projects/{projectId}/marksheets")
+@RequestMapping("/projects/{projectId}/marksheets")
 public class MarksheetController {
 
     private final MarksheetService service;
     private final AppProps props;
 
-    @PostMapping("/process/{marksheetId}")
-    public ResponseEntity<ProcessMarksheetResponse> processMarksheet(
-            @PathVariable String userId,
+    @GetMapping
+    public ResponseEntity<List<GetMarksheetResponse>> getMarksheetResponseResponseEntity(
+            @PathVariable String projectId) {
+        return ResponseEntity.ok(service.getMarksheetResponseList(projectId));
+    }
+
+    @GetMapping("/{marksheetId}")
+    public ResponseEntity<GetMarksheetResponse> getMarksheetResponseResponseEntity(
             @PathVariable String projectId,
             @PathVariable String marksheetId) {
-        ProcessMarksheetResponse response = service.processMarksheet(userId, projectId, marksheetId);
+        return ResponseEntity.ok(service.getMarksheetInfoById(projectId, marksheetId));
+    }
+
+    @PostMapping("/{marksheetId}/process")
+    public ResponseEntity<ProcessMarksheetResponse> processMarksheet(
+            @PathVariable String projectId,
+            @PathVariable String marksheetId) {
+        ProcessMarksheetResponse response = service.processMarksheet(projectId, marksheetId);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/process")
     public ResponseEntity<List<ProcessMarksheetResponse>> processMarksheets(
-            @PathVariable String userId,
             @PathVariable String projectId) {
-        List<ProcessMarksheetResponse> responseList = service.processMarksheets(userId, projectId);
+        List<ProcessMarksheetResponse> responseList = service.processMarksheets(projectId);
         return ResponseEntity.ok(responseList);
     }
 
     @PostMapping("/upload")
     public ResponseEntity<?> storeMarksheets(
-            @PathVariable String userId,
             @PathVariable String projectId,
             @RequestParam("files")
             @NotEmpty(message = "Files must not be empty")
@@ -68,7 +78,7 @@ public class MarksheetController {
         }
 
         // Proceed with storing files
-        List<UploadMarksheetResponse> responses = service.storeMarksheets(userId, projectId, files);
+        List<UploadMarksheetResponse> responses = service.storeMarksheets(projectId, files);
         return ResponseEntity.ok(responses);
     }
 
@@ -84,5 +94,5 @@ public class MarksheetController {
         }
         return Long.parseLong(size); // assume bytes if no suffix
     }
-    
+
 }

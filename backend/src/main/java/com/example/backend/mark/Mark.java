@@ -43,4 +43,7 @@ public class Mark extends Audit {
 
     @Column(name = "subject_obtained_marks_in_words")
     private String obtainedInWords;
+
+    @Column(name = "corrected", columnDefinition = "TEXT")
+    private String corrected;
 }

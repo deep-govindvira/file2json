@@ -13,13 +13,26 @@ public class AppProps {
     private String uploadPath;
     private String processApiUrl;
     private String noOfThreads;
+    private String allowedOrigin;
 
     @Data
     public static class Spring {
         private Application application;
         private Servlet servlet;
         private Threads threads;
+        private Datasource datasource;
     }
+
+    @Data
+    public static class Datasource {
+        private String host;
+        private int port;
+        private String name;
+        private String username;
+        private String password;
+        private String driverClassName;
+    }
+
 
     @Data
     public static class Application {
@@ -35,6 +48,7 @@ public class AppProps {
     public static class Multipart {
         private String maxFileSize;
         private String maxRequestSize;
+        private String maxFileCount;
     }
 
     @Data
