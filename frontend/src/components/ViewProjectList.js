@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getProjects } from "../api/projectService";
 
-const ProjectList = () => {
+const ViewProjectList = () => {
     const [projects, setProjects] = useState([]);
     const navigate = useNavigate();
 
+    // ================= FETCH PROJECTS =================
     useEffect(() => {
         const fetchProjects = async () => {
             try {
@@ -17,6 +18,44 @@ const ProjectList = () => {
         };
 
         fetchProjects();
+    }, []);
+
+    // ================= SSE PROJECT LISTENER =================
+    useEffect(() => {
+
+        const eventSource = new EventSource(
+            `${process.env.REACT_APP_SERVER_URL}/api/stream`
+        );
+
+        eventSource.addEventListener("project-status-update", (event) => {
+            const data = JSON.parse(event.data);
+
+            setProjects((prevProjects) =>
+                prevProjects.map((project) =>
+                    project.projectId === data.projectId
+                        ? {
+                              ...project,
+                              projectStatus: data.projectStatus,
+                              projectProcessingDuration:
+                                  data.projectProcessingDuration,
+                              processedMarksheets: data.processedMarksheets,
+                              processingFailedMarksheets:
+                                  data.processingFailedMarksheets,
+                              totalMarksheets: data.totalMarksheets
+                          }
+                        : project
+                )
+            );
+        });
+
+        eventSource.onerror = (error) => {
+            console.error("SSE error:", error);
+        };
+
+        return () => {
+            eventSource.close();
+        };
+
     }, []);
 
     return (
@@ -74,4 +113,4 @@ const ProjectList = () => {
     );
 };
 
-export default ProjectList;
+export default ViewProjectList;

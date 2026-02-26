@@ -36,12 +36,12 @@ public class ProjectService {
         User user = userService.findById(authService.getCurrentUserId()).orElseThrow();
         Project project = converter.project(request);
 
-        Project savedProject = repository.save(project);
+        project = repository.save(project);
 
         UserProject.builder().build();
         UserProject userProject = UserProject.builder()
                 .user(user)
-                .project(savedProject)
+                .project(project)
                 .build();
 
         UserProject savedUserProject = userProjectService.save(userProject);

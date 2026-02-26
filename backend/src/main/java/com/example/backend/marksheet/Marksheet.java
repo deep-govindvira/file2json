@@ -80,7 +80,7 @@ public class Marksheet extends Audit {
     @JoinColumn(name = "verified_by_users_id", referencedColumnName = "id")
     private User verifiedByUser;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "marksheet_processing_projects_id")
     private Project project;
 

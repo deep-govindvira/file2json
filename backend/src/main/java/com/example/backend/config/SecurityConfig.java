@@ -47,6 +47,8 @@ public class SecurityConfig {
                         .requestMatchers("/files/**").permitAll()
                         .requestMatchers("/projects/**").hasRole("ADMIN")
                         .requestMatchers("/api/stream").permitAll()  // 👈 allow SSE
+                        .requestMatchers("/api/test/marksheet").permitAll()  // 👈 allow SSE
+                        .requestMatchers("/actuator/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

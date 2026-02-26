@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import ProjectList from "../components/ProjectList";
+import ViewProjectList from "../components/ViewProjectList";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ function Dashboard() {
         </button>
       </div>
 
-      <ProjectList />
+      <ViewProjectList />
     </div>
   );
 }

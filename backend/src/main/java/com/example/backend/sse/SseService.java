@@ -1,12 +1,14 @@
 package com.example.backend.sse;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+@Slf4j
 @Service
 public class SseService {
 
@@ -14,6 +16,7 @@ public class SseService {
 
     public SseEmitter createEmitter() {
         SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
+//        SseEmitter emitter = new SseEmitter(0L);
 
         emitters.add(emitter);
 
@@ -25,6 +28,9 @@ public class SseService {
     }
 
     public void sendEvent(String eventName, Object data) {
+
+        List<SseEmitter> deadEmitters = new ArrayList<>();
+
         for (SseEmitter emitter : emitters) {
             try {
                 emitter.send(
@@ -32,10 +38,13 @@ public class SseService {
                                 .name(eventName)
                                 .data(data)
                 );
-            } catch (IOException e) {
+            } catch (Exception ex) {
+                deadEmitters.add(emitter);
                 emitter.complete();
-                emitters.remove(emitter);
             }
         }
+
+        emitters.removeAll(deadEmitters);
     }
+
 }

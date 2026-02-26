@@ -60,4 +60,11 @@ public class MarksheetConverter {
                 .yearOfPassing(summary != null ? summary.getYearOfPassing() : null)
                 .build();
     }
+
+    public GetMarksheetStatusResponse getMarksheetStatusResponse(Marksheet marksheet) {
+        return GetMarksheetStatusResponse.builder()
+                .id(marksheet.getId())
+                .processingStatus(marksheet.getProcessingStatus())
+                .build();
+    }
 }

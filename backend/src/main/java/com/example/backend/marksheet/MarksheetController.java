@@ -19,7 +19,7 @@ public class MarksheetController {
     private final AppProps props;
 
     @GetMapping
-    public ResponseEntity<List<GetMarksheetResponse>> getMarksheetResponseResponseEntity(
+    public ResponseEntity<List<GetMarksheetStatusResponse>> getMarksheetResponseResponseEntity(
             @PathVariable String projectId) {
         return ResponseEntity.ok(service.getMarksheetResponseList(projectId));
     }
