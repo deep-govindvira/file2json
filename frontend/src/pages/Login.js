@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { login } from "../api/authService";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import CenteredFullPageSpinner from "../components/CenteredFullPageSpinner";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -10,6 +12,7 @@ function Login() {
 
   const [message, setMessage] = useState(null);
   const [isError, setIsError] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   const navigate = useNavigate();
 
@@ -25,21 +28,28 @@ function Login() {
     setMessage(null);
 
     try {
+      setIsLoggingIn(true)
       await login(formData);
       setIsError(false);
       setMessage("Login successful! Redirecting...");
 
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 1000);
+      // setTimeout(() => {
+      navigate("/dashboard");
+      // }, 1000);
     } catch (error) {
       setIsError(true);
       setMessage(
         error.response?.data?.message || "Invalid email or password"
       );
+      toast.error("Unable to login");
+    } finally {
+      setIsLoggingIn(false);
     }
   };
 
+  if (isLoggingIn) {
+    return <CenteredFullPageSpinner message="Logging in, please wait..." />;
+  }
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <form
@@ -78,6 +88,7 @@ function Login() {
             type="password"
             name="password"
             placeholder="Password"
+            autoComplete="new-password"
             value={formData.password}
             onChange={handleChange}
             required

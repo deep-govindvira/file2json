@@ -1,6 +1,6 @@
 import axiosInstance from "./axiosInstance";
 
-export const uploadMarksheets = async (projectId, files) => {
+export const uploadMarksheets = async (projectId, files, setFiles) => {
     if (!files || !files.length) {
         throw new Error("No files selected for upload");
     }
@@ -29,6 +29,11 @@ export const uploadMarksheets = async (projectId, files) => {
             }
         );
 
+        setFiles((prevFiles) =>
+            prevFiles.filter((file) => !chunk.includes(file))
+        );
+
+
         allResponses.push(response.data);
     }
 
@@ -55,3 +60,8 @@ export const processById = async (projectId, marksheetId) => {
     const response = await axiosInstance.post(`/projects/${projectId}/marksheets/${marksheetId}/process`);
     return response.data;
 }
+
+export const updateMarksheet = async (projectId, marksheetId, data) => {
+    const response = await axiosInstance.put(`/projects/${projectId}/marksheets/${marksheetId}`, data);
+    return response.data;
+};

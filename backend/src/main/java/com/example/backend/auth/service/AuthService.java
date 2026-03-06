@@ -33,7 +33,7 @@ public class AuthService {
         User user = User.builder()
                 .email(request.getEmail())
                 .password(encoder.encode(request.getPassword()))
-                .role(Role.USER)
+                .role(Role.VERIFIER)
                 .build();
 
         userRepo.save(user);
@@ -96,14 +96,14 @@ public class AuthService {
 
         return userRepo.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"))
-                .getId();
+                .getId().toString();
     }
 
     public void logout(String refreshToken) {
         String userId = getCurrentUserId();
 
         RefreshToken token = refreshRepo.findByToken(refreshToken).orElseThrow();
-        if (token.getUser().getId().equals(userId)) {
+        if (token.getUser().getId().toString().equals(userId)) {
             refreshRepo.delete(token);
         } else
             throw new RuntimeException(

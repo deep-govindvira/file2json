@@ -50,18 +50,15 @@ const EditProject = () => {
     setMessage("");
 
     try {
-    //   await updateProject(id, formData);
+      await updateProject(id, formData);
       setMessage("Project updated successfully.");
-      setTimeout(() => {
-        navigate(`/project/${id}`);
-      }, 1000);
+      navigate(`/project/${id}/view`);
     } catch (error) {
       const backendMessage =
         error?.response?.data?.message ||
         error?.response?.data ||
         error?.message ||
         "Update failed.";
-
       setMessage(backendMessage);
     } finally {
       setSaving(false);
@@ -133,7 +130,7 @@ const EditProject = () => {
 
             <button
               type="button"
-              onClick={() => navigate(`/project/${id}`)}
+              onClick={() => navigate(`/project/${id}/view`)}
               className="px-4 py-2 bg-gray-500 text-white rounded"
             >
               Cancel

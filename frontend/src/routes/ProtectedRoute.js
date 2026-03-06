@@ -1,14 +1,24 @@
 import { Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { useState, useEffect } from "react";
 
 const ProtectedRoute = ({ children }) => {
-    const isAuthenticated = !!Cookies.get("accessToken");
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
 
-    if (!isAuthenticated) {
-        return <Navigate to="/login" replace />;
-    }
+  useEffect(() => {
+    const token = Cookies.get("accessToken");
+    setIsAuthenticated(!!token);
+  }, []);
 
-    return children;
+  if (isAuthenticated === null) {
+    return null; // or a loader
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
 };
 
 export default ProtectedRoute;

@@ -4,6 +4,7 @@ import jakarta.persistence.Embeddable;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 @Embeddable
 @Data
@@ -12,6 +13,6 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @Builder
 public class UserProjectId implements Serializable {
-    private String userId;
-    private String projectId;
+    private UUID userId;
+    private UUID projectId;
 }

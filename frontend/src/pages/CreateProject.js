@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createProject } from "../api/projectService";
+import BlueButton from "../components/BlueButton";
+import { toast } from "react-toastify";
+import RedButton from "../components/RedButton";
 
 function CreateProject() {
   const navigate = useNavigate();
@@ -38,7 +41,7 @@ function CreateProject() {
       const data = await createProject(payload);
 
       // Redirect to /project/{projectId}
-      navigate(`/project/${data.projectId}`);
+      navigate(`/project/${data.projectId}/view`);
 
       // Optional: reset form (not really needed since redirect happens)
       setFormData({
@@ -46,13 +49,16 @@ function CreateProject() {
         projectDescription: "",
         projectYear: "",
       });
+      toast.success("Project created successfully");
     } catch (error) {
+      toast.error("Failed to create project");
       console.error("Failed to create project", error);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md space-y-6"
@@ -69,6 +75,7 @@ function CreateProject() {
           <input
             type="text"
             name="projectName"
+            autoComplete="off"
             value={formData.projectName}
             onChange={handleChange}
             placeholder="Enter project name"
@@ -84,6 +91,7 @@ function CreateProject() {
             Project Description
           </label>
           <textarea
+            autoComplete="off"
             name="projectDescription"
             value={formData.projectDescription}
             onChange={handleChange}
@@ -108,15 +116,21 @@ function CreateProject() {
           />
         </div>
 
+        <div className="flex gap-4">
+          <BlueButton label="Create Project" extraClass="w-1/2" />
+          <RedButton label="Cancel" extraClass="w-1/2" onClick={() => navigate(`/projects`)} />
+        </div>
+
         {/* Submit Button */}
-        <button
+        {/* <button
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200 font-semibold"
         >
           Create Project
-        </button>
+        </button> */}
       </form>
     </div>
+
   );
 }
 

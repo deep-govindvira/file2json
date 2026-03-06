@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class MarksheetConverter {
     public UploadMarksheetResponse uploadMarksheetResponse(Marksheet marksheet) {
         return UploadMarksheetResponse.builder()
-                .marksheetId(marksheet.getId())
+                .marksheetId(marksheet.getId().toString())
                 .processingStatus(marksheet.getProcessingStatus())
                 .verificationStatus(marksheet.getVerificationStatus())
                 .build();
@@ -15,7 +15,7 @@ public class MarksheetConverter {
 
     public ProcessMarksheetResponse processMarksheetResponse(Marksheet marksheet) {
         return ProcessMarksheetResponse.builder()
-                .marksheetId(marksheet.getId())
+                .marksheetId(marksheet.getId().toString())
                 .marksheetUrl(marksheet.getUrl())
                 .processingStartedAt(marksheet.getProcessingStartedAt())
                 .processingStatus(marksheet.getProcessingStatus())
@@ -33,7 +33,7 @@ public class MarksheetConverter {
                 .corrected(marksheet.getCorrected())
                 .fatherName(marksheet.getFatherName())
                 .group(marksheet.getGroup())
-                .id(marksheet.getId())
+                .id(marksheet.getId().toString())
                 .motherName(marksheet.getMotherName())
                 .processingDuration(marksheet.getProcessingDuration())
                 .processingStartedAt(marksheet.getProcessingStartedAt())
@@ -62,9 +62,17 @@ public class MarksheetConverter {
     }
 
     public GetMarksheetStatusResponse getMarksheetStatusResponse(Marksheet marksheet) {
+        String email = null;
+
+        if (marksheet.getVerifiedByUser() != null) {
+            email = marksheet.getVerifiedByUser().getEmail();
+        }
+
         return GetMarksheetStatusResponse.builder()
-                .id(marksheet.getId())
+                .id(marksheet.getId().toString())
                 .processingStatus(marksheet.getProcessingStatus())
+                .verificationStatus(marksheet.getVerificationStatus())
+                .verifiedByUser(email)
                 .build();
     }
 }

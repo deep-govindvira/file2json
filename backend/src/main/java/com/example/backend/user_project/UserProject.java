@@ -10,7 +10,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "users_projects")
+@Table(
+        name = "users_projects",
+        indexes = {
+                @Index(name = "idx_users_projects_user_id", columnList = "user_id"),
+                @Index(name = "idx_users_projects_project_id", columnList = "marksheet_processing_projects_id")
+        }
+)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

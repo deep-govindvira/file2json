@@ -8,4 +8,6 @@ import lombok.Data;
 public class GetMarksheetStatusResponse {
     private String id;
     private ProcessingStatus processingStatus;
+    private VerificationStatus verificationStatus;
+    private String verifiedByUser;
 }

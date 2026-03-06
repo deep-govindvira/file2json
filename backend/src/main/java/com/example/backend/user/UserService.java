@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -18,12 +19,16 @@ public class UserService {
     private final UserConverter converter;
     private final UserProjectService userProjectService;
 
+    public User save(User user) {
+        return repository.save(user);
+    }
+
     public List<User> saveAll(List<User> userList) {
         return repository.saveAll(userList);
     }
 
     public Optional<User> findById(String userId) {
-        return repository.findById(userId);
+        return repository.findById(UUID.fromString(userId));
     }
 
     public RegisterUserResponse registerUser(RegisterUserRequest request) {

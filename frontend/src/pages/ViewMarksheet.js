@@ -1,31 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getMarksheetById } from "../api/marksheetService";
+import BlueButton from "../components/BlueButton";
 
 const ViewMarksheet = () => {
+
     const { projectId, marksheetId } = useParams();
     const [marksheet, setMarksheet] = useState(null);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const eventSource = new EventSource(`${process.env.REACT_APP_SERVER_URL}/api/stream`);
-
-        eventSource.addEventListener("marksheet-update", (event) => {
-            const parsedData = JSON.parse(event.data);
-            console.log(event.data);
-            if (parsedData.id !== parseInt(marksheetId)) return; // Only update if the incoming marksheet ID matches the current one
-
-            setMarksheet(parsedData);
-        });
-
-        eventSource.onerror = (error) => {
-            console.error("SSE Error:", error);
-            eventSource.close();
-        };
-
-        return () => eventSource.close();
-    }, [marksheetId]);
-
 
     useEffect(() => {
         const fetchMarksheet = async () => {
@@ -48,29 +30,72 @@ const ViewMarksheet = () => {
 
     return (
         <div className="p-8 bg-gray-100 min-h-screen">
-            <div className="mb-6">
-                <button
+            <div className="mb-6 flex items-center justify-between">
+                <BlueButton
+                    label="← Back To Project"
                     onClick={() => navigate(`/project/${projectId}/view`)}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg shadow"
-                >
-                    ← Go To Project
-                </button>
+                />
+
+                <BlueButton
+                    label="Edit"
+                    onClick={() =>
+                        navigate(`/project/${projectId}/marksheet/${marksheetId}/edit`)
+                    }
+                />
             </div>
             <div className="bg-white rounded-xl shadow-xl p-8 flex gap-10">
 
                 {/* LEFT SIDE - IMAGE */}
-                <div className="w-1/2">
+                {/* <div className="w-1/2">
                     <img
                         src={`${process.env.REACT_APP_SERVER_URL}/files/${marksheet.url?.split("/").pop()}`}
                         alt="marksheet"
                         className="w-full border rounded-lg shadow-lg"
                     />
+                </div> */}
+                {/* <div className="w-1/2">
+                    <embed
+                        src={`${process.env.REACT_APP_SERVER_URL}/files/${marksheet.url?.split("/").pop()}`}
+                        type="application/pdf"
+                        className="w-full h-[600px]"
+                    />
+                </div> */}
+                {/* <div className="w-1/2">
+                    <iframe
+                        src={`${process.env.REACT_APP_SERVER_URL}/files/${marksheet.url?.split("/").pop()}`}
+                        className="w-full h-[600px] border rounded-lg shadow-lg"
+                        title="marksheet"
+                    />
+                </div> */}
+
+                <div className="w-1/2">
+                    {`${process.env.REACT_APP_SERVER_URL}/files/${marksheet.url?.split("/").pop()}`.endsWith(".pdf") ? (
+                        <iframe
+                            src={`${process.env.REACT_APP_SERVER_URL}/files/${marksheet.url?.split("/").pop()}`}
+                            className="w-full h-full border rounded-lg shadow-lg"
+                            title="pdf"
+                        />
+                    ) : (
+                        <img
+                            src={`${process.env.REACT_APP_SERVER_URL}/files/${marksheet.url?.split("/").pop()}`}
+                            alt="file"
+                            className="w-full border rounded-lg shadow-lg"
+                        />
+                    )}
                 </div>
 
-                {/* RIGHT SIDE - COMPLETE DETAILS */}
-                <div className="w-1/2 space-y-8 text-base">
+                {/* <div className="w-1/2">
+                    <iframe
+                        src={`${process.env.REACT_APP_SERVER_URL}/files/${marksheet.url
+                            ?.split("/")
+                            .pop()}`}
+                        className="w-full h-full border rounded"
+                        title="file"
+                    />
+                </div> */}
 
-                    {/* ================= STUDENT DETAILS ================= */}
+                {/* RIGHT SIDE - COMPLETE DETAILS */}
+                <div className="w-1/2 space-y-8 text-base h-screen overflow-y-auto">                    {/* ================= STUDENT DETAILS ================= */}
                     <div>
                         {/* <h2 className="text-2xl font-bold mb-4">Student Details</h2> */}
                         <div className="grid grid-cols-2 gap-3">

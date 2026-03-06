@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,6 +18,14 @@ public class MarksheetController {
 
     private final MarksheetService service;
     private final AppProps props;
+
+    @PutMapping("/{marksheetId}")
+    public void updateMarksheet(
+            @PathVariable String projectId,
+            @PathVariable String marksheetId,
+            @RequestBody UpdateMarksheetRequest request) {
+        service.updateMarksheet(UUID.fromString(projectId), UUID.fromString(marksheetId), request);
+    }
 
     @GetMapping
     public ResponseEntity<List<GetMarksheetStatusResponse>> getMarksheetResponseResponseEntity(

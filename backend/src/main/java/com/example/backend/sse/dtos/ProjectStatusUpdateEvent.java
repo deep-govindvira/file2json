@@ -1,11 +1,11 @@
 package com.example.backend.sse.dtos;
 
 import com.example.backend.project.ProjectStatus;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 
-@Getter
-@AllArgsConstructor
+@Data
+@Builder
 public class ProjectStatusUpdateEvent {
     private String projectId;
     private ProjectStatus projectStatus;

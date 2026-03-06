@@ -12,9 +12,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
-@Table(name = "student_marksheets")
+@Table(name = "student_marksheets",
+        indexes = {
+                @Index(
+                        name = "idx_marksheet_project_id",
+                        columnList = "marksheet_processing_projects_id"
+                ),
+                @Index(
+                        name = "idx_marksheet_project_status",
+                        columnList = "marksheet_processing_projects_id, processing_status"
+                )
+        }
+)
 @Data
 @Builder
 @NoArgsConstructor
@@ -23,7 +35,7 @@ public class Marksheet extends Audit {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private String id;
+    private UUID id;
 
     @Column(name = "student_name")
     private String studentName;
@@ -68,20 +80,20 @@ public class Marksheet extends Audit {
     @Column(name = "year")
     private Long year;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "exam_boards_id")
     private Board board;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "marksheet_summary_id", referencedColumnName = "id")
     private MarksheetSummary marksheetSummary;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "verified_by_users_id", referencedColumnName = "id")
     private User verifiedByUser;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "marksheet_processing_projects_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "marksheet_processing_projects_id", nullable = false)
     private Project project;
 
     @Column(name = "corrected", columnDefinition = "TEXT")

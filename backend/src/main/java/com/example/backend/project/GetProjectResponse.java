@@ -15,4 +15,5 @@ public class GetProjectResponse {
     private Integer processedMarksheets;
     private Integer processingFailedMarksheets;
     private Integer totalMarksheets;
+    private String projectCreator;
 }

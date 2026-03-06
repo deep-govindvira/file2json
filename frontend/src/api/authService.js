@@ -6,6 +6,7 @@ export const register = async (data) => {
   const response = await axiosInstance.post("/api/auth/register", data);
   Cookies.set("accessToken", response.data.accessToken);
   Cookies.set("refreshToken", response.data.refreshToken);
+  Cookies.set("email", data.email);
   return response.data;
 };
 
@@ -13,6 +14,7 @@ export const login = async (data) => {
   const response = await axiosInstance.post("/api/auth/login", data);
   Cookies.set("accessToken", response.data.accessToken);
   Cookies.set("refreshToken", response.data.refreshToken);
+  Cookies.set("email", data.email);
   return response.data;
 };
 
@@ -31,5 +33,6 @@ export const logout = async () => {
   } finally {
     Cookies.remove("refreshToken");
     Cookies.remove("accessToken");
+    Cookies.remove("email");
   }
 };

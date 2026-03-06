@@ -34,22 +34,24 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .headers(headers -> headers.frameOptions(
+                        frame -> frame.disable())) // solves localhost refused to connect
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/api/auth/**",
-                                "/v3/api-docs/**",
-                                "/swagger-ui/**",
-                                "/swagger-ui.html"
-                        )
-                        .permitAll()
-                        .requestMatchers("/files/**").permitAll()
-                        .requestMatchers("/projects/**").hasRole("ADMIN")
-                        .requestMatchers("/api/stream").permitAll()  // 👈 allow SSE
-                        .requestMatchers("/api/test/marksheet").permitAll()  // 👈 allow SSE
-                        .requestMatchers("/actuator/**").permitAll()
-                        .anyRequest().authenticated()
+                                .requestMatchers(
+                                        "/api/auth/**",
+                                        "/v3/api-docs/**",
+                                        "/swagger-ui/**",
+                                        "/swagger-ui.html"
+                                )
+                                .permitAll()
+                                .requestMatchers("/files/**").permitAll()
+                                .requestMatchers("/projects/**").hasRole("ADMIN")
+//                        .requestMatchers("/api/stream").permitAll()  // 👈 allow SSE
+                                .requestMatchers("/api/test/marksheet").permitAll()  // 👈 allow SSE
+                                .requestMatchers("/actuator/**").permitAll()
+                                .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 

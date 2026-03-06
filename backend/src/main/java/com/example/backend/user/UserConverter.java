@@ -18,7 +18,7 @@ public class UserConverter {
         return RegisterUserResponse.builder()
                 .userDepartment(user.getDepartment())
                 .userEmail(user.getEmail())
-                .userId(user.getId())
+                .userId(user.getId().toString())
                 .userName(user.getName())
                 .build();
     }
@@ -32,7 +32,7 @@ public class UserConverter {
 
     public LoginUserResponse loginUserResponse(User user) {
         return LoginUserResponse.builder()
-                .userId(user.getId())
+                .userId(user.getId().toString())
                 .build();
     }
 
@@ -41,7 +41,7 @@ public class UserConverter {
                 .department(user.getDepartment())
                 .email(user.getEmail())
                 .name(user.getName())
-                .userId(user.getId())
+                .userId(user.getId().toString())
                 .build();
     }
 }

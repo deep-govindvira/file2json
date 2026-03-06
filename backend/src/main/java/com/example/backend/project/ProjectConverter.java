@@ -22,7 +22,7 @@ public class ProjectConverter {
         return CreateProjectResponse.builder()
                 .processedMarksheets(project.getProcessedMarksheets())
                 .projectDescription(project.getDescription())
-                .projectId(project.getId())
+                .projectId(project.getId().toString())
                 .projectName(project.getName())
                 .projectStatus(project.getStatus())
                 .projectYear(project.getYear())
@@ -35,20 +35,13 @@ public class ProjectConverter {
                 .projectDescription(project.getDescription())
                 .processedMarksheets(project.getProcessedMarksheets())
                 .totalMarksheets(project.getTotalMarksheets())
-                .projectId(project.getId())
+                .projectId(project.getId().toString())
                 .projectName(project.getName())
                 .projectProcessingDuration(project.getProcessingDuration())
                 .projectStatus(project.getStatus())
                 .processingFailedMarksheets(project.getProcessingFailedMarksheets())
                 .projectYear(project.getYear())
+                .projectCreator(project.getProjectCreator().getEmail())
                 .build();
     }
-
-//    public Project project(UpdateProjectRequest request) {
-//        Project project = service.findById(request.getId()).orElseThrow();
-//        project.setYear(request.getProjectYear());
-//        project.setDescription(request.getProjectDescription());
-//        project.setName(request.getProjectName());
-//        return project;
-//    }
 }

@@ -29,5 +29,6 @@ public class Beans {
     public ObjectMapper objectMapper() {
         return new ObjectMapper();
     }
+
 }
 

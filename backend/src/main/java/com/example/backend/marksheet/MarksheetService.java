@@ -16,11 +16,8 @@ import com.example.backend.mark.MarkService;
 import com.example.backend.marksheet_summary.MarksheetSummary;
 import com.example.backend.project.Project;
 import com.example.backend.project.ProjectService;
-import com.example.backend.project.ProjectStatus;
-import com.example.backend.sse.SseEvents;
 import com.example.backend.sse.SseService;
-import com.example.backend.sse.dtos.MarksheetStatusUpdateEvent;
-import com.example.backend.sse.dtos.ProjectStatusUpdateEvent;
+import com.example.backend.user.UserService;
 import com.example.backend.user_project.UserProject;
 import com.example.backend.user_project.UserProjectId;
 import com.example.backend.user_project.UserProjectService;
@@ -42,10 +39,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 
 @Slf4j
@@ -54,7 +48,6 @@ import java.util.concurrent.ExecutorService;
 public class MarksheetService {
 
     private final SseService sseService;
-
     private final AppProps props;
     private final ProjectService projectService;
     private final MarksheetRepository repository;
@@ -66,14 +59,61 @@ public class MarksheetService {
     private final MarkService markService;
     private final BoardService boardService;
     private final AuthService authService;
+    private final UserService userService;
 
-    public int countTotal(Project project) {
-        return (int) repository.countByProject(project);
+    public void updateMarksheet(UUID projectId, UUID marksheetId, UpdateMarksheetRequest request) {
+        String userId = authService.getCurrentUserId();
+        authenticateUserAndProject(userId, projectId.toString());
+
+        Marksheet marksheet = repository.findById(marksheetId).orElseThrow();
+
+        markService.deleteByMarksheet(marksheet);
+        markService.saveAll(repository.findById(marksheetId).orElseThrow(), request.getMarkResponseList());
+
+//        for (UpdateMarkRequest markRequest : request.getMarkResponseList()) {
+//            markService.UpdateMark(markRequest);
+//        }
+
+        marksheet = repository.findById(marksheetId).orElseThrow();
+
+        if (marksheet.getMarksheetSummary() == null) {
+            marksheet.setMarksheetSummary(new MarksheetSummary());
+        }
+
+        marksheet.setStudentName(request.getStudentName());
+        marksheet.setMotherName(request.getMotherName());
+        marksheet.setFatherName(request.getFatherName());
+        marksheet.setSeatNo(request.getSeatNo());
+        marksheet.getMarksheetSummary().setYearOfPassing(request.getYearOfPassing());
+        marksheet.setSchoolCentreNo(request.getSchoolCentreNo());
+        marksheet.setSchoolIndexNo(request.getSchoolIndexNo());
+        marksheet.setGroup(request.getGroup());
+
+
+        marksheet.getMarksheetSummary().setObtainedGrade(request.getObtainedGrade());
+        marksheet.getMarksheetSummary().setTotalObtainedMarks(request.getTotalObtainedMarks());
+        marksheet.getMarksheetSummary().setTotalOutOfMarks(request.getTotalOutOfMarks());
+        marksheet.getMarksheetSummary().setObtainedPercentage(request.getObtainedPercentage());
+        marksheet.getMarksheetSummary().setObtainedPercentile(request.getObtainedPercentile());
+        marksheet.getMarksheetSummary().setResultStatus(request.getResultStatus());
+        marksheet.setVerifiedByUser(userService.findById(userId).orElseThrow());
+        marksheet.setVerificationStatus(VerificationStatus.VERIFIED);
+
+        marksheet.setVerifiedByUser(userService.findById(userId).orElseThrow());
+
+        Board board = boardService.findByShortName(request.getBoard()).orElseThrow();
+        marksheet.setBoard(board);
+        repository.save(marksheet);
+
+        repository.save(marksheet);
+
+        sseService.sendProjectInfo(projectService.refreshProjectStatistics(projectId.toString()));
+        sseService.sendMarksheetInfo(repository.findById(marksheetId).orElseThrow());
     }
 
     public GetMarksheetStatusResponse getMarksheetStatusInfoById(String projectId, String marksheetId) {
-        Marksheet marksheet = repository.findById(marksheetId).orElseThrow();
-        if (!marksheet.getProject().getId().equals(projectId)) {
+        Marksheet marksheet = repository.findById(UUID.fromString(marksheetId)).orElseThrow();
+        if (!marksheet.getProject().getId().equals(UUID.fromString(projectId))) {
             throw new RuntimeException("Marksheet with id " + marksheetId + " " +
                     "dont belong to project id with " + projectId);
         }
@@ -85,8 +125,8 @@ public class MarksheetService {
     }
 
     public GetMarksheetResponse getMarksheetInfoById(String projectId, String marksheetId) {
-        Marksheet marksheet = repository.findById(marksheetId).orElseThrow();
-        if (!marksheet.getProject().getId().equals(projectId)) {
+        Marksheet marksheet = repository.findById(UUID.fromString(marksheetId)).orElseThrow();
+        if (!marksheet.getProject().getId().equals(UUID.fromString(projectId))) {
             throw new RuntimeException("Marksheet with id " + marksheetId + " " +
                     "dont belong to project id with " + projectId);
         }
@@ -108,7 +148,7 @@ public class MarksheetService {
 
         List<GetMarksheetStatusResponse> marksheetResponseList = new ArrayList<>();
         for (Marksheet marksheet : marksheetList) {
-            marksheetResponseList.add(getMarksheetStatusInfoById(projectId, marksheet.getId()));
+            marksheetResponseList.add(getMarksheetStatusInfoById(projectId, marksheet.getId().toString()));
         }
 
         return marksheetResponseList;
@@ -117,8 +157,8 @@ public class MarksheetService {
     void authenticateUserAndProject(String userId, String projectId) {
         UserProject userProject = userProjectService.findById(
                 UserProjectId.builder()
-                        .userId(userId)
-                        .projectId(projectId)
+                        .userId(UUID.fromString(userId))
+                        .projectId(UUID.fromString(projectId))
                         .build()
         ).orElseThrow();
     }
@@ -131,7 +171,7 @@ public class MarksheetService {
         List<ProcessMarksheetResponse> responseList = new ArrayList<>();
 
         for (Marksheet marksheet : marksheets) {
-            ProcessMarksheetResponse response = processMarksheet(projectId, marksheet.getId());
+            ProcessMarksheetResponse response = processMarksheet(projectId, marksheet.getId().toString());
             responseList.add(response);
         }
 
@@ -142,26 +182,19 @@ public class MarksheetService {
         String userId = authService.getCurrentUserId();
         authenticateUserAndProject(userId, projectId);
 
-        Marksheet marksheet = repository.findById(marksheetId).orElseThrow();
+        Marksheet marksheet = repository.findById(UUID.fromString(marksheetId)).orElseThrow();
 
-        if (!marksheet.getProject().getId().equals(projectId)) {
+        if (!marksheet.getProject().getId().equals(UUID.fromString(projectId))) {
             throw new RuntimeException("Marksheet does not belong to the project");
         }
 
-        if (marksheet.getProcessingStatus().equals(ProcessingStatus.UNPROCESSED) ||
-                marksheet.getProcessingStatus().equals(ProcessingStatus.FAILED)) {
-            marksheet.getProject().setProcessingFailedMarksheets(
-                    repository.countFailed(marksheet.getProject()));
-            marksheet.getProject().setProcessedMarksheets(
-                    repository.countProcessed(marksheet.getProject())
-            );
-            marksheet.setProcessingStatus(ProcessingStatus.PROCESSING);
-            marksheet.getProject().setStatus(ProjectStatus.PROCESSING);
+        if ((marksheet.getProcessingStatus().equals(ProcessingStatus.UNPROCESSED) ||
+                marksheet.getProcessingStatus().equals(ProcessingStatus.FAILED)) && !marksheet.getVerificationStatus().equals(VerificationStatus.VERIFIED)) {
+            marksheet.setProcessingStatus(ProcessingStatus.QUEUED);
             marksheet.setProcessingStartedAt(LocalDateTime.now());
-            marksheet.getProject().setProcessingDuration(
-                    repository.sumProcessingDurationByProjectId(marksheet.getProject().getId())
-            );
             marksheet = repository.save(marksheet);
+            sseService.sendMarksheetInfo(repository.findById(UUID.fromString(marksheetId)).orElseThrow());
+            sseService.sendProjectInfo(projectService.refreshProjectStatistics(projectId));
             Marksheet finalMarksheet = marksheet;
             executorService.submit(() -> processMarksheetInBackground(finalMarksheet));
         }
@@ -171,21 +204,11 @@ public class MarksheetService {
 
     private void processMarksheetInBackground(Marksheet marksheet) {
         try {
-            sseService.sendEvent(SseEvents.MARKSHEET_STATUS_UPDATE, new MarksheetStatusUpdateEvent(
-                    marksheet.getId(),
-                    marksheet.getProcessingStatus().name())
-            );
-            sseService.sendEvent(
-                    SseEvents.PROJECT_STATUS_UPDATE,
-                    new ProjectStatusUpdateEvent(
-                            marksheet.getProject().getId(),
-                            marksheet.getProject().getStatus(),
-                            marksheet.getProcessingDuration(),
-                            marksheet.getProject().getProcessedMarksheets(),
-                            marksheet.getProject().getProcessingFailedMarksheets(),
-                            marksheet.getProject().getTotalMarksheets()
-                    )
-            );
+            marksheet.setProcessingStatus(ProcessingStatus.PROCESSING);
+            marksheet = repository.save(marksheet);
+
+            sseService.sendMarksheetInfo(repository.findById(marksheet.getId()).orElseThrow());
+            sseService.sendProjectInfo(projectService.refreshProjectStatistics(marksheet.getProject().getId().toString()));
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -199,65 +222,12 @@ public class MarksheetService {
 
             saveStructuredResponse(response, marksheet);
         } catch (Exception e) {
-            updateFailedMarksheetInfo(marksheet);
+            marksheet = updateFailedMarksheetInfo(marksheet);
             throw e;
         } finally {
-            marksheet = updateProjectInfo(marksheet);
-            sseService.sendEvent(
-                    SseEvents.MARKSHEET_STATUS_UPDATE,
-                    new MarksheetStatusUpdateEvent(
-                            marksheet.getId(),
-                            marksheet.getProcessingStatus().name()
-                    )
-            );
-            sseService.sendEvent(
-                    SseEvents.PROJECT_STATUS_UPDATE,
-                    new ProjectStatusUpdateEvent(
-                            marksheet.getProject().getId(),
-                            marksheet.getProject().getStatus(),
-                            marksheet.getProcessingDuration(),
-                            marksheet.getProject().getProcessedMarksheets(),
-                            marksheet.getProject().getProcessingFailedMarksheets(),
-                            marksheet.getProject().getTotalMarksheets()
-                    )
-            );
+            sseService.sendMarksheetInfo(repository.findById(marksheet.getId()).orElseThrow());
+            sseService.sendProjectInfo(projectService.refreshProjectStatistics(marksheet.getProject().getId().toString()));
         }
-    }
-
-    private synchronized Marksheet updateProjectInfo(Marksheet marksheet) {
-        marksheet.getProject().setProcessingFailedMarksheets(
-                repository.countFailed(marksheet.getProject()));
-        marksheet.getProject().setProcessedMarksheets(
-                repository.countProcessed(marksheet.getProject())
-        );
-
-        marksheet = repository.save(marksheet);
-
-        marksheet.getProject().setTotalMarksheets(countTotal(marksheet.getProject()));
-        marksheet.getProject().setProcessingDuration(
-                repository.sumProcessingDurationByProjectId(marksheet.getProject().getId())
-        );
-        marksheet = repository.save(marksheet);
-        if (countTotal(marksheet.getProject()) ==
-                repository.countFailed(marksheet.getProject()) +
-                        repository.countProcessed(marksheet.getProject())) {
-            marksheet.getProject().setStatus(ProjectStatus.COMPLETED);
-        } else {
-            marksheet.getProject().setStatus(ProjectStatus.UNPROCESSED);
-        }
-        return repository.save(marksheet);
-    }
-
-    private synchronized void updateFailedMarksheetInfo(Marksheet marksheet) {
-        marksheet.setProcessingStatus(ProcessingStatus.FAILED);
-        marksheet = repository.save(marksheet);
-        marksheet.getProject().setProcessingFailedMarksheets(
-                repository.countFailed(marksheet.getProject()));
-        marksheet.getProject().setProcessedMarksheets(
-                repository.countProcessed(marksheet.getProject())
-        );
-        marksheet = repository.save(marksheet);
-        log.error("Failed processing marksheet: {}", marksheet.getId());
     }
 
     private void saveStructuredResponse(ResponseEntity<Map> response, Marksheet marksheet) {
@@ -279,6 +249,14 @@ public class MarksheetService {
                 marksheet.setProcessingStatus(ProcessingStatus.FAILED);
                 marksheet = repository.save(marksheet);
         }
+
+        long seconds = Duration.between(
+                marksheet.getProcessingStartedAt(),
+                LocalDateTime.now()
+        ).toSeconds();
+
+        marksheet.setProcessingDuration(seconds);
+        repository.save(marksheet);
     }
 
     private void saveStructuredCbseResponse(ResponseEntity<Map> response, Marksheet marksheet, List<Mark> markList) {
@@ -347,7 +325,6 @@ public class MarksheetService {
         summary.setObtainedPercentage(percentage);
         summary.setTotalObtainedMarks((int) totalObtained);
         summary.setTotalOutOfMarks((int) totalMax);
-
     }
 
     private void saveStructuredGsebResponse(ResponseEntity<Map> response, Marksheet marksheet, List<Mark> markList) {
@@ -492,10 +469,15 @@ public class MarksheetService {
         summary.setTotalOutOfMarks((int) totalMax);
     }
 
-    private synchronized void updateMarksheetInfoInDbAfterProcessing(List<Mark> markList, Marksheet marksheet) {
+    private Marksheet updateMarksheetInfoInDbAfterProcessing(List<Mark> markList, Marksheet marksheet) {
         markService.saveAll(markList);
-
         marksheet.setProcessingStatus(ProcessingStatus.COMPLETED);
+        marksheet = repository.save(marksheet);
+        return marksheet;
+    }
+
+    private Marksheet updateFailedMarksheetInfo(Marksheet marksheet) {
+        marksheet.setProcessingStatus(ProcessingStatus.FAILED);
 
         long seconds = Duration.between(
                 marksheet.getProcessingStartedAt(),
@@ -503,26 +485,7 @@ public class MarksheetService {
         ).toSeconds();
 
         marksheet.setProcessingDuration(seconds);
-        marksheet = repository.save(marksheet);
-
-//        Long totalDuration =
-//                repository.sumProcessingDurationByProjectId(
-//                        marksheet.getProject().getId()
-//                );
-
-//        marksheet.getProject().setProcessingDuration(totalDuration);
-//        repository.save(marksheet);
-
-
-//        if (marksheet.getProject().getProcessingDuration() == null) {
-//            marksheet.getProject().setProcessingDuration(seconds);
-//        } else {
-//            marksheet.getProject().setProcessingDuration(
-//                    marksheet.getProject().getProcessingDuration() + seconds
-//            );
-//        }
-
-//        marksheet = repository.save(marksheet);
+        return repository.save(marksheet);
     }
 
     public List<UploadMarksheetResponse> storeMarksheets(String projectId, List<MultipartFile> files) {
@@ -539,37 +502,18 @@ public class MarksheetService {
         authenticateUserAndProject(userId, projectId);
 
         Project project = projectService.findById(projectId).orElseThrow();
-        project.setStatus(ProjectStatus.UNPROCESSED);
 
         Marksheet marksheet = Marksheet.builder()
                 .project(project)
                 .build();
 
         marksheet = repository.save(marksheet);
-
-        marksheet.getProject().setTotalMarksheets(repository.countTotal(marksheet.getProject()));
-        marksheet.getProject().setProcessingDuration(
-                repository.sumProcessingDurationByProjectId(marksheet.getProject().getId())
-        );
-
-        marksheet = repository.save(marksheet);
-
-        saveFile(file, marksheet);
-        sseService.sendEvent(
-                SseEvents.PROJECT_STATUS_UPDATE,
-                new ProjectStatusUpdateEvent(
-                        marksheet.getProject().getId(),
-                        marksheet.getProject().getStatus(),
-                        marksheet.getProcessingDuration(),
-                        marksheet.getProject().getProcessedMarksheets(),
-                        marksheet.getProject().getProcessingFailedMarksheets(),
-                        marksheet.getProject().getTotalMarksheets()
-                )
-        );
+        marksheet = saveFile(file, marksheet);
+        sseService.sendProjectInfo(projectService.refreshProjectStatistics(projectId));
         return converter.uploadMarksheetResponse(marksheet);
     }
 
-    private void saveFile(MultipartFile file, Marksheet marksheet) {
+    private Marksheet saveFile(MultipartFile file, Marksheet marksheet) {
         String folderPath = Paths.get(props.getUploadPath()).toString();
 
         File folder = new File(folderPath);
@@ -603,7 +547,7 @@ public class MarksheetService {
         try {
             file.transferTo(targetFile);
             marksheet.setUrl(targetFile.getAbsolutePath());
-            marksheet = repository.save(marksheet);
+            return repository.save(marksheet);
         } catch (IOException e) {
             throw new RuntimeException("Failed to save file: " + e.getMessage(), e);
         }

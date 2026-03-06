@@ -15,3 +15,18 @@ export const getProjectById = async (projectId) => {
   return response.data;
 };
 
+export const addUserToProject = async (projectId, email) => {
+  const response = await axiosInstance.put(`/projects/${projectId}/addUser`, { email });
+  return response.data;
+};
+
+export const removeUserToProject = async (projectId, email) => {
+  const response = await axiosInstance.put(`/projects/${projectId}/removeUser`, { email });
+  return response.data;
+};
+
+export const updateProject = async (projectId, data) => {
+  const response = await axiosInstance.put(`/projects/${projectId}`, data);
+  return response.data;
+};
+

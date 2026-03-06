@@ -7,4 +7,3 @@ public enum ProcessingStatus {
     COMPLETED,
     FAILED
 }
-

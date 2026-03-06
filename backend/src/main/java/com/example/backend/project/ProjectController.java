@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -13,6 +14,26 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectService service;
+
+    @PutMapping("/{projectId}")
+    public void updateProject(
+            @PathVariable String projectId,
+            @RequestBody UpdateProjectRequest request
+    ) {
+        service.updateProject(UUID.fromString(projectId), request);
+    }
+
+    @PutMapping("/{projectId}/addUser")
+    public void addUserToProject(@PathVariable String projectId,
+                                 @RequestBody AccessForUserToProjectRequest request) {
+        service.addUserToProject(UUID.fromString(projectId), request);
+    }
+
+    @PutMapping("/{projectId}/removeUser")
+    public void removeUserToProject(@PathVariable String projectId,
+                                    @RequestBody AccessForUserToProjectRequest request) {
+        service.removeUserFromProject(UUID.fromString(projectId), request);
+    }
 
     @PostMapping
     public ResponseEntity<CreateProjectResponse> createProject(

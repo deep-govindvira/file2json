@@ -7,7 +7,7 @@ public class MarkConverter {
     public GetMarkResponse getMarksheetResponse(Mark mark) {
         return GetMarkResponse.builder()
                 .corrected(mark.getCorrected())
-                .id(mark.getId())
+                .id(mark.getId().toString())
                 .obtained(mark.getObtained())
                 .obtainedInWords(mark.getObtainedInWords())
                 .subjectCode(mark.getSubjectCode())
