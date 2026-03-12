@@ -19,6 +19,14 @@ public class MarksheetController {
     private final MarksheetService service;
     private final AppProps props;
 
+    @PutMapping("/{marksheetId}/assignToUser/{assignToUserId}")
+    public void assignMarksheetToUser(
+            @PathVariable String projectId,
+            @PathVariable String marksheetId,
+            @PathVariable String assignToUserId) {
+        service.assignMarksheet(projectId, marksheetId, assignToUserId);
+    }
+
     @PutMapping("/{marksheetId}")
     public void updateMarksheet(
             @PathVariable String projectId,

@@ -1,5 +1,6 @@
 package com.example.backend.marksheet;
 
+import com.example.backend.auth.entity.Role;
 import com.example.backend.auth.service.AuthService;
 import com.example.backend.board.Board;
 import com.example.backend.board.BoardService;
@@ -17,6 +18,7 @@ import com.example.backend.marksheet_summary.MarksheetSummary;
 import com.example.backend.project.Project;
 import com.example.backend.project.ProjectService;
 import com.example.backend.sse.SseService;
+import com.example.backend.user.User;
 import com.example.backend.user.UserService;
 import com.example.backend.user_project.UserProject;
 import com.example.backend.user_project.UserProjectId;
@@ -61,11 +63,39 @@ public class MarksheetService {
     private final AuthService authService;
     private final UserService userService;
 
+    public void assignMarksheet(String projectId, String marksheetId, String userId) {
+        authenticateUserAndProject(authService.getCurrentUserId(), projectId);
+
+        Marksheet marksheet = repository.findById(UUID.fromString(marksheetId))
+                .orElseThrow();
+
+        if (!(marksheet.getProcessingStatus().equals(ProcessingStatus.COMPLETED) ||
+                marksheet.getProcessingStatus().equals(ProcessingStatus.FAILED))
+        ) {
+            throw new RuntimeException("Cant assign unprocessed marksheet");
+        }
+
+        User user = userService.findById(userId)
+                .orElseThrow();
+
+        marksheet.setAssignedToUser(user);
+
+        repository.save(marksheet);
+    }
+
     public void updateMarksheet(UUID projectId, UUID marksheetId, UpdateMarksheetRequest request) {
         String userId = authService.getCurrentUserId();
+
         authenticateUserAndProject(userId, projectId.toString());
 
         Marksheet marksheet = repository.findById(marksheetId).orElseThrow();
+
+        User user = userService.findById(userId).orElseThrow();
+
+        if (user.getRole().equals(Role.VERIFIER) &&
+                !marksheet.getAssignedToUser().getId().toString().equals(userId)) {
+            throw new RuntimeException("Invalid verifier for markhseet");
+        }
 
         markService.deleteByMarksheet(marksheet);
         markService.saveAll(repository.findById(marksheetId).orElseThrow(), request.getMarkResponseList());
@@ -133,6 +163,13 @@ public class MarksheetService {
         String userId = authService.getCurrentUserId();
         authenticateUserAndProject(userId, projectId);
 
+        User user = userService.findById(userId).orElseThrow();
+
+        if (user.getRole().equals(Role.VERIFIER) &&
+                !marksheet.getAssignedToUser().getId().toString().equals(userId)) {
+            throw new RuntimeException("Invalid verifier for markhseet");
+        }
+
         GetMarksheetResponse marksheetResponse = converter.getMarksheetResponse(marksheet);
         List<GetMarkResponse> markResponseList = markService.getMarkResponseList(marksheet);
         marksheetResponse.setMarkResponseList(markResponseList);
@@ -149,6 +186,46 @@ public class MarksheetService {
         List<GetMarksheetStatusResponse> marksheetResponseList = new ArrayList<>();
         for (Marksheet marksheet : marksheetList) {
             marksheetResponseList.add(getMarksheetStatusInfoById(projectId, marksheet.getId().toString()));
+        }
+
+        return marksheetResponseList;
+    }
+
+    public GetMarksheetResponse getMarksheetInfoByIdForVerifier(String projectId, String marksheetId) {
+        Marksheet marksheet = repository.findById(UUID.fromString(marksheetId)).orElseThrow();
+        if (!marksheet.getProject().getId().equals(UUID.fromString(projectId))) {
+            throw new RuntimeException("Marksheet with id " + marksheetId + " " +
+                    "dont belong to project id with " + projectId);
+        }
+
+        String userId = authService.getCurrentUserId();
+        authenticateUserAndProject(userId, projectId);
+
+        GetMarksheetResponse marksheetResponse = GetMarksheetResponse.builder().build();
+
+        if (marksheet.getAssignedToUser() != null &&
+                marksheet.getAssignedToUser().getId().toString().equals(userId)) {
+            marksheetResponse = converter.getMarksheetResponse(marksheet);
+            List<GetMarkResponse> markResponseList = markService.getMarkResponseList(marksheet);
+
+            marksheetResponse.setMarkResponseList(markResponseList);
+        }
+
+        return marksheetResponse;
+    }
+
+    public List<GetMarksheetStatusResponse> getMarksheetResponseListForVerifier(String projectId) {
+        String userId = authService.getCurrentUserId();
+        authenticateUserAndProject(userId, projectId);
+        Project project = projectService.findById(projectId).orElseThrow();
+        List<Marksheet> marksheetList = repository.findAllByProject(project);
+
+        List<GetMarksheetStatusResponse> marksheetResponseList = new ArrayList<>();
+        for (Marksheet marksheet : marksheetList) {
+            if (marksheet.getAssignedToUser() != null &&
+                    marksheet.getAssignedToUser().getId().toString().equals(userId)) {
+                marksheetResponseList.add(getMarksheetStatusInfoById(projectId, marksheet.getId().toString()));
+            }
         }
 
         return marksheetResponseList;
@@ -189,7 +266,8 @@ public class MarksheetService {
         }
 
         if ((marksheet.getProcessingStatus().equals(ProcessingStatus.UNPROCESSED) ||
-                marksheet.getProcessingStatus().equals(ProcessingStatus.FAILED)) && !marksheet.getVerificationStatus().equals(VerificationStatus.VERIFIED)) {
+                marksheet.getProcessingStatus().equals(ProcessingStatus.FAILED)) &&
+                !marksheet.getVerificationStatus().equals(VerificationStatus.VERIFIED)) {
             marksheet.setProcessingStatus(ProcessingStatus.QUEUED);
             marksheet.setProcessingStartedAt(LocalDateTime.now());
             marksheet = repository.save(marksheet);

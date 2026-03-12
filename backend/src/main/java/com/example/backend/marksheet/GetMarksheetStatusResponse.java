@@ -10,4 +10,5 @@ public class GetMarksheetStatusResponse {
     private ProcessingStatus processingStatus;
     private VerificationStatus verificationStatus;
     private String verifiedByUser;
+    private String assignedToUser;
 }

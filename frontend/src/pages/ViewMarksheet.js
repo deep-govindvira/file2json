@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getMarksheetById } from "../api/marksheetService";
 import BlueButton from "../components/BlueButton";
+import NotFoundCard from "../components/NotFoundCard";
+import CenteredFullPageSpinner from "../components/CenteredFullPageSpinner";
 
 const ViewMarksheet = () => {
 
     const { projectId, marksheetId } = useParams();
     const [marksheet, setMarksheet] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -16,13 +19,28 @@ const ViewMarksheet = () => {
                 setMarksheet(data);
             } catch (err) {
                 console.error(err);
+            } finally {
+                setIsLoading(false);
             }
         };
 
         fetchMarksheet();
     }, [projectId, marksheetId]);
 
-    if (!marksheet) return <div className="p-6">Loading...</div>;
+    if (isLoading) return <CenteredFullPageSpinner message="Loading marksheet details, please wait..." />;
+
+    if (!marksheet) {
+        return (
+            <NotFoundCard
+                title="Project Not Found"
+                message="This project may have been deleted or never existed."
+                buttonText="Back to Project"
+                backTo={`/project/${projectId}/view`}
+            />
+        );
+    }
+
+
 
     const mainCorrected = marksheet.corrected
         ? JSON.parse(marksheet.corrected)
@@ -99,7 +117,7 @@ const ViewMarksheet = () => {
                     <div>
                         {/* <h2 className="text-2xl font-bold mb-4">Student Details</h2> */}
                         <div className="grid grid-cols-2 gap-3">
-                            <p><strong>Marksheet ID:</strong> {marksheet.id}</p>
+                            {/* <p><strong>Marksheet ID:</strong> {marksheet.id}</p> */}
                             <p><strong>Student Name:</strong> {marksheet.studentName}</p>
                             <p><strong>Father Name:</strong> {marksheet.fatherName ?? "NULL"}</p>
                             <p><strong>Mother Name:</strong> {marksheet.motherName ?? "NULL"}</p>
@@ -126,14 +144,14 @@ const ViewMarksheet = () => {
                             <table className="min-w-full border border-gray-300 text-sm">
                                 <thead className="bg-gray-200">
                                     <tr>
-                                        <th className="border p-2">Subject ID</th>
+                                        {/* <th className="border p-2">Subject ID</th> */}
                                         <th className="border p-2">Code</th>
                                         <th className="border p-2">Subject Name</th>
                                         <th className="border p-2 text-center">Obtained</th>
-                                        <th className="border p-2 text-center">Out Of</th>
                                         <th className="border p-2">Obtained In Words</th>
+                                        <th className="border p-2 text-center">Out Of</th>
                                         <th className="border p-2 text-center">Grade</th>
-                                        <th className="border p-2">Raw Corrected</th>
+                                        <th className="border p-2">Ocr Value</th>
                                     </tr>
                                 </thead>
 
@@ -146,7 +164,7 @@ const ViewMarksheet = () => {
                                         return (
                                             <React.Fragment key={subject.id}>
                                                 <tr className="bg-white hover:bg-gray-50">
-                                                    <td className="border p-2">{subject.id}</td>
+                                                    {/* <td className="border p-2">{subject.id}</td> */}
                                                     <td className="border p-2">{subject.subjectCode}</td>
                                                     <td className="border p-2">{subject.subjectName}</td>
                                                     <td className="border p-2 text-center">{subject.obtained}</td>
@@ -199,7 +217,7 @@ const ViewMarksheet = () => {
                     <div>
                         <h2 className="text-2xl font-bold mb-4">Board Details</h2>
                         <div className="grid grid-cols-2 gap-3">
-                            <p><strong>ID:</strong> {marksheet.board?.id ?? "NULL"}</p>
+                            {/* <p><strong>ID:</strong> {marksheet.board?.id ?? "NULL"}</p> */}
                             <p><strong>Full Name:</strong> {marksheet.board?.fullName ?? "NULL"}</p>
                             <p><strong>Short Name:</strong> {marksheet.board?.shortName ?? "NULL"}</p>
                             <p><strong>State:</strong> {marksheet.board?.state ?? "NULL"}</p>
@@ -262,9 +280,10 @@ const ViewMarksheet = () => {
                                     rel="noopener noreferrer"
                                     className="text-blue-600 underline"
                                 >
-                                    {marksheet.url}
+                                    {process.env.REACT_APP_SERVER_URL}/files/${marksheet.url?.split("/").pop()}
                                 </a>
-                            </p>                        </div>
+                            </p>
+                        </div>
                     </div>
 
                     {/* ================= VERIFICATION DETAILS ================= */}

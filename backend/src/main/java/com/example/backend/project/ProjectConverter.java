@@ -44,4 +44,12 @@ public class ProjectConverter {
                 .projectCreator(project.getProjectCreator().getEmail())
                 .build();
     }
+
+    public GetProjectResponseForVerifier getProjectResponseForVerifier(Project project) {
+        return GetProjectResponseForVerifier.builder()
+                .projectId(project.getId().toString())
+                .projectName(project.getName())
+                .projectDescription(project.getDescription())
+                .build();
+    }
 }

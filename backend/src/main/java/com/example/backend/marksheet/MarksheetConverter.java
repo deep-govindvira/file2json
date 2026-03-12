@@ -68,11 +68,18 @@ public class MarksheetConverter {
             email = marksheet.getVerifiedByUser().getEmail();
         }
 
+        String assignedToUserName = null;
+
+        if (marksheet.getAssignedToUser() != null) {
+            assignedToUserName = marksheet.getAssignedToUser().getName();
+        }
+
         return GetMarksheetStatusResponse.builder()
                 .id(marksheet.getId().toString())
                 .processingStatus(marksheet.getProcessingStatus())
                 .verificationStatus(marksheet.getVerificationStatus())
                 .verifiedByUser(email)
+                .assignedToUser(assignedToUserName)
                 .build();
     }
 }

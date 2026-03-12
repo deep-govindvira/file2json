@@ -34,6 +34,7 @@ function Login() {
       setMessage("Login successful! Redirecting...");
 
       // setTimeout(() => {
+        
       navigate("/dashboard");
       // }, 1000);
     } catch (error) {

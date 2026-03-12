@@ -2,10 +2,8 @@ package com.example.backend.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,9 +35,15 @@ public class UserController {
     }
 
     @GetMapping("/project/{projectId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<GetUserResponse>> getUsersByProject(
             @PathVariable String projectId
     ) {
         return ResponseEntity.ok(service.getUsersForProject(projectId));
+    }
+
+    @PutMapping
+    public String updateProfile(@RequestBody UpdateUserRequest request) {
+        return service.updateProfile(request);
     }
 }

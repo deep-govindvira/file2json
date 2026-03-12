@@ -4,6 +4,8 @@ import com.example.backend.auth.entity.Role;
 import com.example.backend.board.Board;
 import com.example.backend.board.BoardService;
 import com.example.backend.config.AppProps;
+import com.example.backend.department.Department;
+import com.example.backend.department.DepartmentService;
 import com.example.backend.user.User;
 import com.example.backend.user.UserService;
 import com.example.backend.user_project.UserProjectRepository;
@@ -28,13 +30,32 @@ public class Initializer implements CommandLineRunner {
     private final UserProjectService userProjectService;
     private final UserProjectRepository userProjectRepository;
     private final PasswordEncoder encoder;
+    private final DepartmentService departmentService;
 
     @Override
     public void run(String... args) {
         log.info("Properties: {}", props);
         log.info("Apis: {}", "http://localhost:" + props.getServer().getPort() + "/swagger-ui/index.html");
         addBoards();
-        addUsers();
+//        addUsers();
+
+        User user = User.builder()
+                .name("Super Admin")
+                .email("superadmin@gmail.com")
+                .password(encoder.encode("superadmin"))
+                .role(Role.SUPER_ADMIN)
+                .build();
+
+        userService.save(user);
+
+        departmentService.createDepartment(Department.builder().name("Information Technology").build());
+        departmentService.createDepartment(Department.builder().name("Computer Engineering").build());
+        departmentService.createDepartment(Department.builder().name("Chemical Engineering").build());
+        departmentService.createDepartment(Department.builder().name("Civil Engineering").build());
+        departmentService.createDepartment(Department.builder().name("Electronics & Communication Engineering").build());
+        departmentService.createDepartment(Department.builder().name("Information Technology").build());
+        departmentService.createDepartment(Department.builder().name("Instrumentation & Control Engineering").build());
+        departmentService.createDepartment(Department.builder().name("Mechanical Engineering").build());
     }
 
     void addBoards() {
@@ -88,7 +109,6 @@ public class Initializer implements CommandLineRunner {
                 .email("deepgovindvira@gmail.com")
                 .password(encoder.encode("deep"))
                 .role(Role.ADMIN)
-                .department("IT")
                 .build();
 
         userList.add(user);
@@ -100,7 +120,6 @@ public class Initializer implements CommandLineRunner {
                 .email("yashgokulgandhi6@gmail.com")
                 .password(encoder.encode("yash"))
                 .role(Role.ADMIN)
-                .department("IT")
                 .build();
 
         userList.add(user);

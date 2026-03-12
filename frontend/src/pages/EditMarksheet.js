@@ -426,7 +426,7 @@ const EditMarksheet = () => {
                     corrected: subject.corrected // if you need it
                 })),
 
-                board: marksheet.board_shortName.value
+                board: marksheet.board_shortName.value,
             };
 
 

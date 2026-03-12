@@ -48,3 +48,7 @@ process-api-url: ${PROCESS_API_URL}
 no_of_threads: ${NO_OF_THREADS}
 
 allowed-origin: "http://localhost:3000"
+
+logging:
+  level:
+    org.hibernate.orm.jdbc.bind: trace

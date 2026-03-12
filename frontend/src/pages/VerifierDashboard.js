@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getProjects } from "../api/projectService";
+import { getProjectsForVerifier } from "../api/projectService";
 import { connectSSE } from "../api/sseClient";
 import { toast } from "react-toastify";
 import CenteredFullPageSpinner from "../components/CenteredFullPageSpinner";
@@ -28,7 +28,7 @@ const projectStatusConfig = {
     },
 };
 
-const ViewProjectList = () => {
+const VerifierDashboard = () => {
 
     const [projects, setProjects] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -39,7 +39,7 @@ const ViewProjectList = () => {
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                const response = await getProjects();
+                const response = await getProjectsForVerifier();
                 setProjects(response);
             } catch (error) {
                 toast.error("Failed to load projects");
@@ -51,43 +51,6 @@ const ViewProjectList = () => {
         };
 
         fetchProjects();
-    }, []);
-
-    // ================= SSE PROJECT LISTENER =================
-    useEffect(() => {
-        const eventSource = connectSSE();
-
-        const handleSSEProjectUpdate = (event) => {
-            const data = JSON.parse(event.data);
-
-            setProjects((prevProjects) =>
-                prevProjects.map((project) =>
-                    project.projectId === data.projectId
-                        ? {
-                            ...project,
-                            projectStatus: data.projectStatus,
-                            projectProcessingDuration:
-                                data.projectProcessingDuration,
-                            processedMarksheets: data.processedMarksheets,
-                            processingFailedMarksheets:
-                                data.processingFailedMarksheets,
-                            totalMarksheets: data.totalMarksheets
-                        }
-                        : project
-                )
-            );
-        };
-
-        eventSource.addEventListener("project-status-update", handleSSEProjectUpdate);
-
-        eventSource.onerror = (error) => {
-            console.error("SSE error:", error);
-        };
-
-        return () => {
-            eventSource.removeEventListener("project-status-update", handleSSEProjectUpdate);
-        };
-
     }, []);
 
     if (isLoading) return <CenteredFullPageSpinner message="Loading projects, please wait..." />;
@@ -118,30 +81,12 @@ const ViewProjectList = () => {
                         Manage and monitor all your processing projects
                     </p> */}
                 </div>
-
-                <BlueButton label="New Project" onClick={() => navigate("/create-project")} />
-
-                {/* <button
-                    onClick={() => navigate("/create-project")}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-medium shadow-md hover:shadow-lg transition-all duration-300"
-                >
-                    Create Project
-                </button> */}
             </div>
 
 
 
             <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 {projects.map((project) => {
-                    const getStatusStyle = () => {
-                        return projectStatusConfig[project.projectStatus].style
-                    };
-
-                    const unprocessed =
-                        (project.totalMarksheets || 0) -
-                        (project.processingFailedMarksheets || 0) -
-                        (project.processedMarksheets || 0);
-
 
                     return (
                         <div
@@ -157,11 +102,11 @@ const ViewProjectList = () => {
                                     {project.projectName}
                                 </h3>
 
-                                <span
+                                {/* <span
                                     className={`px-3 py-1 text-xs font-semibold rounded-full ${getStatusStyle()}`}
                                 >
                                     {projectStatusConfig[project.projectStatus].label}
-                                </span>
+                                </span> */}
                             </div>
 
                             {/* Description */}
@@ -172,30 +117,30 @@ const ViewProjectList = () => {
                             {/* Info */}
                             <div className="text-sm text-gray-600 mb-4 space-y-1">
                                 {/* <p><span className="font-medium">Project ID:</span> {project.projectId}</p> */}
-                                <p><span className="font-medium">Year:</span> {project.projectYear}</p>
+                                {/* <p><span className="font-medium">Year:</span> {project.projectYear}</p>
                                 <p>
                                     <span className="font-medium">Processing Duration:</span>{" "}
                                     {project.projectProcessingDuration ?? "Not processed yet"}
-                                </p>
+                                </p> */}
                             </div>
 
                             {/* Stats Section */}
                             <div className="grid grid-cols-4 gap-3 mt-4">
-                                <div className="bg-gray-50 rounded-lg p-3 text-center">
+                                {/* <div className="bg-gray-50 rounded-lg p-3 text-center">
                                     <p className="text-xs text-gray-500">Total</p>
                                     <p className="text-lg font-bold text-gray-800">
                                         {project.totalMarksheets}
                                     </p>
-                                </div>
+                                </div> */}
 
-                                <div className="bg-green-50 rounded-lg p-3 text-center">
+                                {/* <div className="bg-green-50 rounded-lg p-3 text-center">
                                     <p className="text-xs text-green-600">Processed</p>
                                     <p className="text-lg font-bold text-green-700">
                                         {project.processedMarksheets}
                                     </p>
-                                </div>
+                                </div> */}
 
-                                <div className="bg-red-50 rounded-lg p-3 text-center">
+                                {/* <div className="bg-red-50 rounded-lg p-3 text-center">
                                     <p className="text-xs text-red-600">Failed</p>
                                     <p className="text-lg font-bold text-red-700">
                                         {project.processingFailedMarksheets}
@@ -207,7 +152,7 @@ const ViewProjectList = () => {
                                     <p className="text-lg font-bold text-yellow-800">
                                         {unprocessed >= 0 ? unprocessed : 0}
                                     </p>
-                                </div>
+                                </div> */}
 
                             </div>
                         </div>
@@ -218,4 +163,4 @@ const ViewProjectList = () => {
     );
 };
 
-export default ViewProjectList;
+export default VerifierDashboard;

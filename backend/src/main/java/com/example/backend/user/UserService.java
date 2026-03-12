@@ -1,9 +1,13 @@
 package com.example.backend.user;
 
+import com.example.backend.auth.entity.Role;
+import com.example.backend.auth.service.AuthService;
+import com.example.backend.department.DepartmentService;
 import com.example.backend.user_project.UserProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,6 +22,9 @@ public class UserService {
     private final UserRepository repository;
     private final UserConverter converter;
     private final UserProjectService userProjectService;
+    private final PasswordEncoder encoder;
+    private final AuthService authService;
+    private final DepartmentService departmentService;
 
     public User save(User user) {
         return repository.save(user);
@@ -35,6 +42,57 @@ public class UserService {
         User user = converter.user(request);
         User saved = repository.save(user);
         return converter.registerUserResponse(saved);
+    }
+
+    public String updateProfile(UpdateUserRequest request) {
+
+        String id = authService.getCurrentUserId();
+
+        User user = repository.findById(UUID.fromString(id)).orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (request.getName() != null && !request.getName().isBlank()) {
+            user.setName(request.getName());
+        }
+
+        if (request.getPassword() != null && !request.getPassword().isBlank()) {
+            user.setPassword(encoder.encode(request.getPassword()));
+        }
+
+        repository.save(user);
+
+        return "Profile updated successfully";
+    }
+
+
+    public RegisterUserResponse registerAdmin(RegisterAdminRequest request) {
+
+        Optional<User> existingUser = repository.findByEmail(request.getEmail());
+
+        User user;
+
+        if (existingUser.isPresent()) {
+            user = existingUser.get();
+            user.setRole(Role.ADMIN);
+            user.setDepartment(departmentService.getDepartmentById(UUID.fromString(request.getDepartment())));
+        } else {
+            user = User.builder()
+                    .name(request.getEmail())
+                    .email(request.getEmail())
+                    .password(encoder.encode(request.getEmail()))
+                    .department(departmentService.getDepartmentById(UUID.fromString(request.getDepartment())))
+                    .role(Role.ADMIN)
+                    .build();
+        }
+
+        User saved = repository.save(user);
+        return converter.registerUserResponse(saved);
+    }
+
+    public List<GetUserResponse> getAllAdmins() {
+        return repository.findByRole(Role.ADMIN)
+                .stream()
+                .map(converter::getUserResponse)
+                .toList();
     }
 
     public LoginUserResponse loginUser(LoginUserRequest request) {

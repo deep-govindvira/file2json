@@ -2,6 +2,7 @@ package com.example.backend.user;
 
 import com.example.backend.Audit;
 import com.example.backend.auth.entity.Role;
+import com.example.backend.department.Department;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,8 +32,12 @@ public class User extends Audit {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "department")
-    private String department;
+//    @Column(name = "department")
+//    private String department;
+
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
 
     @Enumerated(EnumType.STRING)
     private Role role;

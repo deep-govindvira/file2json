@@ -1,13 +1,21 @@
 package com.example.backend.user;
 
+import com.example.backend.department.DepartmentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
+@RequiredArgsConstructor
 public class UserConverter {
 
+    private final DepartmentService departmentService;
+
     public User user(RegisterUserRequest request) {
+
         return User.builder()
-                .department(request.getDepartment())
+                .department(departmentService.getDepartmentById(UUID.fromString(request.getDepartment())))
                 .name(request.getUserName())
                 .password(request.getPassword())
                 .email(request.getEmail())
@@ -16,7 +24,7 @@ public class UserConverter {
 
     public RegisterUserResponse registerUserResponse(User user) {
         return RegisterUserResponse.builder()
-                .userDepartment(user.getDepartment())
+                .userDepartment(user.getDepartment().getName())
                 .userEmail(user.getEmail())
                 .userId(user.getId().toString())
                 .userName(user.getName())
@@ -38,7 +46,7 @@ public class UserConverter {
 
     public GetUserResponse getUserResponse(User user) {
         return GetUserResponse.builder()
-                .department(user.getDepartment())
+                .department(user.getDepartment().getName())
                 .email(user.getEmail())
                 .name(user.getName())
                 .userId(user.getId().toString())

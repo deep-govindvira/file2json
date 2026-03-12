@@ -12,6 +12,7 @@ import BlueButton from "./BlueButton";
 import RedButton from "./RedButton";
 import { getUsersByProject } from "../api/userService";
 import Cookies from "js-cookie";
+import { getAllDepartments } from "../api/departmentService";
 
 const statusConfig = [
   { key: "UNPROCESSED", name: "UNPROCESSED", displayName: "Unprocessed", color: "bg-gray-200", darkColor: "bg-gray-400" },
@@ -75,6 +76,8 @@ const ViewProject = () => {
 
   const [userEmail, setUserEmail] = useState("");
   const [addingUser, setAddingUser] = useState(false);
+  const [departmentId, setDepartmentId] = useState("");
+  const [departments, setDepartments] = useState([]);
 
   const handleAddUser = async () => {
     if (!userEmail.trim()) {
@@ -82,11 +85,29 @@ const ViewProject = () => {
       return;
     }
 
+    if (!departmentId) {
+      toast.error("Please select department");
+      return;
+    }
+
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(userEmail)) {
+      toast.error("Invalid formate of email address");
+      return;
+    }
+
     try {
       setAddingUser(true);
-      await addUserToProject(id, userEmail);
+      await addUserToProject(id, {
+        email: userEmail,
+        departmentId: departmentId
+      });
       toast.success("User added to project");
       setUserEmail("");
+      setDepartmentId("");
+
       const usersResponse = await getUsersByProject(id);
       setUsers(usersResponse);
     } catch {
@@ -99,6 +120,13 @@ const ViewProject = () => {
   const handleRemoveUser = async () => {
     if (!userEmail.trim()) {
       toast.error("Please enter user email");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(userEmail)) {
+      toast.error("Invalid formate of email address");
       return;
     }
 
@@ -121,9 +149,11 @@ const ViewProject = () => {
       const projectResponse = await getProjectById(id);
       const marksheetsResponse = (await getMarksheets(id)) || [];
       const usersResponse = await getUsersByProject(id);
+      const departmentsResponse = await getAllDepartments();
 
       setProject(projectResponse);
       setUsers(usersResponse);
+      setDepartments(departmentsResponse);
 
       const initialStatus = {};
       const verifiedMap = {};
@@ -350,6 +380,24 @@ const ViewProject = () => {
       // extraClass: "bg-blue-600 hover:bg-blue-700"
     },
     {
+      label: "Deselect All",
+      show: selectedMarksheets.length > 0,
+      onClick: () => {
+        setSelectedMarksheets([]);
+        selectedRef.current = [];
+      },
+      // extraClass: "bg-gray-500 hover:bg-gray-600"
+    },
+    {
+      label: `Process Selected (${selectedMarksheets.length})`,
+      show: selectedMarksheets.length > 0,
+      onClick: handleProcessSelected,
+      disabled: selectedMarksheets.length === 0 || processingSelected,
+      loading: processingSelected,
+      loadingText: `Processing Selected (${selectedMarksheets.length}) ...`,
+      // extraClass: "bg-green-600 hover:bg-green-700"
+    },
+    {
       label: "Process All",
       loadingText: "Processing...",
       show: project.projectStatus !== "PROCESSING",
@@ -362,29 +410,19 @@ const ViewProject = () => {
       //     : "bg-purple-600 hover:bg-purple-700",
       // margin: "ml-20"
     },
-    {
-      label: `Process Selected (${selectedMarksheets.length})`,
-      show: selectedMarksheets.length > 0,
-      onClick: handleProcessSelected,
-      disabled: selectedMarksheets.length === 0 || processingSelected,
-      loading: processingSelected,
-      loadingText: `Processing Selected (${selectedMarksheets.length}) ...`,
-      // extraClass: "bg-green-600 hover:bg-green-700"
-    },
-    {
-      label: "Deselect All",
-      show: selectedMarksheets.length > 0,
-      onClick: () => {
-        setSelectedMarksheets([]);
-        selectedRef.current = [];
-      },
-      // extraClass: "bg-gray-500 hover:bg-gray-600"
-    },
+
     {
       label: "Edit Project",
       show: project.projectCreator === Cookies.get("email"),
       onClick: () => {
         navigate(`/project/${id}/edit`);
+      }
+    },
+    {
+      label: "Verification Assignment",
+      show: true,
+      onClick: () => {
+        navigate(`/project/${id}/assignMarksheets`);
       }
     }
   ];
@@ -472,6 +510,15 @@ const ViewProject = () => {
             </div>
           }
 
+          {((getCountByStatus("QUEUED") + getCountByStatus("PROCESSING")) / 16.0) > 0 && (
+            <div>
+              <p className="text-sm text-gray-500 font-medium">Expected Time</p>
+              <p className="text-lg font-semibold text-gray-800">
+                {formatDuration((getCountByStatus("QUEUED") + getCountByStatus("PROCESSING")) * 100 / 16.0)}
+              </p>
+            </div>
+          )}
+
           <div>
             <p className="text-sm text-gray-500 font-medium">Duration</p>
             <p className="text-lg font-semibold text-gray-800">
@@ -496,10 +543,10 @@ const ViewProject = () => {
               <div
                 key={index}
                 className={`flex items-center gap-2
-            bg-white border
-            px-3 py-2 rounded-md
-            transition-all duration-200
-            ${removingIndex === index
+                  bg-white border
+                  px-3 py-2 rounded-md
+                  transition-all duration-200
+                  ${removingIndex === index
                     ? "opacity-0 scale-95"
                     : "opacity-100 scale-100"
                   }`}
@@ -630,6 +677,7 @@ const ViewProject = () => {
       {
         (project.projectCreator === Cookies.get("email")) &&
         (<div className="mt-4 flex gap-2 items-center">
+
           <input
             type="email"
             placeholder="Enter user email"
@@ -638,6 +686,21 @@ const ViewProject = () => {
             onChange={(e) => setUserEmail(e.target.value)}
             className="border rounded-md px-3 py-2 w-72 text-sm"
           />
+
+          <select
+            value={departmentId}
+            onChange={(e) => setDepartmentId(e.target.value)}
+            className="border rounded-md px-3 py-2 text-sm"
+          >
+            <option value="">Select Department</option>
+
+            {departments.map((dept) => (
+              <option key={dept.id} value={dept.id}>
+                {dept.name}
+              </option>
+            ))}
+
+          </select>
 
           <BlueButton
             label="Add User"
@@ -654,6 +717,7 @@ const ViewProject = () => {
             loading={addingUser}
             loadingText="Removing..."
           />
+
         </div>)
       }
 

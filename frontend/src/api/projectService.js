@@ -10,13 +10,23 @@ export const getProjects = async () => {
   return response.data;
 };
 
+export const getProjectsForVerifier = async () => {
+  const response = await axiosInstance.get(`/verifier/projects`);
+  return response.data;
+};
+
 export const getProjectById = async (projectId) => {
   const response = await axiosInstance.get(`/projects/${projectId}`);
   return response.data;
 };
 
-export const addUserToProject = async (projectId, email) => {
-  const response = await axiosInstance.put(`/projects/${projectId}/addUser`, { email });
+export const getProjectByIdForVerifier = async (projectId) => {
+  const response = await axiosInstance.get(`/verifier/projects/${projectId}`);
+  return response.data;
+};
+
+export const addUserToProject = async (projectId, request) => {
+  const response = await axiosInstance.put(`/projects/${projectId}/addUser`, request);
   return response.data;
 };
 

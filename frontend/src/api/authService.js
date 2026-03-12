@@ -14,6 +14,7 @@ export const login = async (data) => {
   const response = await axiosInstance.post("/api/auth/login", data);
   Cookies.set("accessToken", response.data.accessToken);
   Cookies.set("refreshToken", response.data.refreshToken);
+  Cookies.set("role", response.data.role);
   Cookies.set("email", data.email);
   return response.data;
 };
@@ -34,5 +35,29 @@ export const logout = async () => {
     Cookies.remove("refreshToken");
     Cookies.remove("accessToken");
     Cookies.remove("email");
+    Cookies.remove("role");
   }
 };
+
+
+export const registerSuperAdmin = async (data) => {
+  const response = await axiosInstance.post("/superadmin/registerAdmin", data);
+  return response.data;
+};
+
+export const getAdmins = async () => {
+  const response = await axiosInstance.get("/superadmin/admins");
+  return response.data;
+};
+
+
+export const updateProfile = async (data) => {
+  const response = await axiosInstance.put("/users", data);
+  return response.data;
+};
+
+
+export const getUserInfo = async () => {
+  const response = await axiosInstance.get("/users");
+  return response.data;
+}

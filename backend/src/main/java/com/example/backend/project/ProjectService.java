@@ -3,6 +3,7 @@ package com.example.backend.project;
 import com.example.backend.auth.entity.Role;
 import com.example.backend.auth.service.AuthService;
 import com.example.backend.config.AppProps;
+import com.example.backend.department.DepartmentService;
 import com.example.backend.user.User;
 import com.example.backend.user.UserService;
 import com.example.backend.user_project.UserProject;
@@ -29,6 +30,7 @@ public class ProjectService {
     private final AuthService authService;
     private final AppProps appProps;
     private final PasswordEncoder encoder;
+    private final DepartmentService departmentService;
 
     public Project updateProject(UUID projectId, UpdateProjectRequest request) {
         String creatorUserId = authService.getCurrentUserId();
@@ -61,12 +63,16 @@ public class ProjectService {
                     .name(request.getEmail())
                     .email(request.getEmail())
                     .password(encoder.encode(request.getEmail()))
-                    .department("UNKNOWN")
-                    .role(Role.ADMIN)
+                    .department(departmentService.getDepartmentById(UUID.fromString(request.getDepartmentId())))
+                    .role(Role.VERIFIER)
                     .build();
             user = userService.save(user);
+        } else {
+            if (user.getRole().equals(Role.VERIFIER)) {
+                user.setDepartment(departmentService.getDepartmentById(UUID.fromString(request.getDepartmentId())));
+                userService.save(user);
+            }
         }
-
 
         UserProjectId id = new UserProjectId();
         id.setUserId(user.getId());
@@ -146,10 +152,33 @@ public class ProjectService {
 
     public List<GetProjectResponse> getProjectsByUserId() {
         String userId = authService.getCurrentUserId();
+
         List<Project> projectList = userProjectService.getProjectsByUserId(userId);
         List<GetProjectResponse> responseList = new ArrayList<>();
         for (Project project : projectList) {
             responseList.add(converter.getProjectResponse(project));
+        }
+        return responseList;
+    }
+
+    public GetProjectResponseForVerifier getProjectInfoForVerifier(String projectId) {
+        String userId = authService.getCurrentUserId();
+        UserProject userProject = userProjectService.findById(
+                UserProjectId.builder()
+                        .userId(UUID.fromString(userId))
+                        .projectId(UUID.fromString(projectId))
+                        .build()
+        ).orElseThrow();
+        return converter.getProjectResponseForVerifier(userProject.getProject());
+    }
+
+    public List<GetProjectResponseForVerifier> getProjectsByUserIdForVerifier() {
+        String userId = authService.getCurrentUserId();
+
+        List<Project> projectList = userProjectService.getProjectsByUserId(userId);
+        List<GetProjectResponseForVerifier> responseList = new ArrayList<>();
+        for (Project project : projectList) {
+            responseList.add(converter.getProjectResponseForVerifier(project));
         }
         return responseList;
     }

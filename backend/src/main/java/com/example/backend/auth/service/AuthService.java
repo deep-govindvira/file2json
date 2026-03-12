@@ -69,7 +69,7 @@ public class AuthService {
 
         refreshRepo.save(refreshToken);
 
-        return new AuthResponse(accessToken, refreshTokenValue);
+        return new AuthResponse(accessToken, refreshTokenValue, user.getRole().name());
     }
 
     public AuthResponse refresh(String token) {
@@ -86,7 +86,7 @@ public class AuthService {
 
         String newAccessToken = jwtService.generateAccessToken(user);
 
-        return new AuthResponse(newAccessToken, token);
+        return new AuthResponse(newAccessToken, token, user.getRole().name());
     }
 
     public String getCurrentUserId() {

@@ -46,6 +46,11 @@ export const getMarksheets = async (projectId) => {
     return response.data;
 };
 
+export const getMarksheetsForVerifier = async (projectId) => {
+    const response = await axiosInstance.get(`/verifier/projects/${projectId}/marksheets`);
+    return response.data;
+};
+
 export const getMarksheetById = async (projectId, marksheetId) => {
     const response = await axiosInstance.get(`/projects/${projectId}/marksheets/${marksheetId}`);
     return response.data;
@@ -65,3 +70,8 @@ export const updateMarksheet = async (projectId, marksheetId, data) => {
     const response = await axiosInstance.put(`/projects/${projectId}/marksheets/${marksheetId}`, data);
     return response.data;
 };
+
+export const assignMarksheetToUser = async (projectId, marksheetId, assignToUserId) => {
+    const response = await axiosInstance.put(`/projects/${projectId}/marksheets/${marksheetId}/assignToUser/${assignToUserId}`);
+    return response.data;
+}

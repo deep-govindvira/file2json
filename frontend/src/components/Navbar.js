@@ -1,6 +1,7 @@
 import { useNavigate, NavLink } from "react-router-dom";
 import { logout } from "../api/authService";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 function Navbar() {
     const navigate = useNavigate();
@@ -22,6 +23,10 @@ function Navbar() {
             </h2>
 
             <div className="flex items-center gap-4">
+                <div>
+                    {Cookies.get("role")}
+                </div>
+
                 <NavLink
                     to="/dashboard"
                     className={({ isActive }) =>
@@ -30,7 +35,18 @@ function Navbar() {
                             : "px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-700 rounded-md transition"
                     }
                 >
-                    Projects
+                    Dashboard
+                </NavLink>
+
+                <NavLink
+                    to="/profile"
+                    className={({ isActive }) =>
+                        isActive
+                            ? "px-3 py-2 bg-slate-700 rounded-md text-white transition"
+                            : "px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-700 rounded-md transition"
+                    }
+                >
+                    Profile
                 </NavLink>
 
                 <button

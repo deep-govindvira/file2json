@@ -98,4 +98,8 @@ public class Marksheet extends Audit {
 
     @Column(name = "corrected", columnDefinition = "TEXT")
     private String corrected;
+
+    @ManyToOne
+    @JoinColumn(name = "assigned_to_users_id", referencedColumnName = "id")
+    private User assignedToUser;
 }
