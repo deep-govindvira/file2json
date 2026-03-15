@@ -428,11 +428,24 @@ const AssignMarksheet = () => {
 
                     <div className="w-16 h-16">
                         <CircularProgressbar
-                            value={globalStats.unverified}
-                            text={`${globalStats.unverified.toFixed(0)}%`}
+                            value={
+                                globalStats.verified + globalStats.unverified === 0
+                                    ? 0
+                                    : (globalStats.verified /
+                                        (globalStats.verified + globalStats.unverified)) *
+                                    100
+                            }
+                            text={`${globalStats.verified + globalStats.unverified === 0
+                                ? 0
+                                : (
+                                    (globalStats.verified /
+                                        (globalStats.verified + globalStats.unverified)) *
+                                    100
+                                ).toFixed(0)
+                                }%`}
                             styles={buildStyles({
                                 textSize: "28px",
-                                pathColor: "#06b6d4",
+                                pathColor: "#22c55e", // green
                                 textColor: "#374151",
                                 trailColor: "#e5e7eb",
                             })}

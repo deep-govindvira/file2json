@@ -47,9 +47,10 @@ public class SecurityConfig {
                                 )
                                 .permitAll()
                                 .requestMatchers("/files/**").permitAll()
+                                .requestMatchers("/users/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "VERIFIER")
                                 .requestMatchers("/projects/{projectId}/marksheets/{marksheetId}").permitAll()
                                 .requestMatchers("/superadmin/**").hasRole("SUPER_ADMIN")
-                                .requestMatchers("/departments/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
+                                .requestMatchers("/departments/**").hasAnyRole("SUPER_ADMIN")
                                 .requestMatchers("/projects/**").hasRole("ADMIN")
                                 .requestMatchers("/verifier/**").hasRole("VERIFIER")
 //                        .requestMatchers("/api/stream").permitAll()  // 👈 allow SSE

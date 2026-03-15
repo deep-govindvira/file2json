@@ -63,13 +63,13 @@ public class ProjectService {
                     .name(request.getEmail())
                     .email(request.getEmail())
                     .password(encoder.encode(request.getEmail()))
-                    .department(departmentService.getDepartmentById(UUID.fromString(request.getDepartmentId())))
+                    .department(departmentService.getDepartmentById(project.getProjectCreator().getDepartment().getId()))
                     .role(Role.VERIFIER)
                     .build();
             user = userService.save(user);
         } else {
             if (user.getRole().equals(Role.VERIFIER)) {
-                user.setDepartment(departmentService.getDepartmentById(UUID.fromString(request.getDepartmentId())));
+                user.setDepartment(departmentService.getDepartmentById(project.getProjectCreator().getDepartment().getId()));
                 userService.save(user);
             }
         }

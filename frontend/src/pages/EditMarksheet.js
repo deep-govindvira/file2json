@@ -595,11 +595,41 @@ const EditMarksheet = () => {
                                                                             : "text"
                                                                     }
                                                                     value={field?.value || ""}
+                                                                    // onChange={(e) => {
+                                                                    //     const value = e.target.value;
+                                                                    //     setMarksheet(prev => {
+                                                                    //         const updated = [...prev.markResponseList];
+                                                                    //         updated[rowIndex][column].value = value;
+                                                                    //         return {
+                                                                    //             ...prev,
+                                                                    //             markResponseList: updated,
+                                                                    //         };
+                                                                    //     });
+                                                                    // }}
                                                                     onChange={(e) => {
                                                                         const value = e.target.value;
+
                                                                         setMarksheet(prev => {
                                                                             const updated = [...prev.markResponseList];
+
+                                                                            const obtained =
+                                                                                column === "obtained"
+                                                                                    ? Number(value)
+                                                                                    : Number(updated[rowIndex].obtained.value);
+
+                                                                            const outOf =
+                                                                                column === "subjectOutOfMarks"
+                                                                                    ? Number(value)
+                                                                                    : Number(updated[rowIndex].subjectOutOfMarks.value);
+
+                                                                            // 🚫 Prevent obtained > out of
+                                                                            if (!isNaN(obtained) && !isNaN(outOf) && obtained > outOf) {
+                                                                                toast.error("Obtained cannot be greater than Out Of");
+                                                                                return prev; // stop update
+                                                                            }
+
                                                                             updated[rowIndex][column].value = value;
+
                                                                             return {
                                                                                 ...prev,
                                                                                 markResponseList: updated,

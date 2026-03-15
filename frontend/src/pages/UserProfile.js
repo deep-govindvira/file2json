@@ -20,11 +20,44 @@ const UserProfile = () => {
     fetchUser();
   }, []);
 
+  // const handleUpdate = async (e) => {
+  //   e.preventDefault();
+
+  //   // Validate only if password entered
+  //   if (password) {
+  //     if (password !== confirmPassword) {
+  //       toast.error("Passwords do not match");
+  //       return;
+  //     }
+  //   }
+
+  //   try {
+  //     await updateProfile({
+  //       name,
+  //       password: password || undefined, // send only if exists
+  //     });
+
+  //     toast.success("Profile updated successfully");
+  //     setPassword("");
+  //     setConfirmPassword("");
+  //   } catch (error) {
+  //     toast.error("Failed to update profile");
+  //   }
+  // };
+
   const handleUpdate = async (e) => {
     e.preventDefault();
 
-    // Validate only if password entered
-    if (password) {
+    const trimmedPassword = password.trim();
+
+    // If user typed something but only spaces
+    if (password.length > 0 && trimmedPassword.length === 0) {
+      toast.error("Password cannot be blank");
+      return;
+    }
+
+    // Validate only if real password entered
+    if (trimmedPassword.length > 0) {
       if (password !== confirmPassword) {
         toast.error("Passwords do not match");
         return;
@@ -34,7 +67,7 @@ const UserProfile = () => {
     try {
       await updateProfile({
         name,
-        password: password || undefined, // send only if exists
+        password: trimmedPassword ? password : undefined,
       });
 
       toast.success("Profile updated successfully");

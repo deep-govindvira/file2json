@@ -1,2 +1,4 @@
 .env
 /er-output
+s3.yaml
+localstack.yaml

@@ -62,6 +62,8 @@ public class MarksheetService {
     private final BoardService boardService;
     private final AuthService authService;
     private final UserService userService;
+//    private final S3Client s3Client;
+
 
     public void assignMarksheet(String projectId, String marksheetId, String userId) {
         authenticateUserAndProject(authService.getCurrentUserId(), projectId);
@@ -587,6 +589,7 @@ public class MarksheetService {
 
         marksheet = repository.save(marksheet);
         marksheet = saveFile(file, marksheet);
+//        marksheet = saveFileInS3(file, marksheet);
         sseService.sendProjectInfo(projectService.refreshProjectStatistics(projectId));
         return converter.uploadMarksheetResponse(marksheet);
     }
@@ -631,6 +634,45 @@ public class MarksheetService {
         }
     }
 
+
+//    private Marksheet saveFileInS3(MultipartFile file, Marksheet marksheet) {
+//
+//        final String bucketName = "marksheets";
+//
+//        String originalFileName = file.getOriginalFilename();
+//        String extension = "";
+//
+//        if (originalFileName != null && originalFileName.contains(".")) {
+//            extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+//        }
+//
+
+    /// /        String key = "marksheets/" + marksheet.getId() + extension;
+//        String key = marksheet.getId() + extension;
+//
+//        try {
+//
+//            PutObjectRequest putRequest = PutObjectRequest.builder()
+//                    .bucket(bucketName)
+//                    .key(key)
+//                    .contentType(file.getContentType())
+//                    .build();
+//
+//            s3Client.putObject(
+//                    putRequest,
+//                    RequestBody.fromInputStream(file.getInputStream(), file.getSize())
+//            );
+//
+//            String url = "http://localhost:9000/marksheets/" + key;
+//            marksheet.setUrl(url);
+//
+//            return repository.save(marksheet);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace(); // ⭐ important for debugging
+//            throw new RuntimeException("Failed to upload file to S3", e);
+//        }
+//    }
     private Integer extractYear(String date) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");

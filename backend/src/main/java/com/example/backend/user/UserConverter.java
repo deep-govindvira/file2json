@@ -45,11 +45,16 @@ public class UserConverter {
     }
 
     public GetUserResponse getUserResponse(User user) {
-        return GetUserResponse.builder()
-                .department(user.getDepartment().getName())
+        GetUserResponse response = GetUserResponse.builder()
                 .email(user.getEmail())
                 .name(user.getName())
                 .userId(user.getId().toString())
                 .build();
+
+        if (user.getDepartment() != null) {
+            response.setDepartment(user.getDepartment().getName());
+        }
+
+        return response;
     }
 }

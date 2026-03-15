@@ -49,10 +49,11 @@ function MarksheetGrid({ list, projectId, navigate }) {
                     }
                     className={`
                         h-6 w-6 rounded-sm cursor-pointer transition-all duration-200
-                        ${
-                            m.verificationStatus === "VERIFIED"
-                                ? "bg-cyan-400"
-                                : "bg-gray-400"
+                        ${m.verificationStatus === "VERIFIED"
+                            ? "bg-cyan-400"
+                            : m.processingStatus === "COMPLETED"
+                                ? "bg-green-400"
+                                : "bg-red-400"
                         }
                     `}
                 />
@@ -144,6 +145,26 @@ function VerifierViewProject() {
                 <StatCard title="Total" value={marksheets.length} />
                 <CompletionCard percent={completionPercent} />
             </div>
+
+            <div className="flex items-center gap-6 mb-4 text-sm">
+
+                <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-red-400 rounded-sm"></div>
+                    <span>Failed</span>
+                </div>
+
+                <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-green-400 rounded-sm"></div>
+                    <span>Completed</span>
+                </div>
+
+                <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-cyan-400 rounded-sm"></div>
+                    <span>Verified</span>
+                </div>
+
+            </div>
+
 
             {/* Unverified */}
             <div className="border rounded-lg p-5 bg-white shadow-sm">

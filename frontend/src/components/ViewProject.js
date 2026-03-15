@@ -76,20 +76,12 @@ const ViewProject = () => {
 
   const [userEmail, setUserEmail] = useState("");
   const [addingUser, setAddingUser] = useState(false);
-  const [departmentId, setDepartmentId] = useState("");
-  const [departments, setDepartments] = useState([]);
 
   const handleAddUser = async () => {
     if (!userEmail.trim()) {
       toast.error("Please enter user email");
       return;
     }
-
-    if (!departmentId) {
-      toast.error("Please select department");
-      return;
-    }
-
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -101,12 +93,10 @@ const ViewProject = () => {
     try {
       setAddingUser(true);
       await addUserToProject(id, {
-        email: userEmail,
-        departmentId: departmentId
+        email: userEmail
       });
       toast.success("User added to project");
       setUserEmail("");
-      setDepartmentId("");
 
       const usersResponse = await getUsersByProject(id);
       setUsers(usersResponse);
@@ -149,11 +139,9 @@ const ViewProject = () => {
       const projectResponse = await getProjectById(id);
       const marksheetsResponse = (await getMarksheets(id)) || [];
       const usersResponse = await getUsersByProject(id);
-      const departmentsResponse = await getAllDepartments();
 
       setProject(projectResponse);
       setUsers(usersResponse);
-      setDepartments(departmentsResponse);
 
       const initialStatus = {};
       const verifiedMap = {};
@@ -687,23 +675,8 @@ const ViewProject = () => {
             className="border rounded-md px-3 py-2 w-72 text-sm"
           />
 
-          <select
-            value={departmentId}
-            onChange={(e) => setDepartmentId(e.target.value)}
-            className="border rounded-md px-3 py-2 text-sm"
-          >
-            <option value="">Select Department</option>
-
-            {departments.map((dept) => (
-              <option key={dept.id} value={dept.id}>
-                {dept.name}
-              </option>
-            ))}
-
-          </select>
-
           <BlueButton
-            label="Add User"
+            label="Add Verifier"
             onClick={handleAddUser}
             disabled={addingUser}
             loading={addingUser}
@@ -711,7 +684,7 @@ const ViewProject = () => {
           />
 
           <RedButton
-            label="Remove User"
+            label="Remove Verifier"
             onClick={handleRemoveUser}
             disabled={addingUser}
             loading={addingUser}

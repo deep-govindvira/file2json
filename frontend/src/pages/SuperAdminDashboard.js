@@ -1,24 +1,38 @@
 import { useEffect, useState } from "react";
-import { getAdmins, registerSuperAdmin } from "../api/authService";
-import { getAllDepartments } from "../api/departmentService";
+import {
+  getAdmins,
+  registerSuperAdmin,
+} from "../api/authService";
+
+import {
+  getAllDepartments,
+  createDepartment,
+  deleteDepartment,
+} from "../api/departmentService";
+
 import { toast } from "react-toastify";
 
 function SuperAdminDashboard() {
-
   const [admins, setAdmins] = useState([]);
   const [departments, setDepartments] = useState([]);
 
+  // ⚠️ KEEP ORIGINAL API FORMAT
   const [form, setForm] = useState({
     email: "",
-    department: ""
+    department: "",
   });
+
+  const [newDept, setNewDept] = useState("");
+  const [deleteId, setDeleteId] = useState(null);
+
+  // ================= FETCH =================
 
   const fetchAdmins = async () => {
     try {
       const data = await getAdmins();
       setAdmins(data);
-    } catch (error) {
-      console.error(error);
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -26,8 +40,8 @@ function SuperAdminDashboard() {
     try {
       const data = await getAllDepartments();
       setDepartments(data);
-    } catch (error) {
-      console.error(error);
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -36,119 +50,268 @@ function SuperAdminDashboard() {
     fetchDepartments();
   }, []);
 
+  // ================= FORM =================
+
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value
-    });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleRegisterAdmin = async (e) => {
     e.preventDefault();
+
+    if (!form.email) return toast.error("Enter email");
+    if (!form.department)
+      return toast.error("Select department");
 
     try {
       await registerSuperAdmin(form);
 
-      setForm({
-        email: "",
-        department: ""
-      });
-
+      setForm({ email: "", department: "" });
       fetchAdmins();
-      toast.success("Admin added successfully.");
-    } catch (error) {
-      toast.error("Failed to add.");
-      console.error(error);
+
+      toast.success("Admin registered");
+    } catch (err) {
+      toast.error("Registration failed");
+      console.error(err);
     }
   };
 
+  // ================= DEPARTMENT =================
+
+  const handleAddDepartment = async () => {
+    if (!newDept)
+      return toast.error("Enter department name");
+
+    try {
+      await createDepartment(newDept);
+      setNewDept("");
+      fetchDepartments();
+
+      toast.success("Department added");
+    } catch {
+      toast.error("Add failed");
+    }
+  };
+
+  const confirmDeleteDepartment = (id) => {
+    setDeleteId(id);
+  };
+
+  const handleDeleteDepartment = async () => {
+    try {
+      await deleteDepartment(deleteId);
+      setDeleteId(null);
+      fetchDepartments();
+
+      toast.success("Department removed");
+    } catch {
+      toast.error("Delete failed");
+    }
+  };
+
+  // ================= UI =================
+
   return (
-    <div className="p-10 max-w-6xl mx-auto space-y-10">
+    <div className="min-h-screen bg-gray-100 p-8">
 
-      <h1 className="text-3xl font-bold text-gray-800">
-        Super Admin Dashboard
-      </h1>
+      <div className="max-w-7xl mx-auto space-y-8">
 
-      <div className="bg-white shadow-md rounded-xl p-6 max-w-md">
+        {/* ===== TITLE ===== */}
+        <h1 className="text-3xl font-bold text-gray-800">
+          Super Admin Dashboard
+        </h1>
 
-        <h2 className="text-xl font-semibold mb-4">
-          Register Department Admin
-        </h2>
+        {/* ===== TOP GRID ===== */}
+        <div className="grid md:grid-cols-2 gap-8">
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* ===== REGISTER ADMIN ===== */}
+          <div className="bg-white rounded-2xl shadow p-6">
 
-          <input
-            type="email"
-            name="email"
-            placeholder="Department Admin Email"
-            value={form.email}
-            onChange={handleChange}
-            autoComplete="off"
-            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
+            <h2 className="text-xl font-semibold mb-6">
+              Register Department Admin
+            </h2>
 
-          <select
-            name="department"
-            value={form.department}
-            onChange={handleChange}
-            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          >
-            <option value="">Select Department</option>
+            <form
+              onSubmit={handleRegisterAdmin}
+              className="space-y-4"
+            >
+              <input
+                type="email"
+                name="email"
+                placeholder="Admin email"
+                value={form.email}
+                onChange={handleChange}
+                className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+              />
 
-            {departments.map((dept) => (
-              <option key={dept.id} value={dept.id}>
-                {dept.name}
-              </option>
-            ))}
+              <select
+                name="department"
+                value={form.department}
+                onChange={handleChange}
+                className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+              >
+                <option value="">
+                  Select Department
+                </option>
 
-          </select>
+                {departments.map((dept) => (
+                  <option key={dept.id} value={dept.id}>
+                    {dept.name}
+                  </option>
+                ))}
+              </select>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
-          >
-            Register Admin
-          </button>
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+              >
+                Register Admin
+              </button>
+            </form>
+          </div>
 
-        </form>
+          {/* ===== MANAGE DEPARTMENTS ===== */}
+          <div className="bg-white rounded-2xl shadow p-6">
 
-      </div>
+            <h2 className="text-xl font-semibold mb-6">
+              Manage Departments
+            </h2>
 
-      <div className="bg-white shadow-md rounded-xl p-6">
+            {/* Add Department */}
+            <div className="flex gap-3 mb-6">
+              <input
+                type="text"
+                placeholder="Department name"
+                value={newDept}
+                onChange={(e) =>
+                  setNewDept(e.target.value)
+                }
+                className="flex-1 border rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-400 outline-none"
+              />
 
-        <h2 className="text-xl font-semibold mb-4">
-          Admin List
-        </h2>
+              <button
+                onClick={handleAddDepartment}
+                className="bg-green-500 text-white px-5 rounded-lg hover:bg-green-600 transition"
+              >
+                Add
+              </button>
+            </div>
 
-        <div className="overflow-x-auto">
+            {/* Department List */}
+            <div className="max-h-72 overflow-y-auto space-y-2">
 
-          <table className="w-full border border-gray-200">
+              {departments.map((dept) => (
+                <div
+                  key={dept.id}
+                  className="flex justify-between items-center border rounded-lg px-4 py-2"
+                >
+                  <span className="font-medium">
+                    {dept.name}
+                  </span>
 
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="p-3 border text-left">Name</th>
-                <th className="p-3 border text-left">Email</th>
-                <th className="p-3 border text-left">Department</th>
-              </tr>
-            </thead>
-
-            <tbody>
-
-              {admins.map((admin) => (
-                <tr key={admin.userId} className="hover:bg-gray-50">
-                  <td className="p-3 border">{admin.name}</td>
-                  <td className="p-3 border">{admin.email}</td>
-                  <td className="p-3 border">{admin.department}</td>
-                </tr>
+                  <button
+                    onClick={() =>
+                      confirmDeleteDepartment(dept.id)
+                    }
+                    className="text-red-500 hover:text-red-700 font-semibold"
+                  >
+                    Remove
+                  </button>
+                </div>
               ))}
+            </div>
+          </div>
+        </div>
 
-            </tbody>
+        {/* ===== ADMIN LIST ===== */}
+        <div className="bg-white rounded-2xl shadow p-6">
 
-          </table>
+          <h2 className="text-xl font-semibold mb-6">
+            Admin List
+          </h2>
 
+          <div className="overflow-x-auto">
+
+            <table className="w-full border border-gray-200">
+
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="p-3 border text-left">
+                    Name
+                  </th>
+                  <th className="p-3 border text-left">
+                    Email
+                  </th>
+                  <th className="p-3 border text-left">
+                    Department
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                {admins.map((admin) => (
+                  <tr
+                    key={admin.userId}
+                    className="hover:bg-gray-50"
+                  >
+                    <td className="p-3 border">
+                      {admin.name}
+                    </td>
+
+                    <td className="p-3 border">
+                      {admin.email}
+                    </td>
+
+                    <td className="p-3 border">
+                      {admin.department}
+                    </td>
+                  </tr>
+                ))}
+
+              </tbody>
+            </table>
+
+          </div>
         </div>
 
       </div>
+
+      {/* ===== DELETE CONFIRM MODAL ===== */}
+      {deleteId && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+
+          <div className="bg-white rounded-xl shadow-lg p-6 w-96">
+
+            <h3 className="text-lg font-semibold mb-2">
+              Delete Department
+            </h3>
+
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to delete this
+              department? This action cannot be undone.
+            </p>
+
+            <div className="flex justify-end gap-3">
+
+              <button
+                onClick={() => setDeleteId(null)}
+                className="px-4 py-2 rounded-lg border hover:bg-gray-100"
+              >
+                Cancel
+              </button>
+
+              <button
+                onClick={handleDeleteDepartment}
+                className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700"
+              >
+                Delete
+              </button>
+
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

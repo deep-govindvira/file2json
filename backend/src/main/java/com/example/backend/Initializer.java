@@ -31,6 +31,7 @@ public class Initializer implements CommandLineRunner {
     private final UserProjectRepository userProjectRepository;
     private final PasswordEncoder encoder;
     private final DepartmentService departmentService;
+//    private final S3Client s3Client;
 
     @Override
     public void run(String... args) {
@@ -53,10 +54,26 @@ public class Initializer implements CommandLineRunner {
         departmentService.createDepartment(Department.builder().name("Chemical Engineering").build());
         departmentService.createDepartment(Department.builder().name("Civil Engineering").build());
         departmentService.createDepartment(Department.builder().name("Electronics & Communication Engineering").build());
-        departmentService.createDepartment(Department.builder().name("Information Technology").build());
         departmentService.createDepartment(Department.builder().name("Instrumentation & Control Engineering").build());
         departmentService.createDepartment(Department.builder().name("Mechanical Engineering").build());
+
+//        createMarksheetBucket();
+
     }
+
+//    void createMarksheetBucket() {
+//        String bucket = "marksheets";
+//
+//        boolean exists = s3Client.listBuckets().buckets()
+//                .stream()
+//                .anyMatch(b -> b.name().equals(bucket));
+//
+//        if (!exists) {
+//            s3Client.createBucket(b -> b.bucket(bucket));
+//            System.out.println("Bucket created: " + bucket);
+//        }
+//
+//    }
 
     void addBoards() {
         List<Board> boardList = new ArrayList<>();
