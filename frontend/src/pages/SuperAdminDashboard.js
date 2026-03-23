@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  deleteAdmin,
   getAdmins,
   registerSuperAdmin,
 } from "../api/authService";
@@ -15,6 +16,10 @@ import { toast } from "react-toastify";
 function SuperAdminDashboard() {
   const [admins, setAdmins] = useState([]);
   const [departments, setDepartments] = useState([]);
+
+  const [deleteAdminId, setDeleteAdminId] = useState(null);
+
+  const [selectedDept, setSelectedDept] = useState("");
 
   // ⚠️ KEEP ORIGINAL API FORMAT
   const [form, setForm] = useState({
@@ -104,6 +109,18 @@ function SuperAdminDashboard() {
       fetchDepartments();
 
       toast.success("Department removed");
+    } catch {
+      toast.error("Delete failed");
+    }
+  };
+
+
+  const handleDeleteAdmin = async () => {
+    try {
+      await deleteAdmin(deleteAdminId);
+      setDeleteAdminId(null);
+      fetchAdmins();
+      toast.success("Admin deleted");
     } catch {
       toast.error("Delete failed");
     }
@@ -223,6 +240,25 @@ function SuperAdminDashboard() {
           </div>
         </div>
 
+        {/* Department Filter */}
+        <div className="mb-4 flex gap-3 items-center">
+          <label className="font-medium">Filter by Department:</label>
+
+          <select
+            value={selectedDept}
+            onChange={(e) => setSelectedDept(e.target.value)}
+            className="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+          >
+            <option value="">All Departments</option>
+
+            {departments.map((dept) => (
+              <option key={dept.id} value={dept.name}>
+                {dept.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
         {/* ===== ADMIN LIST ===== */}
         <div className="bg-white rounded-2xl shadow p-6">
 
@@ -245,13 +281,19 @@ function SuperAdminDashboard() {
                   <th className="p-3 border text-left">
                     Department
                   </th>
+                  <th className="p-3 border text-left">Actions</th>
                 </tr>
               </thead>
 
               <tbody>
 
-                {admins.map((admin) => (
-                  <tr
+                {admins
+                  .filter((admin) =>
+                    selectedDept
+                      ? admin.department === selectedDept
+                      : true
+                  )
+                  .map((admin) => (<tr
                     key={admin.userId}
                     className="hover:bg-gray-50"
                   >
@@ -266,8 +308,17 @@ function SuperAdminDashboard() {
                     <td className="p-3 border">
                       {admin.department}
                     </td>
+
+                    <td className="p-3 border">
+                      <button
+                        onClick={() => setDeleteAdminId(admin.userId)}
+                        className="text-red-500 hover:text-red-700 font-semibold"
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </tr>
-                ))}
+                  ))}
 
               </tbody>
             </table>
@@ -303,6 +354,39 @@ function SuperAdminDashboard() {
 
               <button
                 onClick={handleDeleteDepartment}
+                className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700"
+              >
+                Delete
+              </button>
+
+            </div>
+          </div>
+        </div>
+      )}
+
+      {deleteAdminId && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-lg p-6 w-96">
+
+            <h3 className="text-lg font-semibold mb-2">
+              Delete Admin
+            </h3>
+
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to delete this admin?
+            </p>
+
+            <div className="flex justify-end gap-3">
+
+              <button
+                onClick={() => setDeleteAdminId(null)}
+                className="px-4 py-2 rounded-lg border hover:bg-gray-100"
+              >
+                Cancel
+              </button>
+
+              <button
+                onClick={handleDeleteAdmin}
                 className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700"
               >
                 Delete

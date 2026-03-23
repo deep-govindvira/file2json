@@ -15,6 +15,7 @@ GEMINI_API_KEY=your_gemini_api_key_here
 python -W ignore ext.py
 python -W ignore api.py
 python -W ignore -m uvicorn api:app --reload
+pip install -r requirements.txt
 deactivate
 
 Windows
@@ -32,6 +33,7 @@ GEMINI_API_KEY=your_gemini_api_key_here
 python -W ignore ext.py
 python -W ignore api.py
 python -W ignore -m uvicorn api:app --reload
+python -W ignore -m uvicorn api:app --host 192.168.1.33 --port 8000
 deactivate
 
 Urls

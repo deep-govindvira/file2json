@@ -40,3 +40,8 @@ export const updateProject = async (projectId, data) => {
   return response.data;
 };
 
+export const stopProcessing = async (projectId) => {
+  const response = await axiosInstance.post(`/projects/${projectId}/marksheets/stopProcessing`,);
+  return response.data;
+};
+

@@ -27,6 +27,15 @@ public class MarksheetController {
         service.assignMarksheet(projectId, marksheetId, assignToUserId);
     }
 
+    @PutMapping("/assignToUser/{assignToUserId}")
+    public void assignMarksheetsToUser(
+            @PathVariable String projectId,
+            @PathVariable String assignToUserId,
+            @RequestBody List<String> marksheetIds) {
+
+        service.assignMarksheets(projectId, marksheetIds, assignToUserId);
+    }
+
     @PutMapping("/{marksheetId}")
     public void updateMarksheet(
             @PathVariable String projectId,
@@ -54,6 +63,13 @@ public class MarksheetController {
             @PathVariable String marksheetId) {
         ProcessMarksheetResponse response = service.processMarksheet(projectId, marksheetId);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/stopProcessing")
+    public ResponseEntity<Void> stopAllQueuedProcessing(
+            @PathVariable String projectId) {
+        service.stopAllQueuedProcessing(projectId);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/process")
@@ -112,4 +128,18 @@ public class MarksheetController {
         return Long.parseLong(size); // assume bytes if no suffix
     }
 
+    @PostMapping("/export/excel")
+    public ResponseEntity<byte[]> exportExcel(
+            @PathVariable String projectId,
+            @RequestBody ExportRequest request
+    ) throws Exception {
+
+        byte[] data = service.exportToExcel(projectId, request);
+
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=marksheets.xlsx")
+                .header("Content-Type",
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                .body(data);
+    }
 }

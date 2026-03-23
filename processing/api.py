@@ -8,13 +8,20 @@ import yaml, pdf2image, pytesseract, os, ollama, PIL, PIL.ImageFilter, time, dot
 from google import genai
 from pathlib import Path
 
+import boto3
+import tempfile
 from fastapi.concurrency import run_in_threadpool
 
 with open("config.yaml", "r") as file:
     cfg = yaml.safe_load(file) or {}
 
-env_path = Path("../.env")   # adjust path as needed
-dotenv.load_dotenv(dotenv_path=env_path)
+# env_path = Path("../.env")   # adjust path as needed
+# dotenv.load_dotenv(dotenv_path=env_path)
+
+dotenv.load_dotenv()
+host = os.getenv("UVICORN_HOST", "0.0.0.0")
+port = int(os.getenv("UVICORN_PORT", 8000))
+gemini_api_key = os.getenv("GEMINI_API_KEY")
 
 # =========================
 # CONFIGURATION
@@ -61,6 +68,7 @@ def process_pdf_file(input_file_path):
         if heights:
             avg_font_height = sum(heights) / len(heights)
             SCALE = 120 / avg_font_height  # dynamic scale factor (taget_font_size = 20)
+            SCALE = 1
             print(f"⬆️ SCALE = {SCALE}")
 
         width, height = image.size
@@ -79,14 +87,14 @@ def process_pdf_file(input_file_path):
     return text
 
 def generate_with_gemma(prompt):
-    client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+    client = genai.Client(api_key=gemini_api_key)
     return client.models.generate_content(
         model=MODEL,   # e.g., "gemma-3-27b"
         contents=prompt
     ).text
 
 def generate_with_gemini(prompt):
-    client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+    client = genai.Client(api_key=gemini_api_key)
     return client.models.generate_content(
         model=MODEL,
         contents=prompt
@@ -154,6 +162,7 @@ def process_image_file(input_file_path, output_dir):
     if heights:
         avg_font_height = sum(heights) / len(heights)
         SCALE = 120 / avg_font_height  # dynamic scale factor (taget_font_size = 20)
+        SCALE = 1
         print(f"⬆️ SCALE = {SCALE}")
 
     width, height = image.size
@@ -161,14 +170,14 @@ def process_image_file(input_file_path, output_dir):
     new_height = int(height * SCALE)
     image = image.resize((new_width, new_height), PIL.Image.Resampling.LANCZOS)
     # image = image.filter(PIL.ImageFilter.MedianFilter()) # image becomes smother (remove noise)
-    image.save(os.path.join(output_dir, "preprocessed.png"))
+    # image.save(os.path.join(output_dir, "preprocessed.png")) # save image
     return extract_text_from_image(image)
 
 def process_file(input_file_path):
     os.makedirs(OUTPUT_PATH, exist_ok=True)
     base_name = os.path.splitext(os.path.basename(input_file_path))[0]
-    output_dir = os.path.join(OUTPUT_PATH, base_name)
-    os.makedirs(output_dir, exist_ok=True)
+    output_dir = os.path.join(OUTPUT_PATH, base_name) 
+    # os.makedirs(output_dir, exist_ok=True)
 
     ocr_start = time.perf_counter()
     extension = os.path.splitext(input_file_path)[1].lower()
@@ -181,10 +190,10 @@ def process_file(input_file_path):
         print(f"❌ Unsupported file extension: {extension}")
         raise ValueError(f"Unsupported file extension: {extension}")
 
-    output_file_path_for_orc = os.path.join(output_dir, "ocr.txt")
-    with open(output_file_path_for_orc, "w", encoding="utf-8") as f:
-        f.write(text)
-        print(f"✅ OCR text saved to: {output_file_path_for_orc}")
+    # output_file_path_for_orc = os.path.join(output_dir, "ocr.txt")
+    # with open(output_file_path_for_orc, "w", encoding="utf-8") as f:
+    #     f.write(text)
+    #     print(f"✅ OCR text saved to: {output_file_path_for_orc}")
 
     ocr_end = time.perf_counter()
     ocr_time = ocr_end - ocr_start
@@ -212,10 +221,10 @@ def process_file(input_file_path):
     if json_output.endswith("```"):
         json_output = json_output[:-3].strip()
 
-    output_file_path_for_json = os.path.join(output_dir, "json.json")
-    with open(output_file_path_for_json, "w", encoding="utf-8") as f:
-        f.write(json_output)
-    print(f"✅ JSON output saved to: {output_file_path_for_json}")
+    # output_file_path_for_json = os.path.join(output_dir, "json.json")
+    # with open(output_file_path_for_json, "w", encoding="utf-8") as f:
+    #     f.write(json_output)
+    # print(f"✅ JSON output saved to: {output_file_path_for_json}")
 
     llm_end = time.perf_counter()
     llm_time = llm_end - llm_start
@@ -271,13 +280,51 @@ async def upload(file: UploadFile = File(...)):
 class PathRequest(BaseModel):
     file_path: str
 
+# @app.post("/process")
+# async def process_path(data: PathRequest):
+#     file_path = data.file_path
+
+#     if not os.path.exists(file_path):
+#         return {"error": "File not found"}
+
+#     # json_output = process_file(file_path)
+#     json_output = await run_in_threadpool(process_file, file_path) # multithreading
+#     return json.loads(json_output)
+
+
+# ---- MinIO / S3 CONFIG ----
+s3_client = boto3.client(
+    "s3",
+    endpoint_url=os.getenv("S3_ENDPOINT_URL"),
+    aws_access_key_id=os.getenv("S3_ACCESS_KEY"),
+    aws_secret_access_key=os.getenv("S3_SECRET_KEY"),
+    region_name=os.getenv("S3_REGION")
+)
+
+# ---- Request Model ----
+class FileRequest(BaseModel):
+    bucket: str
+    key: str
+
+# ---- API Endpoint ----
 @app.post("/process")
-async def process_path(data: PathRequest):
-    file_path = data.file_path
+async def process_file_from_s3(data: FileRequest):
+    try:
+        # get extension from key
+        _, ext = os.path.splitext(data.key)
 
-    if not os.path.exists(file_path):
-        return {"error": "File not found"}
+        with tempfile.NamedTemporaryFile(delete=False, suffix=ext) as tmp:
+            s3_client.download_fileobj(data.bucket, data.key, tmp)
+            temp_path = tmp.name
 
-    # json_output = process_file(file_path)
-    json_output = await run_in_threadpool(process_file, file_path) # multithreading
-    return json.loads(json_output)
+        result = await run_in_threadpool(process_file, temp_path)
+
+        return json.loads(result)
+
+    except Exception as e:
+        return {"error": str(e)}
+    
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("api:app", host=host, port=port)

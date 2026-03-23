@@ -1,0 +1,13 @@
+fastapi
+uvicorn[standard]
+pytesseract
+pdf2image
+Pillow
+opencv-python
+PyYAML
+numpy
+python-dotenv
+google-genai
+ollama
+boto3
+python-multipart

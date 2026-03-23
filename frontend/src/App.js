@@ -21,6 +21,7 @@ import DashboardRouter from "./routes/DashboardRouter";
 import UserProfile from "./pages/UserProfile";
 import AssignMarksheet from "./pages/AssignMarksheet";
 import ProjectRouter from "./routes/ProjectRouter";
+import Export from "./pages/Export";
 
 function App() {
 
@@ -72,6 +73,10 @@ function App() {
           <Route
             path="/project/:projectId/marksheet/:marksheetId/edit"
             element={<EditMarksheet />}
+          />
+          <Route
+            path="/project/:projectId/export"
+            element={<Export />}
           />
         </Route>
 

@@ -14,11 +14,8 @@ public class FlywayMigrationRunner {
 
     @EventListener(ApplicationReadyEvent.class)
     public void migrateDatabase() {
-        // Build JDBC URL from AppProps
-        String jdbcUrl = "jdbc:postgresql://"
-                + appProps.getSpring().getDatasource().getHost() + ":"
-                + appProps.getSpring().getDatasource().getPort() + "/"
-                + appProps.getSpring().getDatasource().getName();
+
+        String jdbcUrl = appProps.getSpring().getDatasource().getUrl();
 
         Flyway flyway = Flyway.configure()
                 .dataSource(
@@ -26,12 +23,12 @@ public class FlywayMigrationRunner {
                         appProps.getSpring().getDatasource().getUsername(),
                         appProps.getSpring().getDatasource().getPassword()
                 )
-                .locations("classpath:db/migration") // your migration scripts
-                .baselineOnMigrate(true)             // safe for existing DBs
-                .validateOnMigrate(true) // <-- checks DB against migration history
+                .locations("classpath:db/migration")
+                .baselineOnMigrate(true)
+                .validateOnMigrate(true)
                 .load();
 
         flyway.migrate();
-
     }
+
 }

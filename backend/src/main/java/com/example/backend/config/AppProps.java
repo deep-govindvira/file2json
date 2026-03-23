@@ -14,6 +14,16 @@ public class AppProps {
     private String processApiUrl;
     private String noOfThreads;
     private String allowedOrigin;
+    private S3 s3;
+
+    @Data
+    public static class S3 {
+        private String endpointUrl;
+        private String accessKey;
+        private String secretKey;
+        private String region;
+        private String bucket;
+    }
 
     @Data
     public static class Spring {
@@ -21,13 +31,17 @@ public class AppProps {
         private Servlet servlet;
         private Threads threads;
         private Datasource datasource;
+        private Mail mail;
+    }
+
+    @Data
+    public static class Mail {
+        private String username;
     }
 
     @Data
     public static class Datasource {
-        private String host;
-        private int port;
-        private String name;
+        private String url;
         private String username;
         private String password;
         private String driverClassName;

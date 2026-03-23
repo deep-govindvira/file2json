@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { addUserToProject, getProjectById, removeUserToProject } from "../api/projectService";
+import { addUserToProject, getProjectById, removeUserToProject, stopProcessing } from "../api/projectService";
 import { getMarksheets, process, processById, uploadMarksheets } from "../api/marksheetService";
 import CenteredFullPageSpinner from "./CenteredFullPageSpinner";
 import { connectSSE } from "../api/sseClient";
@@ -76,6 +76,9 @@ const ViewProject = () => {
 
   const [userEmail, setUserEmail] = useState("");
   const [addingUser, setAddingUser] = useState(false);
+
+  const [isProcessAllConfirmDialogOpen, setIsProcessConfirmDialogOpen] = useState(false);
+  const [isProcessSelectedConfirmDialogOpen, setIsProcessSelectedConfirmDialogOpen] = useState(false);
 
   const handleAddUser = async () => {
     if (!userEmail.trim()) {
@@ -379,7 +382,7 @@ const ViewProject = () => {
     {
       label: `Process Selected (${selectedMarksheets.length})`,
       show: selectedMarksheets.length > 0,
-      onClick: handleProcessSelected,
+      onClick: () => { setIsProcessSelectedConfirmDialogOpen(true) },
       disabled: selectedMarksheets.length === 0 || processingSelected,
       loading: processingSelected,
       loadingText: `Processing Selected (${selectedMarksheets.length}) ...`,
@@ -389,7 +392,7 @@ const ViewProject = () => {
       label: "Process All",
       loadingText: "Processing...",
       show: project.projectStatus !== "PROCESSING",
-      onClick: handleProcessAll,
+      onClick: () => { setIsProcessConfirmDialogOpen(true) },
       disabled: project.projectStatus === "PROCESSING" || processingAll,
       loading: processingAll,
       // extraClass:
@@ -398,7 +401,28 @@ const ViewProject = () => {
       //     : "bg-purple-600 hover:bg-purple-700",
       // margin: "ml-20"
     },
+    {
+      label: "Stop Processing",
+      loadingText: "Stopping...",
+      show: true,
+      onClick: async () => {
+        try {
+          await stopProcessing(id);
+        } catch (e) {
+          toast.error("Failed to stop.");
+        } finally {
+          toast.success("Stopped processing successfully.");
+        }
+      },
+      disabled: false,
+      loading: false,
+      // extraClass:
+      //   project.projectStatus === "PROCESSING"
+      //     ? "bg-gray-400"
+      //     : "bg-purple-600 hover:bg-purple-700",
+      // margin: "ml-20"
 
+    },
     {
       label: "Edit Project",
       show: project.projectCreator === Cookies.get("email"),
@@ -411,6 +435,13 @@ const ViewProject = () => {
       show: true,
       onClick: () => {
         navigate(`/project/${id}/assignMarksheets`);
+      }
+    },
+    {
+      label: "Export",
+      show: true,
+      onClick: () => {
+        navigate(`/project/${id}/export`);
       }
     }
   ];
@@ -450,7 +481,7 @@ const ViewProject = () => {
         </div>
 
         {/* ================= BUTTON ROW ================= */}
-        <div className="mt-6 flex flex-col sm:flex-row sm:flex-wrap gap-3 items-start sm:items-center">
+        <div className="mt-6 flex flex-col sm:flex-row sm:flex-wrap gap-2 items-start sm:items-center">
           <input
             type="file"
             onChange={(e) => setFiles(Array.from(e.target.files))}
@@ -726,6 +757,80 @@ const ViewProject = () => {
         )}
       </div>
 
+      {/* ===== DELETE CONFIRM MODAL ===== */}
+      {isProcessAllConfirmDialogOpen && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+
+          <div className="bg-white rounded-xl shadow-lg p-6 w-96">
+
+            <h3 className="text-lg font-semibold mb-2">
+              Start Processing
+            </h3>
+
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to start processing of All Marksheets?
+            </p>
+
+            <div className="flex justify-end gap-3">
+
+              <button
+                onClick={() => setIsProcessConfirmDialogOpen(false)}
+                className="px-4 py-2 rounded-lg border hover:bg-gray-100"
+              >
+                Cancel
+              </button>
+
+              <button
+                onClick={() => {
+                  setIsProcessConfirmDialogOpen(false)
+                  handleProcessAll();
+                }}
+                className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700"
+              >
+                Process All
+              </button>
+
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ===== DELETE CONFIRM MODAL ===== */}
+      {isProcessSelectedConfirmDialogOpen && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+
+          <div className="bg-white rounded-xl shadow-lg p-6 w-96">
+
+            <h3 className="text-lg font-semibold mb-2">
+              Start Processing
+            </h3>
+
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to start processing of selected Marksheets?
+            </p>
+
+            <div className="flex justify-end gap-3">
+
+              <button
+                onClick={() => setIsProcessSelectedConfirmDialogOpen(false)}
+                className="px-4 py-2 rounded-lg border hover:bg-gray-100"
+              >
+                Cancel
+              </button>
+
+              <button
+                onClick={() => {
+                  setIsProcessSelectedConfirmDialogOpen(false)
+                  handleProcessSelected();
+                }}
+                className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700"
+              >
+                {`Process Selected (${selectedMarksheets.length})`}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

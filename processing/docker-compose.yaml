@@ -1,0 +1,14 @@
+services:
+  mms-ml:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mms-ml:latest
+    env_file:
+      - .env
+    ports:
+      - "${UVICORN_PORT}:${UVICORN_PORT}"
+
+# docker compose -p mms up
+
+

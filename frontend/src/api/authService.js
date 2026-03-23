@@ -61,3 +61,7 @@ export const getUserInfo = async () => {
   const response = await axiosInstance.get("/users");
   return response.data;
 }
+
+export const deleteAdmin = async (userId) => {
+  return await axiosInstance.delete(`/superadmin/admin/${userId}`);
+};

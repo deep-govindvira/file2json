@@ -8,4 +8,9 @@ import java.util.UUID;
 
 public interface MarksheetRepository extends JpaRepository<Marksheet, UUID> {
     List<Marksheet> findAllByProject(Project project);
+
+    List<Marksheet> findByProjectIdAndProcessingStatus(
+            UUID projectId,
+            ProcessingStatus status);
+
 }

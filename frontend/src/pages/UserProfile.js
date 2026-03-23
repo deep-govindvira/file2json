@@ -20,31 +20,6 @@ const UserProfile = () => {
     fetchUser();
   }, []);
 
-  // const handleUpdate = async (e) => {
-  //   e.preventDefault();
-
-  //   // Validate only if password entered
-  //   if (password) {
-  //     if (password !== confirmPassword) {
-  //       toast.error("Passwords do not match");
-  //       return;
-  //     }
-  //   }
-
-  //   try {
-  //     await updateProfile({
-  //       name,
-  //       password: password || undefined, // send only if exists
-  //     });
-
-  //     toast.success("Profile updated successfully");
-  //     setPassword("");
-  //     setConfirmPassword("");
-  //   } catch (error) {
-  //     toast.error("Failed to update profile");
-  //   }
-  // };
-
   const handleUpdate = async (e) => {
     e.preventDefault();
 

@@ -1,0 +1,13 @@
+services:
+  mms-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mms-frontend:latest
+    env_file:
+      - .env
+    ports:
+      - "${PORT}:80"
+
+# docker compose -p mms up
+

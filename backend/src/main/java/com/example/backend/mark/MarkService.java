@@ -1,6 +1,7 @@
 package com.example.backend.mark;
 
 import com.example.backend.marksheet.Marksheet;
+import com.example.backend.project.Project;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,14 @@ public class MarkService {
 
     private final MarkRepository repository;
     private final MarkConverter converter;
+
+    public List<Mark> findAllByProject(Project project) {
+        return repository.findAllByProject(project);
+    }
+
+//    public List<String> findAllDistinctSubjectNames() {
+//        return repository.findAllDistinctSubjectNames();
+//    }
 
     public List<Mark> saveAll(List<Mark> markList) {
         return repository.saveAll(markList);

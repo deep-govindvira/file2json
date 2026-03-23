@@ -27,4 +27,10 @@ public class SuperAdminController {
         List<GetUserResponse> admins = service.getAllAdmins();
         return ResponseEntity.ok(admins);
     }
+
+    @DeleteMapping("/admin/{userId}")
+    public ResponseEntity<Void> deleteAdmin(@PathVariable String userId) {
+        service.deleteAdmin(userId);
+        return ResponseEntity.noContent().build();
+    }
 }

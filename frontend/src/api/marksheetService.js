@@ -75,3 +75,38 @@ export const assignMarksheetToUser = async (projectId, marksheetId, assignToUser
     const response = await axiosInstance.put(`/projects/${projectId}/marksheets/${marksheetId}/assignToUser/${assignToUserId}`);
     return response.data;
 }
+
+export const assignMarksheetsToUser = async (projectId, marksheetIds, assignToUserId) => {
+    const response = await axiosInstance.put(
+        `/projects/${projectId}/marksheets/assignToUser/${assignToUserId}`,
+        marksheetIds 
+    );
+    return response.data;
+};
+
+export const exportExcelData = async (projectId, selectedColumns) => {
+    if (!selectedColumns || selectedColumns.length === 0) {
+        alert("Select at least one column");
+        return;
+    }
+
+    const response = await axiosInstance.post(
+        `/projects/${projectId}/marksheets/export/excel`,
+        {
+            columns: selectedColumns, // ✅ BODY
+        },
+        {
+            responseType: "blob", // ✅ for download
+        }
+    );
+
+    // Download file
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "marksheets.xlsx";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+};

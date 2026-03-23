@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { getMarksheets, assignMarksheetToUser } from "../api/marksheetService";
+import { getMarksheets, assignMarksheetToUser, assignMarksheetsToUser } from "../api/marksheetService";
 import { getUsersByProject } from "../api/userService";
 import BlueButton from "../components/BlueButton";
 import CenteredFullPageSpinner from "../components/CenteredFullPageSpinner";
@@ -181,11 +181,13 @@ const AssignMarksheet = () => {
 
         try {
 
-            await Promise.all(
-                selectedMarksheets.map(m =>
-                    assignMarksheetToUser(id, m, selectedUser)
-                )
-            );
+            // await Promise.all(
+            //     selectedMarksheets.map(m =>
+            //         assignMarksheetToUser(id, m, selectedUser)
+            //     )
+            // );
+
+            await assignMarksheetsToUser(id, selectedMarksheets, selectedUser);
 
             toast.success("Marksheets assigned successfully");
 
