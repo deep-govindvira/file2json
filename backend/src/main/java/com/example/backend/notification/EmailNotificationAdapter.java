@@ -3,15 +3,17 @@ package com.example.backend.notification;
 import com.example.backend.config.AppProps;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Component;
 
 /**
  * Google To step verification -> App password -> Create password
  * To disable email notifications via Spring, remove @Component, @Primary.
  */
-//@Component
-//@Primary
+@Component
+@Primary
 @RequiredArgsConstructor
 public class EmailNotificationAdapter implements NotificationPort {
     private final JavaMailSender mailSender;

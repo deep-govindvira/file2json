@@ -44,5 +44,5 @@ services:
 volumes:
   postgres_data:
 
-# docker-compose -f postgres-db.yaml -p postgres-db up -d
-# docker compose -f postgres-db.yaml -p postgres-db --profile er run --rm schemaspy
+# docker-compose -f postgres-db.yaml -p mms up -d
+# docker compose -f postgres-db.yaml -p mms --profile er run --rm schemaspy

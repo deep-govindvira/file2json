@@ -1,3 +1,4 @@
+
 create table departments (
     created_at timestamp(6) not null,
     updated_at timestamp(6),
@@ -117,71 +118,69 @@ create table users_projects (
     primary key (marksheet_processing_projects_id, user_id)
 );
 
-create index idx_marksheet_project_id 
+create index idx_marksheet_project_id
    on student_marksheets (marksheet_processing_projects_id);
-   
-create index idx_marksheet_project_status 
+
+create index idx_marksheet_project_status
    on student_marksheets (marksheet_processing_projects_id, processing_status);
-   
-create index idx_users_projects_user_id 
+
+create index idx_users_projects_user_id
    on users_projects (user_id);
-   
-create index idx_users_projects_project_id 
+
+create index idx_users_projects_project_id
    on users_projects (marksheet_processing_projects_id);
-   
-alter table if exists marksheet_marks 
-   add constraint FKhhbb5pcpes9qur0ahg5iio88m 
-   foreign key (student_marksheets_id) 
+
+alter table if exists marksheet_marks
+   add constraint FKhhbb5pcpes9qur0ahg5iio88m
+   foreign key (student_marksheets_id)
    references student_marksheets;
-   
-alter table if exists marksheet_processing_projects 
-   add constraint FK3b0ae6epqmmoooqto3fusrb93 
-   foreign key (project_creator) 
+
+alter table if exists marksheet_processing_projects
+   add constraint FK3b0ae6epqmmoooqto3fusrb93
+   foreign key (project_creator)
    references users;
-   
-alter table if exists refresh_tokens 
-   add constraint FK1lih5y2npsf8u5o3vhdb9y0os 
-   foreign key (user_id) 
+
+alter table if exists refresh_tokens
+   add constraint FK1lih5y2npsf8u5o3vhdb9y0os
+   foreign key (user_id)
    references users;
-   
-alter table if exists student_marksheets 
-   add constraint FKdsner30pm2y0q58xkrlgucxgl 
-   foreign key (assigned_to_users_id) 
+
+alter table if exists student_marksheets
+   add constraint FKdsner30pm2y0q58xkrlgucxgl
+   foreign key (assigned_to_users_id)
    references users;
-   
-alter table if exists student_marksheets 
-   add constraint FKfwt4aofmnjelsyxsbr96lifb7 
-   foreign key (exam_boards_id) 
+
+alter table if exists student_marksheets
+   add constraint FKfwt4aofmnjelsyxsbr96lifb7
+   foreign key (exam_boards_id)
    references exam_boards;
 
-alter table if exists student_marksheets 
-   add constraint FKrpjpv6gh73ytu69tufuiqle73 
-   foreign key (marksheet_summary_id) 
+alter table if exists student_marksheets
+   add constraint FKrpjpv6gh73ytu69tufuiqle73
+   foreign key (marksheet_summary_id)
    references marksheet_summary;
 
-alter table if exists student_marksheets 
-   add constraint FKih1rhnprba0o2imqtfg86rr8h 
-   foreign key (marksheet_processing_projects_id) 
+alter table if exists student_marksheets
+   add constraint FKih1rhnprba0o2imqtfg86rr8h
+   foreign key (marksheet_processing_projects_id)
    references marksheet_processing_projects;
 
-alter table if exists student_marksheets 
-   add constraint FK8m9vls17btyysuhpdjwsa5ogk 
-   foreign key (verified_by_users_id) 
+alter table if exists student_marksheets
+   add constraint FK8m9vls17btyysuhpdjwsa5ogk
+   foreign key (verified_by_users_id)
    references users;
 
-alter table if exists users 
-   add constraint FKsbg59w8q63i0oo53rlgvlcnjq 
-   foreign key (department_id) 
+alter table if exists users
+   add constraint FKsbg59w8q63i0oo53rlgvlcnjq
+   foreign key (department_id)
    references departments;
 
-alter table if exists users_projects 
-   add constraint FKbq2krui85w0kr70eqra1m4vgd 
-   foreign key (marksheet_processing_projects_id) 
+alter table if exists users_projects
+   add constraint FKbq2krui85w0kr70eqra1m4vgd
+   foreign key (marksheet_processing_projects_id)
    references marksheet_processing_projects;
 
-alter table if exists users_projects 
-   add constraint FKen924y69h6d6chaojjgqfaow8 
-   foreign key (user_id) 
+alter table if exists users_projects
+   add constraint FKen924y69h6d6chaojjgqfaow8
+   foreign key (user_id)
    references users;
-
-
